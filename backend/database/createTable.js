@@ -13,7 +13,7 @@ async function createTable(){
         `)
 
         await pool.query(`
-            CREATE TABLE IF NOT EXISTS barang(
+            CREATE TABLE IF NOT EXISTS items(
             id SERIAL PRIMARY KEY,
             title VARCHAR,
             description TEXT, 
@@ -31,11 +31,11 @@ async function createTable(){
             id SERIAL PRIMARY KEY,
             user_found INT,
             user_owner INT,
-            barang_id INT,
+            items_id INT,
 
             FOREIGN KEY (user_found) REFERENCES users(id),
             FOREIGN KEY (user_owner) REFERENCES users(id),
-            FOREIGN KEY (barang_id) REFERENCES barang(id)
+            FOREIGN KEY (items_id) REFERENCES items(id)
             )
         `)
 

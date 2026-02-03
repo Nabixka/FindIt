@@ -11,6 +11,9 @@ async function deleteDB(){
     catch(err){
         console.log(err)
     }
+    finally{
+        process.exit(0)
+    }
 }
 
 deleteDB()
