@@ -7,6 +7,7 @@ async function createTable(){
             id SERIAL PRIMARY KEY,
             username VARCHAR,
             email VARCHAR UNIQUE,
+            token TEXT,
             password TEXT
             )       
         `)

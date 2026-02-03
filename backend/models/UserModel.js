@@ -44,15 +44,6 @@ const createUser = async (data) => {
     return user
 }
 
-// Forget Password
-const forgetPassword = async (id, password) => {
-    const hashedPassword = await bcrypt.hash(password, 10)
-
-    const update = await pool.query(`
-        UPDATE users SET password = $1 WHERE id = $2`,
-    [hashedPassword, id])
-}
-
 // Get By Email
 const getUserByEmail = async (email) => {
     const result = await pool.query(`
@@ -60,6 +51,15 @@ const getUserByEmail = async (email) => {
     [email])
 
     return result.rows[0]
+}
+
+// Forget Password
+const forgetPassword = async (email, password) => {
+    const hashedPassword = await bcrypt.hash(password, 10)
+
+    const update = await pool.query(`
+        UPDATE users SET password = $1 WHERE email = $2`,
+    [hashedPassword, email])
 }
 
 // Delete Account

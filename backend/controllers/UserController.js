@@ -1,5 +1,7 @@
 const user = require("../models/UserModel")
+const pool = require("../database/db")
 const bcrypt = require("bcrypt")
+const crypto = require("crypto")
 
 // Get User
 exports.getUser = async (req, res) => {
@@ -105,26 +107,24 @@ exports.deleteUser = async (req, res) => {
 // Forgot Password
 exports.forgetPassword = async (req, res) => {
     try{
-
-        const { id } = req.params
-        const { password } = req.body
-
-        if(!password){
+        const { email, password} = req.body
+        
+        if(!email || !password){
             return res.status(400).json({
                 status: 400,
                 message: "Bad Request"
             })
         }
-        
-        const exist = await user.getUserById(id)
+
+        const exist = await user.getUserByEmail(email)
         if(!exist){
             return res.status(404).json({
                 status: 404,
-                message: "Not Found"
+                message: "User Tidak Ada"
             })
         }
 
-        const result = await user.forgetPassword(id, password)
+        const result = await user.forgetPassword(email, password)
         res.status(200).json({
             status: 200,
             message: "success"
@@ -167,6 +167,12 @@ exports.loginUser = async (req, res) => {
                 message: "Password Salah"
             })
         }
+        
+        const token = crypto.randomBytes(32).toString("hex")
+
+        await pool.query(`
+            UPDATE users SET token = $1 WHERE id = $2`,
+        [token, exist.id])
         
         const result = await user.getUserById(exist.id)
         res.status(200).json({
