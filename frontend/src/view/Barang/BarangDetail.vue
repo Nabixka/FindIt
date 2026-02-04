@@ -4,13 +4,19 @@
     import Bar from '../Bar/Bar.vue';
     import Nav from '../Bar/Nav.vue';
     import { Icon } from '@iconify/vue';
-    
+    import { useRouter } from 'vue-router';
+
+
+    const router = useRouter()
     const API_URL = import.meta.env.VITE_API_URL
     const token = getToken()
     const detail = ref({})
 
     const getDetail = async () => {
         try {
+            if(!token){
+                router.push("/")
+            }
             const id = history.state?.id
             const res = await fetch(`${API_URL}/item/${id}`, {
                 headers: {
@@ -44,7 +50,7 @@
                 </div>
                 <div class="overflow-hidden rounded-3xl shadow-xl border-4 border-white aspect-square bg-white">
                     <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
-                         :src="detail.image" 
+                         :src="`${API_URL}${detail.image}`" 
                          alt="Item Image">
                 </div>
             </div>

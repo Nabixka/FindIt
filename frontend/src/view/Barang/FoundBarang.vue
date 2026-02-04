@@ -8,12 +8,17 @@
 
     const router = useRouter()
     const API_URL = import.meta.env.VITE_API_URL
-    const title = ref("")
-    const location = ref("")
     const token = getToken()
 
+    const form = ref({
+        title: '',
+        location: '',
+        descrption: '',
+        image: null
+    })
+
     const handleFile = (e) => {
-        form.value.file = e.target.files[0]
+        form.value.image = e.target.files[0]
     }
 
     const uploadBarang = async () => {
@@ -22,14 +27,23 @@
                 router.push("/")
             }
             
+            const formData = new FormData()
+            formData.append('title', form.value.title)
+            formData.append('location', form.value.location)
+            formData.append('description', form.value.description)
+            formData.append('image', form.value.image)
 
             const res = await fetch(`${API_URL}/item`, {
-                methodL: "POST",
+                method: "POST",
                 headers: {
                     Authorization: `Bearer ${token}`
                 },
                 body: formData
             })
+
+            if(res.ok){
+                router.push("/home")
+            }
         }
         catch(err){
             console.log(err)

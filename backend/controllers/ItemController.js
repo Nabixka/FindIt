@@ -46,7 +46,23 @@ exports.getItemById = async (req, res) => {
 
 exports.createItem = async (req, res) => {
     try{
-        
+        const user_id = req.user.id
+        const {title, location, description, } = req.body
+        const imageUrl = req.file ? `/uploads/${req.file.filename}` : null
+
+        if(!title || !location || !description){
+            return res.status(400).json({
+                status: 400,
+                message: "Bad Request"
+            })
+        }
+
+        const result = await item.createItem({title, description, image: imageUrl, location, user_found_id: user_id})
+        res.status(201).json({
+            status: 201,
+            message: "created",
+            data: result
+        })
     }
     catch(err){
         res.status(500).json({

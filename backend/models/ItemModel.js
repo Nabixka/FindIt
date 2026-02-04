@@ -23,7 +23,7 @@ const createItem =  async (data) => {
     
     const create = await pool.query(`
         INSERT INTO items (title, description, location, image, user_found_id) VALUES ($1, $2, $3, $4, $5) RETURNING id
-    `,[title, description, image, location, user_found_id])
+    `,[title, description, location, image, user_found_id])
 
     const newId = create.rows[0].id
     const result = await pool.query(`

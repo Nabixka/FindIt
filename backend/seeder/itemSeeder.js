@@ -7,7 +7,7 @@ async function itemSeeder(){
                 title: "Dompet",
                 description: "Berwarna Coklat Merek Atlo",
                 location: "Jalan Sudirman",
-                image: `${process.env.API_URL}/uploads/dompet.jpg`,
+                image: `/uploads/dompet.jpg`,
                 user_found_id: 1
             }
         ]
