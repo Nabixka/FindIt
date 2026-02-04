@@ -43,3 +43,16 @@ exports.getItemById = async (req, res) => {
         })
     }
 }
+
+exports.createItem = async (req, res) => {
+    try{
+        
+    }
+    catch(err){
+        res.status(500).json({
+            status: 500,
+            message: err.message,
+            stack: err.stack
+        })
+    }
+}

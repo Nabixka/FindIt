@@ -20,7 +20,7 @@ async function createTable(){
             location TEXT,
             image TEXT,
             user_found_id INT,
-            status VARCHAR,
+            status VARCHAR DEFAULT 'lost',
 
             FOREIGN KEY (user_found_id) REFERENCES users(id)
             )  

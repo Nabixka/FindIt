@@ -1,12 +1,14 @@
 <script setup>
     import { ref, onMounted } from 'vue';
     import Bar from '../Bar/Bar.vue';
-    import { getToken } from '../../utils/helper';
+    import { getToken, removeToken } from '../../components/utils/helper';
+    import { useRouter } from 'vue-router';
 
     const API_URL = import.meta.env.VITE_API_URL
     const message = ref("")
     const profil = ref({})
     const token = getToken()
+    const router = useRouter()
 
     const getProfil = async () => {
         try{
@@ -28,6 +30,11 @@
         }
     }
 
+    const LogOut = async () => {
+        removeToken()
+        router.push("/")
+    }
+
     onMounted(() => {
         getProfil()
     })
@@ -38,5 +45,6 @@
     <div>
         <Bar />
         <h3 class="text-5xl">{{ profil.username }}</h3>
+        <button @click="LogOut" class="py-2 px-5 bg-yellow-500">LogOut</button>
     </div>
 </template>

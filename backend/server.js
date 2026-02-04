@@ -10,6 +10,7 @@ const itemRouter = require("./routers/ItemRouter")
 app.use(express.json())
 app.use(bearerToken())
 app.use(cors())
+app.use("/uploads", express.static("uploads"))
 app.use("/user", userRouter)
 app.use("/item", itemRouter)
 
