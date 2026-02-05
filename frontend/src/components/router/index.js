@@ -7,6 +7,7 @@ import Profil from '../../view/Profil/Profil.vue'
 import BarangDetail from '../../view/Barang/BarangDetail.vue'
 import FoundBarang from '../../view/Barang/FoundBarang.vue'
 import FoundItem from '../../view/Home/FoundItem.vue'
+import LostBarang from '../../view/Barang/LostBarang.vue'
 
 const routes = [
     {
@@ -48,6 +49,11 @@ const routes = [
         path: "/createFound",
         name: "CreateFound",
         component: FoundBarang
+    },
+    {
+        path: "/createLost",
+        name: "CreateLost",
+        component: LostBarang
     }
 ]
 

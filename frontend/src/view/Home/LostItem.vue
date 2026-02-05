@@ -75,7 +75,7 @@
                         </h3>
                     </div>
                     <div class="flex w-full justify-end pr-5">
-                        <button class="py-2 bg-yellow-600/80 rounded-lg p-2 font-semibold text-white border-3">Laporan Kehilangan</button>
+                        <router-link to="/createLost" class="py-2 bg-yellow-600/80 rounded-lg p-2 font-semibold text-white border-3">Laporan Kehilangan</router-link>
                     </div>
                 </div>
                 <div class="grid grid-cols-1 pt-10 pl-5 pr-5 gap-5">

@@ -43,7 +43,7 @@
             })
 
             if(res.ok){
-                router.push("/found")
+                router.push("/lost")
             }
         }
         catch(err){
