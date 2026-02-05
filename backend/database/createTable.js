@@ -8,7 +8,7 @@ async function createTable(){
             username VARCHAR,
             email VARCHAR UNIQUE,
             token TEXT,
-            password TEXT
+            password TEXT,
             )       
         `)
 
@@ -20,9 +20,11 @@ async function createTable(){
             location TEXT,
             image TEXT,
             user_found_id INT,
+            user_lost_id INT,
             status VARCHAR DEFAULT 'lost',
 
-            FOREIGN KEY (user_found_id) REFERENCES users(id)
+            FOREIGN KEY (user_found_id) REFERENCES users(id),
+            FOREIGN KEY (user_lost_id) REFERENCES users(id)
             )  
         `)
 

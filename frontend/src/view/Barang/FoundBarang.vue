@@ -42,7 +42,7 @@
             })
 
             if(res.ok){
-                router.push("/home")
+                router.push("/found")
             }
         }
         catch(err){

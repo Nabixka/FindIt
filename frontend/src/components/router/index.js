@@ -1,11 +1,12 @@
 import { createWebHashHistory, createRouter} from 'vue-router'
 import Login from '../../view/Auth/Login.vue'
 import Register from '../../view/Auth/Register.vue'
-import Home from '../../view/Home/Home.vue'
+import LostItem from '../../view/Home/LostItem.vue'
 import ForgetPassword from '../../view/Auth/ForgetPassword.vue'
 import Profil from '../../view/Profil/Profil.vue'
 import BarangDetail from '../../view/Barang/BarangDetail.vue'
 import FoundBarang from '../../view/Barang/FoundBarang.vue'
+import FoundItem from '../../view/Home/FoundItem.vue'
 
 const routes = [
     {
@@ -19,9 +20,9 @@ const routes = [
         component: Register
     },
     {
-        path: "/home",
-        name: "Home",
-        component: Home
+        path: "/lost",
+        name: "Lost",
+        component: LostItem
     },
     {
         path: "/forget",
@@ -41,6 +42,11 @@ const routes = [
     {
         path: "/found",
         name: "Found",
+        component: FoundItem
+    },
+    {
+        path: "/createFound",
+        name: "CreateFound",
         component: FoundBarang
     }
 ]

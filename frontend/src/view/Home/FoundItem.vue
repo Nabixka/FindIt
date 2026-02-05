@@ -13,9 +13,7 @@
     
     const getItems = async () => {
         try{
-            if(!token){
-                router.push("/")
-            }
+            if(token){
 
             const res = await fetch(`${API_URL}/item`, {
                 headers: {
@@ -25,6 +23,10 @@
 
             const json = await res.json()
             items.value = json.data
+            }
+            else{
+                router.push("/")
+            }
         }
         catch(err){
             console.log(err)
@@ -58,15 +60,27 @@
                 </motion.div>
                 <div class="w-full pl-5 pr-5">
                     <motion.div :initial="{ scale: 0 }" :animate="{ scale: [0, 1.1, 1], transition: { duration: 1 } }" class="grid grid-cols-2 gap-5 w-full">
-                        <router-link to="/home" class="text-center bg-yellow-600/80 w-full py-2 rounded-xl text-blue-950 text-xl font-bold">Lost item</router-link>
-                        <router-link to="/found" class="text-center bg-yellow-600/80 w-full py-2 rounded-xl text-blue-950 text-xl font-bold">Found Item</router-link>
+                        <router-link to="/lost" class="border-3 border-white text-center bg-yellow-600/80 w-full py-2 rounded-xl text-white text-xl font-bold">Lost item</router-link>
+                        <router-link to="/found" active-class="!border-yellow-600/80 !bg-white text-yellow-600/80" class="border-3 border-white text-center bg-yellow-600/80 w-full py-2 rounded-xl text-blue-950 text-xl font-bold">Found Item</router-link>
                     </motion.div>
                 </div>
             </div>
 
             <!-- List Item -->
-            <motion.div :initial="{ y: 300 }" :animate="{ y: 0, transition: {duration: 1} }" class="bg-blue-900/90 min-h-screen h-full rounded-t-4xl">
-                <div class="grid grid-cols-1 pt-10 pl-5 pr-5 gap-5">
+            <motion.div :initial="{ y: 300 }" :animate="{ y: 0, transition: {duration: 1} }" class="bg-blue-950/90 min-h-screen h-full rounded-t-4xl">
+                <div class="flex pt-5 items-center">
+                    <div class="pl-5 w-50 text-white font-bold">
+                        <h3 class="flex items-center gap-2">Total Item: 
+                            <p class="text-yellow-600/80">
+                                {{ items.length }}
+                            </p>
+                        </h3>
+                    </div>
+                    <div class="flex w-full justify-end pr-5">
+                        <router-link to="/createFound" class="py-2 bg-yellow-600/80 rounded-lg p-2 font-semibold text-white border-3">Laporan Penemuan</router-link>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 pt-5 pl-5 pr-5 gap-5">
                     <button @click="navigate(item.id)" v-for="item in items" class="flex gap-5 items-center bg-gray-200 p-5 rounded-xl">
                         <img class="w-30 h-25" :src="`${API_URL}${item.image}`">
                         <h3 class="font-bold text-2xl ">{{ item.title }}</h3>

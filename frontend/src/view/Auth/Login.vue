@@ -32,7 +32,7 @@
 
             localStorage.setItem('token', data.token)
 
-            router.push('/home')
+            router.push('/lost')
         }
         catch (err) {
             console.log(err)
@@ -65,7 +65,7 @@
                             placeholder="Password">
                     </div>
                     <div class="flex justify-center">
-                        <button class="bg-yellow-400/90 py-2 px-15 text-lg rounded-lg font-semibold text-blue-800">LOG
+                        <button class="cursor-pointer bg-yellow-400/90 py-2 px-15 text-lg rounded-lg font-semibold text-blue-800">LOG
                             IN</button>
                     </div>
                 </form>
