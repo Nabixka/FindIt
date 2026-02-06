@@ -14,7 +14,7 @@
     const form = ref({
         title: '',
         location: '',
-        descrption: '',
+        description: '',
         image: null,
         status: 'lost'
     })

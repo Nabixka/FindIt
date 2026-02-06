@@ -3,7 +3,19 @@ const pool = require("../database/db")
 // Get All Item  Lost
 const getItem = async () => {
     const result = await pool.query(`
-        SELECT * FROM items
+        SELECT 
+        i.id,
+        i.title,
+        i.description,
+        i.location,
+        i.image,
+        i.status,
+        json_build_object(
+        'id', u.id,
+        'username', u.username) AS user
+
+        FROM items i
+        LEFT JOIN users u ON i.user_id = u.id
     `)
 
     return result.rows
