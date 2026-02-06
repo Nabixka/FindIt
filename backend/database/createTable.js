@@ -8,7 +8,7 @@ async function createTable(){
             username VARCHAR,
             email VARCHAR UNIQUE,
             token TEXT,
-            password TEXT,
+            password TEXT
             )       
         `)
 
@@ -19,12 +19,10 @@ async function createTable(){
             description TEXT, 
             location TEXT,
             image TEXT,
-            user_found_id INT,
-            user_lost_id INT,
-            status VARCHAR DEFAULT 'lost',
+            user_id INT,
+            status VARCHAR,
 
-            FOREIGN KEY (user_found_id) REFERENCES users(id),
-            FOREIGN KEY (user_lost_id) REFERENCES users(id)
+            FOREIGN KEY (user_id) REFERENCES users(id)
             )  
         `)
 
@@ -56,7 +54,7 @@ async function createTable(){
         console.log("Berhasil Membuat Table")
     }
     catch(err){
-        console.log(err)
+        console.log(err.message)
     }
 }
 

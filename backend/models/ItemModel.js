@@ -18,12 +18,13 @@ const getItemById = async (id) => {
     return result.rows[0]
 }
 
+// Create Item
 const createItem =  async (data) => {
-    const { title, description, image, location, user_found_id } = data
+    const { title, description, image, location, user_id, status } = data
     
     const create = await pool.query(`
-        INSERT INTO items (title, description, location, image, user_found_id) VALUES ($1, $2, $3, $4, $5) RETURNING id
-    `,[title, description, location, image, user_found_id])
+        INSERT INTO items (title, description, location, image, user_id, status) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id
+    `,[title, description, location, image, user_id, status])
 
     const newId = create.rows[0].id
     const result = await pool.query(`
@@ -33,8 +34,42 @@ const createItem =  async (data) => {
     return result.rows[0]
 }
 
+const getItemLost = async () => {
+    const result = await pool.query(`
+        SELECT * FROM items WHERE status = 'lost' `)
+
+    return result.rows
+}
+
+const getItemFound = async () => {
+    const result = await pool.query(`
+        SELECT * FROM items WHERE status = 'found' `)
+
+    return result.rows
+}
+
+const getItemUserLost = async (id) => {
+    const result = await pool.query(`
+        SELECT * FROM items WHERE user_id = $1 AND status = 'lost' `,
+    [id])
+    
+    return result.rows
+}
+
+const getItemUserFound = async (id) => {
+    const result  = await pool.query(`
+        SELECT * FROM items WHERE user_id = $1 AND status = 'found' `,
+    [id])
+
+    return result.rows
+}
+
 module.exports = {
     getItem,
     getItemById,
-    createItem
+    createItem,
+    getItemLost,
+    getItemFound,
+    getItemUserLost,
+    getItemUserFound
 }

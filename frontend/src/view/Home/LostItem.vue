@@ -17,7 +17,7 @@
                 router.push("/")
             }
 
-            const res = await fetch(`${API_URL}/item`, {
+            const res = await fetch(`${API_URL}/item/lost`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -65,7 +65,7 @@
             </div>
 
             <!-- List Item -->
-            <motion.div :initial="{ y: 300 }" :animate="{ y: 0, transition: {duration: 1} }" class="bg-blue-950/90 min-h-screen h-full rounded-t-4xl">
+            <motion.div :initial="{ y: 300 }" :animate="{ y: 0, transition: {duration: 1} }" class="bg-blue-950/90 pb-27 min-h-screen h-full rounded-t-4xl">
                 <div class="flex pt-5 items-center">
                     <div class="pl-5 w-50 text-white font-bold">
                         <h3 class="flex items-center gap-2">Total Item: 

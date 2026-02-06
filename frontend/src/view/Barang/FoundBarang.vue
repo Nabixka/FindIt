@@ -15,7 +15,8 @@
         title: '',
         location: '',
         descrption: '',
-        image: null
+        image: null,
+        status: 'found'
     })
 
     const handleFile = (e) => {
@@ -33,6 +34,7 @@
             formData.append('location', form.value.location)
             formData.append('description', form.value.description)
             formData.append('image', form.value.image)
+            formData.append('status', form.value.status)
 
             const res = await fetch(`${API_URL}/item`, {
                 method: "POST",

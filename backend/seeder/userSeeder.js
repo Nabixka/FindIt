@@ -27,7 +27,7 @@ async function userSeeder(){
         console.log("Berhasil Membuat User")
     }
     catch(err){
-        console.log(err)
+        console.log(err.message)
     }
 }
 

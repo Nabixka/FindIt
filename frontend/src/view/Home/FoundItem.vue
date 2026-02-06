@@ -15,7 +15,7 @@
         try{
             if(token){
 
-            const res = await fetch(`${API_URL}/item`, {
+            const res = await fetch(`${API_URL}/item/found`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
