@@ -8,6 +8,7 @@ import BarangDetail from '../../view/Barang/BarangDetail.vue'
 import FoundBarang from '../../view/Barang/FoundBarang.vue'
 import FoundItem from '../../view/Home/FoundItem.vue'
 import LostBarang from '../../view/Barang/LostBarang.vue'
+import Otp from '../../view/Auth/Otp.vue'
 
 const routes = [
     {
@@ -54,6 +55,11 @@ const routes = [
         path: "/createLost",
         name: "CreateLost",
         component: LostBarang
+    },
+    {
+        path: "/otp",
+        name: "Otp",
+        component: Otp
     }
 ]
 

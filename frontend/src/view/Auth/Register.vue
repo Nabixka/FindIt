@@ -17,7 +17,7 @@
                 message.value = "Isi Yang Benar"
             }
 
-            const res = await fetch(`${API_URL}/user`, {
+            const res = await fetch(`${API_URL}/user/register`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

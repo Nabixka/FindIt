@@ -30,9 +30,12 @@
             const json = await res.json()
             const data = json.data
 
-            localStorage.setItem('token', data.token)
-
-            router.push('/lost')
+            router.push({
+                name: "Otp",
+                state: {
+                    email: data.email
+                }
+            })
         }
         catch (err) {
             console.log(err)

@@ -1,5 +1,5 @@
 <script setup>
-    import { ref, onMounted, nextTick } from 'vue'
+    import { ref, onMounted, nextTick, computed } from 'vue'
     import { getToken } from '../../components/utils/helper'
     import Bar from '../Bar/Bar.vue'
     import Nav from '../Bar/Nav.vue'
@@ -24,6 +24,7 @@
     const token = getToken()
     const detail = ref({})
     let mapInstance = null;
+    const user = computed(() => detail.value?.user)
 
     const showMap = async (locationText) => {
         if (!locationText) return
@@ -142,9 +143,9 @@
                     <div class="w-10 h-10 bg-blue-950 rounded-full flex items-center justify-center text-white font-bold">
                         {{ detail.user_found_id || 'P' }}
                     </div>
-                    <div>
+                    <div v-if="user">
                         <p class="text-xs text-blue-900/50 font-bold uppercase">Pelapor</p>
-                        <p class="text-blue-950 font-bold">User #{{ detail.user_found_id }}</p>
+                        <p class="text-blue-950 font-bold">{{ user.username }}</p>
                     </div>
                 </div>
             </motion.div>

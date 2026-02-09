@@ -24,7 +24,20 @@ const getItem = async () => {
 // Get Item Lost ById
 const getItemById = async (id) => {
     const result = await pool.query(`
-        SELECT * FROM items WHERE id = $1`,
+        SELECT 
+        i.id,
+        i.title,
+        i.description,
+        i.location,
+        i.image,
+        i.status,
+        json_build_object(
+        'id', u.id,
+        'username', u.username) AS user
+
+        FROM items i
+        LEFT JOIN users u ON i.user_id = u.id
+        WHERE i.id = $1`,
     [id])
 
     return result.rows[0]
@@ -40,7 +53,20 @@ const createItem =  async (data) => {
 
     const newId = create.rows[0].id
     const result = await pool.query(`
-        SELECT * FROM items WHERE id = $1`,
+        SELECT 
+        i.id,
+        i.title,
+        i.description,
+        i.location,
+        i.image,
+        i.status,
+        json_build_object(
+        'id', u.id,
+        'username', u.username) AS user
+
+        FROM items i
+        LEFT JOIN users u ON i.user_id = u.id
+        WHERE i.id = $1`,
     [newId])
 
     return result.rows[0]
@@ -48,21 +74,60 @@ const createItem =  async (data) => {
 
 const getItemLost = async () => {
     const result = await pool.query(`
-        SELECT * FROM items WHERE status = 'lost' `)
+        SELECT 
+        i.id,
+        i.title,
+        i.description,
+        i.location,
+        i.image,
+        i.status,
+        json_build_object(
+        'id', u.id,
+        'username', u.username) AS user
+
+        FROM items i
+        LEFT JOIN users u ON i.user_id = u.id
+        WHERE i.status = 'lost' `)
 
     return result.rows
 }
 
 const getItemFound = async () => {
     const result = await pool.query(`
-        SELECT * FROM items WHERE status = 'found' `)
+        SELECT 
+        i.id,
+        i.title,
+        i.description,
+        i.location,
+        i.image,
+        i.status,
+        json_build_object(
+        'id', u.id,
+        'username', u.username) AS user
+
+        FROM items i
+        LEFT JOIN users u ON i.user_id = u.id
+        WHERE i.status = 'found' `)
 
     return result.rows
 }
 
 const getItemUserLost = async (id) => {
     const result = await pool.query(`
-        SELECT * FROM items WHERE user_id = $1 AND status = 'lost' `,
+        SELECT 
+        i.id,
+        i.title,
+        i.description,
+        i.location,
+        i.image,
+        i.status,
+        json_build_object(
+        'id', u.id,
+        'username', u.username) AS user
+
+        FROM items i
+        LEFT JOIN users u ON i.user_id = u.id
+        WHERE i.user_id = $1 AND i.status = 'lost' `,
     [id])
     
     return result.rows
@@ -70,7 +135,20 @@ const getItemUserLost = async (id) => {
 
 const getItemUserFound = async (id) => {
     const result  = await pool.query(`
-        SELECT * FROM items WHERE user_id = $1 AND status = 'found' `,
+        SELECT 
+        i.id,
+        i.title,
+        i.description,
+        i.location,
+        i.image,
+        i.status,
+        json_build_object(
+        'id', u.id,
+        'username', u.username) AS user
+
+        FROM items i
+        LEFT JOIN users u ON i.user_id = u.id
+        WHERE i.user_id = $1 AND i.status = 'found' `,
     [id])
 
     return result.rows
