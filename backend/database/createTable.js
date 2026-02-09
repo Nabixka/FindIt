@@ -8,7 +8,10 @@ async function createTable(){
             username VARCHAR,
             email VARCHAR UNIQUE,
             token TEXT,
-            password TEXT
+            password TEXT,
+            otp_code VARCHAR,
+            otp_expired BIGINT,
+            otp_verified BOOLEAN DEFAULT false
             )       
         `)
 

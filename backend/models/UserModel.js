@@ -58,7 +58,7 @@ const forgetPassword = async (email, password) => {
     const hashedPassword = await bcrypt.hash(password, 10)
 
     const update = await pool.query(`
-        UPDATE users SET password = $1 WHERE email = $2`,
+        UPDATE users SET password = $1 otp_code = NULL, otp_expired = NULL WHERE email = $2`,
     [hashedPassword, email])
 }
 
