@@ -19,6 +19,7 @@
     });
     L.Marker.prototype.options.icon = DefaultIcon;
 
+    const { state } = history
     const router = useRouter()
     const API_URL = import.meta.env.VITE_API_URL
     const token = getToken()
@@ -67,7 +68,7 @@
                 return
             }
 
-            const id = history.state?.id
+            const id = state?.id
             if (!id) return;
 
             const res = await fetch(`${API_URL}/item/${id}`, {

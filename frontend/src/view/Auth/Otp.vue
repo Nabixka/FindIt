@@ -1,6 +1,7 @@
 <script setup>
     import { ref } from "vue"
     import { useRouter } from "vue-router"
+    import { motion } from "motion-v"
 
     const { state } = history
     const router = useRouter()
@@ -8,6 +9,7 @@
     const otp = ref(["", "", "", "", "", ""])
     const inputs = ref([])
     const email = state?.email
+    const error = ref(null)
 
     const handleInput = (e, index) => {
       const value = e.target.value.replace(/\D/g, "")
@@ -28,7 +30,7 @@
       const otpCode = otp.value.join("")
 
       if (otpCode.length !== 6) {
-        alert("OTP harus 6 digit")
+        error.value = "Kode OTP Harus 6 Angka"
         return
       }
 
@@ -47,18 +49,17 @@
         const json = await res.json()
         const data = json.data
         if(json.status == 200){
-            console.log("Berhasil")
 
             localStorage.setItem('token', data.token)
 
             router.push("/lost")
         }
         else{
-            console,log("Gagal")
+            error.value = "Kode OTP Salah"
         }
       }
       catch(err){
-        console.log(err.message)
+        error.value = "Gagal Terhubung Ke Server"
       }
     }
 
@@ -67,17 +68,23 @@
 
 <template>
   <div class="bg-gray-200 h-screen grid grid-cols-1">
+
+    <!-- Title -->
     <div class="flex flex-col gap-5 justify-center items-center">
-      <img src="/Findit.png" class="w-35 h-15">
-      <h3 class="text-blue-950/80 font-bold text-4xl text-center">
+      <motion.div :initial="{scale: 0}" :animate="{scale: [0, 1.3, 1], transition: {duration: 1}}">
+        <img src="/Findit.png" class="w-35 h-15">
+      </motion.div>
+      <motion.h3 :initial="{scale: 0}" :animate="{scale: [0, 1.1, 1], transition: {duration: 1}}" class="text-blue-950/80 font-bold text-4xl text-center">
         Verifikasi Kode OTP
-      </h3>
-      <p class="text-center px-5 font-semibold text-blue-950/70">
+      </motion.h3>
+      <motion.p :initial="{scale: 0}" :animate="{scale: [0, 1.1, 1], transition: {duration: 1}}" class="text-center px-5 font-semibold text-blue-950/70">
         Kode OTP telah dikirim ke email anda dan akan kadaluarsa dalam 5 menit
-      </p>
+      </motion.p>
     </div>
 
-    <div class="bg-blue-900/80 rounded-t-4xl flex flex-col gap-10 p-5">
+    <!-- Form -->
+    <motion.div :initial="{y: 300}" :animate="{y: 0, transition: { duration: 0.8}}" class="bg-blue-900/80 rounded-t-4xl flex flex-col gap-10 p-5">
+      <h3 class="text-red-500 text-center">{{ error }}</h3>
       <div class="grid grid-cols-6 gap-3">
         <input
           v-for="(item, index) in otp"
@@ -91,12 +98,11 @@
         />
       </div>
 
-      <button
-        @click="verifyOtp"
-        class="bg-yellow-400 text-white font-bold py-3 text-2xl rounded-full"
-      >
+      <button @click="verifyOtp" class="bg-yellow-400 text-white font-bold py-3 text-2xl rounded-full" >
         Verifikasi Akun
       </button>
-    </div>
+      <router-link to="/" class="text-center font-semibold text-blue-400">Kembali Ke Login</router-link>
+    </motion.div>
+
   </div>
 </template>

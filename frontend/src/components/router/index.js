@@ -5,10 +5,12 @@ import LostItem from '../../view/Home/LostItem.vue'
 import ForgetPassword from '../../view/Auth/ForgetPassword.vue'
 import Profil from '../../view/Profil/Profil.vue'
 import BarangDetail from '../../view/Barang/BarangDetail.vue'
-import FoundBarang from '../../view/Barang/FoundBarang.vue'
 import FoundItem from '../../view/Home/FoundItem.vue'
-import LostBarang from '../../view/Barang/LostBarang.vue'
 import Otp from '../../view/Auth/Otp.vue'
+import FoundBarang from '../../view/Barang/Create/FoundBarang.vue'
+import LostBarang from '../../view/Barang/Create/LostBarang.vue'
+import UserFound from '../../view/Barang/UserBarang/UserFound.vue'
+import UserLost from '../../view/Barang/UserBarang/UserLost.vue'
 
 const routes = [
     {
@@ -60,6 +62,16 @@ const routes = [
         path: "/otp",
         name: "Otp",
         component: Otp
+    },
+    {
+        path: "/user/found",
+        name: "UserFound",
+        component: UserFound
+    },
+    {
+        path: "/user/lost",
+        name: "UserLost",
+        component: UserLost
     }
 ]
 

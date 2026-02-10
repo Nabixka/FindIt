@@ -1,9 +1,9 @@
 <script setup>
     import { ref, onMounted } from 'vue';
-    import Bar from '../Bar/Bar.vue';
-    import Nav from '../Bar/Nav.vue';
+    import Bar from '../../Bar/Bar.vue';
+    import Nav from '../../Bar/Nav.vue';
     import { Icon } from '@iconify/vue';
-    import { getToken } from '../../components/utils/helper';
+    import { getToken } from '../../../components/utils/helper';
     import { useRouter } from 'vue-router';
     import { motion } from 'motion-v';
 
@@ -16,7 +16,7 @@
         location: '',
         description: '',
         image: null,
-        status: 'lost'
+        status: 'found'
     })
 
     const handleFile = (e) => {
@@ -45,7 +45,7 @@
             })
 
             if(res.ok){
-                router.push("/lost")
+                router.push("/found")
             }
         }
         catch(err){

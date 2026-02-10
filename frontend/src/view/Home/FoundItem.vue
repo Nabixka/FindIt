@@ -2,8 +2,9 @@
     import { getToken } from '../../components/utils/helper';
     import { useRouter} from 'vue-router'
     import Bar from '../Bar/Bar.vue';
-    import { ref, onMounted } from 'vue';
+    import { ref, onMounted, computed } from 'vue';
     import { motion } from 'motion-v'
+    import { Icon } from '@iconify/vue';
 
     const router = useRouter()
     const token = getToken()
@@ -81,9 +82,16 @@
                     </div>
                 </div>
                 <div class="grid grid-cols-1 pt-5 pl-5 pr-5 gap-5">
-                    <button @click="navigate(item.id)" v-for="item in items" class="flex gap-5 items-center bg-gray-200 p-5 rounded-xl">
-                        <img class="w-30 h-25" :src="`${API_URL}${item.image}`">
-                        <h3 class="font-bold text-2xl ">{{ item.title }}</h3>
+                    <button @click="navigate(item.id)" v-for="item in items" class="flex gap-5 bg-gray-200 p-5 rounded-xl">
+                        <img class="w-20 h-20" :src="`${API_URL}${item.image}`">
+                        <div class="flex flex-col justify-start">
+                            <h3 class="text-start text-blue-950/80 font-bold text-lg pl-1">{{ item.title }}</h3>
+                            <div class="flex items-center gap-1">
+                                <Icon icon="mdi:map-marker" width="24" height="24" />
+                                <h3>{{ item.location }}</h3>
+                            </div>
+                            <h3 class="text-start pl-1 text-blue-950/40 font-semibold">{{ item.user.username }}</h3>
+                        </div>
                     </button>
                 </div>
             </motion.div>

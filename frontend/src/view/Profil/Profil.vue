@@ -121,18 +121,18 @@
             <motion.div :initial="{y: 300}" :animate="{y: 0, transition: {duration: 0.8}}" class="bg-gray-200 rounded-t-4xl ">
                 <div class="pl-6 pt-8 pr-6 flex flex-col gap-5 pb-10">
                     <h3 class="text-shadow-md text-xl text-blue-950/90 font-bold">Pengaturan Akun</h3>
-                    <div class="shadow-lg bg-white p-4 rounded-lg flex gap-6 items-center">
+                    <router-link to="/user/found" class="shadow-lg bg-white p-4 rounded-lg flex gap-6 items-center">
                         <div class="bg-sky-300 p-2 rounded-full">
                             <Icon icon="iconoir:page" width="24" height="24" />
                         </div>
-                        <div class="font-bold text-blue-950/90 text-lg">Laporan Saya</div>
-                    </div>
-                    <div class="shadow-lg bg-white p-4 rounded-lg flex gap-6 items-center">
+                        <div class="font-bold text-blue-950/90 text-lg">Laporan Penemuan</div>
+                    </router-link>
+                    <router-link to="/user/lost" class="shadow-lg bg-white p-4 rounded-lg flex gap-6 items-center">
                         <div class="bg-sky-300 p-2 rounded-full">
                             <Icon icon="mdi:bell" width="24" height="24" />
                         </div>
-                        <div class="font-bold text-blue-950/90 text-lg">Laporan Saya</div>
-                    </div>
+                        <div class="font-bold text-blue-950/90 text-lg">Laporan Kehilangan</div>
+                    </router-link>
                     <button @click="LogOut" class="shadow-lg bg-white p-4 rounded-lg flex gap-6 items-center">
                         <div class="bg-red-300 p-2 rounded-full">
                             <Icon icon="material-symbols:logout" width="24" height="24" />
