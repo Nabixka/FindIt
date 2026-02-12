@@ -3,6 +3,16 @@ const pool = require("./db")
 async function createTable(){
     try{
         await pool.query(`
+            CREATE TYPE item_category AS ENUM(
+            'Elektronik', 
+            'Aksesoris', 
+            'Pribadi', 
+            'Berharga', 
+            'Lainnya' 
+            )
+        `)
+
+        await pool.query(`
             CREATE TABLE IF NOT EXISTS users(
             id SERIAL PRIMARY KEY,
             username VARCHAR,
@@ -22,6 +32,7 @@ async function createTable(){
             description TEXT, 
             location TEXT,
             image TEXT,
+            category item_category,
             user_id INT,
             status VARCHAR,
 

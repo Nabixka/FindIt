@@ -9,6 +9,7 @@ const getItem = async () => {
         i.description,
         i.location,
         i.image,
+        i.category,
         i.status,
         json_build_object(
         'id', u.id,
@@ -30,6 +31,7 @@ const getItemById = async (id) => {
         i.description,
         i.location,
         i.image,
+        i.category,
         i.status,
         json_build_object(
         'id', u.id,
@@ -45,11 +47,11 @@ const getItemById = async (id) => {
 
 // Create Item
 const createItem =  async (data) => {
-    const { title, description, image, location, user_id, status } = data
+    const { title, description, image, location, category, user_id, status } = data
     
     const create = await pool.query(`
-        INSERT INTO items (title, description, location, image, user_id, status) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id
-    `,[title, description, location, image, user_id, status])
+        INSERT INTO items (title, description, location, category, image, user_id, status) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id
+    `,[title, description, location, category, image, user_id, status])
 
     const newId = create.rows[0].id
     const result = await pool.query(`
@@ -58,6 +60,7 @@ const createItem =  async (data) => {
         i.title,
         i.description,
         i.location,
+        i.category,
         i.image,
         i.status,
         json_build_object(
@@ -80,6 +83,7 @@ const getItemLost = async () => {
         i.description,
         i.location,
         i.image,
+        i.category,
         i.status,
         json_build_object(
         'id', u.id,
@@ -99,6 +103,7 @@ const getItemFound = async () => {
         i.title,
         i.description,
         i.location,
+        i.category,
         i.image,
         i.status,
         json_build_object(
@@ -119,6 +124,7 @@ const getItemUserLost = async (id) => {
         i.title,
         i.description,
         i.location,
+        i.category,
         i.image,
         i.status,
         json_build_object(
@@ -141,6 +147,7 @@ const getItemUserFound = async (id) => {
         i.description,
         i.location,
         i.image,
+        i.category
         i.status,
         json_build_object(
         'id', u.id,
@@ -154,6 +161,12 @@ const getItemUserFound = async (id) => {
     return result.rows
 }
 
+const deleteItem = async (id) => {
+    const result = await pool.query(`
+        DELETE FROM items WHERE id = $1`
+    ,[id])
+}
+
 module.exports = {
     getItem,
     getItemById,
@@ -161,5 +174,6 @@ module.exports = {
     getItemLost,
     getItemFound,
     getItemUserLost,
-    getItemUserFound
+    getItemUserFound,
+    deleteItem
 }

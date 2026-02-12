@@ -48,17 +48,17 @@ exports.getItemById = async (req, res) => {
 exports.createItem = async (req, res) => {
     try{
         const user_id = req.user.id
-        const {title, location, description, status } = req.body
+        const {title, location, category, description, status } = req.body
         const imageUrl = req.file ? `/uploads/${req.file.filename}` : null
 
-        if(!title || !location || !description){
+        if(!title || !location || !category || !description){
             return res.status(400).json({
                 status: 400,
                 message: "Bad Request"
             })
         }
 
-        const result = await item.createItem({title, description, image: imageUrl, location, user_id, status})
+        const result = await item.createItem({title, description, image: imageUrl, category, location, user_id, status})
         res.status(201).json({
             status: 201,
             message: "created",
@@ -162,6 +162,33 @@ exports.getItemUserFound = async (req, res) => {
             data: result
         })
         
+    }
+    catch(err){
+        res.status(500).json({
+            status: 500,
+            message: err.message,
+            stack: err.stack
+        })
+    }
+}
+
+exports.deleteItem = async (req, res) => {
+    try{
+        const { id } = req.params
+        const result = await item.deleteItem(id)
+
+        const exist = await item.getItemById(id)
+        if(!exist){
+            return res.status(404).json({
+                status: 404,
+                message: "Not Found"
+            })
+        }
+
+        res.status(200).json({
+            status: 200,
+            message: "success"
+        })
     }
     catch(err){
         res.status(500).json({

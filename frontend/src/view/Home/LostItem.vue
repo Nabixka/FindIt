@@ -2,13 +2,14 @@
     import { getToken } from '../../components/utils/helper';
     import { useRouter} from 'vue-router'
     import Bar from '../Bar/Bar.vue';
-    import { ref, onMounted } from 'vue';
+    import { ref, onMounted, computed } from 'vue';
     import { motion } from 'motion-v'
     import { Icon } from '@iconify/vue';
 
     const router = useRouter()
     const token = getToken()
     const API_URL = import.meta.env.VITE_API_URL
+    const category = ref("")
 
     const items = ref([])
     
@@ -43,6 +44,11 @@
         getItems()
     })
 
+    const filterItem = computed(() => {
+        if(!category.value) return items.value
+        return items.value.filter( item => item.category === category.value)
+    })
+
 </script>
 
 <template>
@@ -68,19 +74,29 @@
             <!-- List Item -->
             <motion.div :initial="{ y: 300 }" :animate="{ y: 0, transition: {duration: 1} }" class="bg-blue-950/90 pb-27 min-h-screen h-full rounded-t-4xl">
                 <div class="flex pt-5 items-center">
+
+                    <!-- Filter -->
                     <div class="pl-5 w-50 text-white font-bold">
-                        <h3 class="flex items-center gap-2">Total Item: 
-                            <p class="text-yellow-600/80">
-                                {{ items.length }}
-                            </p>
-                        </h3>
+                        <select class="border-3 border-yellow-600/80 bg-white text-yellow-600/80 text-md px-4 py-2 rounded-lg" v-model="category">
+                            <option class="text-black" value="" default>All</option>
+                            <option class="text-black" value="Elektronik">Elektronik</option>
+                            <option class="text-black" value="Aksesoris">Aksesoris</option>
+                            <option class="text-black" value="Pribadi">Pribadi</option>
+                            <option class="text-black" value="Berharga">Berharga</option>
+                            <option class="text-black" value="Lainnya">Lainnya</option>
+                        </select>
                     </div>
+
+                    <!-- Create -->
                     <div class="flex w-full justify-end pr-5">
                         <router-link to="/createLost" class="py-2 bg-yellow-600/80 rounded-lg p-2 font-semibold text-white border-3">Laporan Kehilangan</router-link>
                     </div>
+
                 </div>
+
+                <!-- Item -->
                 <div class="grid grid-cols-1 pt-5 pl-5 pr-5 gap-5">
-                    <button @click="navigate(item.id)" v-for="item in items" class="flex gap-5 bg-gray-200 p-5 rounded-xl">
+                    <button v-if="filterItem.length" @click="navigate(item.id)" v-for="item in filterItem" class="flex gap-5 bg-gray-200 p-5 rounded-xl">
                         <img class="w-20 h-20" :src="`${API_URL}${item.image}`">
                         <div class="flex flex-col justify-start">
                             <h3 class="text-start text-blue-950/80 font-bold text-lg pl-1">{{ item.title }}</h3>
@@ -91,6 +107,7 @@
                             <h3 class="text-start pl-1 text-blue-950/40 font-semibold">{{ item.user.username }}</h3>
                         </div>
                     </button>
+                    <h3 v-else class="text-white font-bold text-center text-4xl pt-35">Tidak Ada</h3>
                 </div>
             </motion.div>
         </div>

@@ -10,6 +10,7 @@
     const router = useRouter()
     const API_URL = import.meta.env.VITE_API_URL
     const token = getToken()
+    const previewImg = ref(null)
 
     const form = ref({
         title: '',
@@ -20,7 +21,11 @@
     })
 
     const handleFile = (e) => {
-        form.value.image = e.target.files[0]
+        const file = e.target.files[0]
+        if(!file) return
+
+        form.value.image = file
+        previewImg.value = URL.createObjectURL(file)
     }
 
     const uploadBarang = async () => {
@@ -65,8 +70,11 @@
                 <div class="flex flex-col gap-5">
                     <motion.label :initial="{scale: 0 }" :animate="{scale: [0, 1.2, 1], transition: {duration: 1}}" class="flex flex-col items-center border-dashed border-2 p-5 border-gray-400/40 rounded-lg">
                         <input type="file" @change="handleFile" accept="image/*" hidden>
-                        <Icon icon="ri:camera-fill" class="text-blue-950/90" width="100" height="100" />
-                        <h3 class="text-gray-400 text-2xl font-semibold">Upload Photo</h3>
+                            <img v-if="previewImg" class="w-40 h-40" :src="previewImg">
+                            <div v-else class="flex flex-col items-center justify-center">
+                            <Icon icon="ri:camera-fill" class="text-blue-950/90" width="100" height="100" />
+                            <h3 class="text-gray-400 text-2xl font-semibold">Upload Photo</h3>
+                            </div>
                     </motion.label>
                     <motion.div class="w-full" :initial="{scale: 0 }" :animate="{scale: [0, 1.2, 1], transition: {duration: 1}}">
                         <input v-model="form.title" class="w-full shadow-md bg-white rounded-lg py-3 pl-5" type="text" placeholder="Nama Barang">
