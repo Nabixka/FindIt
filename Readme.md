@@ -86,7 +86,7 @@ findit/
 - Tekan "<> Code" Di github ini dan Download ZIP
 - Extract dan Masuk ke VS Code
 - Masuk Ke Folder Project
-```bash
+```powershell
 # Masuk Ke Project
 cd Findit
 
@@ -133,7 +133,7 @@ EMAIL_PASS = "YOUR_EMAIL_APP_PASS"
 
 - Menggunakan Cloudflared
 ## Download Di Windows Powershell sebagai Admin
-```bash
+```powershell
 winget install --id Cloudflare.cloudflared
 
 # Login
