@@ -92,6 +92,7 @@ cd Findit
 
 # Instalasi Backend
 cd backend
+npm install
 node migrate.js
 node server.js
 
