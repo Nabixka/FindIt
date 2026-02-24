@@ -86,7 +86,7 @@
 </script>
 
 <template>
-    <div class="bg-blue-950/90 min-h-screen h-full">
+    <div class="bg-linear-to-b from-blue-900/80 to-blue-950 min-h-screen h-full">
         <Bar />
         <div class="flex flex-col justify-around h-screen">
 
@@ -118,7 +118,7 @@
             </div>
 
             <!-- Pengaturan -->
-            <motion.div :initial="{y: 300}" :animate="{y: 0, transition: {duration: 0.8}}" class="bg-gray-200 rounded-t-4xl ">
+            <motion.div :initial="{y: 300}" :animate="{y: 0, transition: {duration: 0.8}}" class="bg-linear-to-r from-white to-gray-200 rounded-t-4xl ">
                 <div class="pl-6 pt-8 pr-6 flex flex-col gap-5 pb-10">
                     <h3 class="text-shadow-md text-xl text-blue-950/90 font-bold">Pengaturan Akun</h3>
                     <router-link to="/user/found" class="shadow-lg bg-white p-4 rounded-lg flex gap-6 items-center">

@@ -147,7 +147,7 @@ const getItemUserFound = async (id) => {
         i.description,
         i.location,
         i.image,
-        i.category
+        i.category,
         i.status,
         json_build_object(
         'id', u.id,
