@@ -10,13 +10,14 @@
     const token = getToken()
     const API_URL = import.meta.env.VITE_API_URL
     const category = ref("")
+    const search = ref("")
 
     const items = ref([])
     
     const getItems = async () => {
         try{
             if(!token){
-                router.push("/")
+                return router.push("/")
             }
 
             const res = await fetch(`${API_URL}/item/lost`, {
@@ -45,8 +46,21 @@
     })
 
     const filterItem = computed(() => {
-        if(!category.value) return items.value
-        return items.value.filter( item => item.category === category.value)
+         return items.value.filter(item => {
+
+        // Filter kategori
+        const matchCategory = !category.value || 
+            item.category?.toLowerCase() === category.value.toLowerCase()
+
+        // Filter search (judul & lokasi)
+        const matchSearch =
+            !search.value.trim() ||
+            item.title?.toLowerCase().includes(search.value.trim().toLowerCase()) ||
+            item.location?.toLowerCase().includes(search.value.trim().toLowerCase())
+
+
+        return matchCategory && matchSearch
+    })
     })
 
 </script>
@@ -72,31 +86,35 @@
             </div>
 
             <!-- List Item -->
-            <motion.div :initial="{ y: 300 }" :animate="{ y: 0, transition: {duration: 1} }" class="bg-blue-950/90 pb-27 min-h-screen h-full rounded-t-4xl">
-                <div class="flex pt-5 items-center">
+            <motion.div :initial="{ y: 300 }" :animate="{ y: 0, transition: {duration: 1} }" class="bg-blue-950/90 min-h-screen h-full pb-27 rounded-t-4xl">
+                <div class="flex flex-col pt-5 items-center gap-5">
 
                     <!-- Filter -->
-                    <div class="pl-5 w-50 text-white font-bold">
-                        <select class="border-3 border-yellow-600/80 bg-white text-yellow-600/80 text-md px-4 py-2 rounded-lg" v-model="category">
-                            <option class="text-black" value="" default>All</option>
-                            <option class="text-black" value="Elektronik">Elektronik</option>
-                            <option class="text-black" value="Aksesoris">Aksesoris</option>
-                            <option class="text-black" value="Pribadi">Pribadi</option>
-                            <option class="text-black" value="Berharga">Berharga</option>
-                            <option class="text-black" value="Lainnya">Lainnya</option>
-                        </select>
+                    <div class="grid grid-cols-1 w-full">
+                        <input v-model="search" type="text" class="py-2 pl-5 shadow-lg bg-gray-200 border border-white ml-5 mr-5 rounded-lg" placeholder="Cari Barang Atau Lokasi">
                     </div>
-
-                    <!-- Create -->
-                    <div class="flex w-full justify-end pr-5">
-                        <router-link to="/createLost" class="py-2 bg-yellow-600/80 rounded-lg p-2 font-semibold text-white border-3">Laporan Kehilangan</router-link>
+                    <div class="grid grid-cols-2">
+                        <div class="pl-5 w-50 text-white font-bold">
+                            <select class="border-3 border-yellow-600/80 bg-white text-yellow-600/80 text-md px-4 py-2 rounded-lg" v-model="category">
+                                <option class="text-black" value="" default>All</option>
+                                <option class="text-black" value="Elektronik">Elektronik</option>
+                                <option class="text-black" value="Aksesoris">Aksesoris</option>
+                                <option class="text-black" value="Pribadi">Pribadi</option>
+                                <option class="text-black" value="Berharga">Berharga</option>
+                                <option class="text-black" value="Lainnya">Lainnya</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Create -->
+                        <div class="flex w-full justify-end pr-5">
+                            <router-link to="/createLost" class="py-2 bg-yellow-600/80 rounded-lg p-2 font-semibold text-white border-3">Laporan Penemuan</router-link>
+                        </div>
                     </div>
-
                 </div>
 
                 <!-- Item -->
                 <div class="grid grid-cols-1 pt-5 pl-5 pr-5 gap-5">
-                    <button v-if="filterItem.length" @click="navigate(item.id)" v-for="item in filterItem" class="flex gap-5 bg-gray-200 p-5 rounded-xl">
+                    <button v-if="filterItem.length" @click="navigate(item.id)" v-for="item in filterItem" :key="item.id" class="flex gap-5 bg-gray-200 p-5 rounded-xl">
                         <img class="w-20 h-20" :src="`${API_URL}${item.image}`">
                         <div class="flex flex-col justify-start">
                             <h3 class="text-start text-blue-950/80 font-bold text-lg pl-1">{{ item.title }}</h3>
@@ -109,6 +127,7 @@
                     </button>
                     <h3 v-else class="text-white font-bold text-center text-4xl pt-35">Tidak Ada</h3>
                 </div>
+
             </motion.div>
         </div>
     </div>

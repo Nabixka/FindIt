@@ -3,6 +3,7 @@ const pool = require("../database/db")
 const auth = async (req, res, next) => {
     if(!req.token){
         return res.status(401).json({
+            status: 401,
             message: "Token Tidak Ada"
         })
     }
@@ -13,6 +14,7 @@ const auth = async (req, res, next) => {
 
     if(result.rows.length === 0){
         return res.status(401).json({
+            status: 401,
             message: "Token Tidak Valid"
         })
     }

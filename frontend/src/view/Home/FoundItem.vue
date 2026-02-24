@@ -1,5 +1,5 @@
 <script setup>
-    import { getToken } from '../../components/utils/helper';
+    import { getToken, removeToken } from '../../components/utils/helper';
     import { useRouter} from 'vue-router'
     import Bar from '../Bar/Bar.vue';
     import { ref, onMounted, computed } from 'vue';
@@ -10,12 +10,15 @@
     const token = getToken()
     const API_URL = import.meta.env.VITE_API_URL
     const category = ref("")
+    const search = ref("")
 
     const items = ref([])
     
     const getItems = async () => {
         try{
-            if(token){
+            if(!token){
+                router.push("/")
+            }
 
             const res = await fetch(`${API_URL}/item/found`, {
                 headers: {
@@ -25,8 +28,9 @@
 
             const json = await res.json()
             items.value = json.data
-            }
-            else{
+
+            if(res.status == 401){
+                removeToken()
                 router.push("/")
             }
         }
@@ -47,8 +51,21 @@
     })
 
     const filterItem = computed(() => {
-        if(!category.value) return items.value
-        return items.value.filter(item => item.category === category.value)
+         return items.value.filter(item => {
+
+        // Filter kategori
+        const matchCategory = !category.value || 
+            item.category?.toLowerCase() === category.value.toLowerCase()
+
+        // Filter search (judul & lokasi)
+        const matchSearch =
+            !search.value.trim() ||
+            item.title?.toLowerCase().includes(search.value.trim().toLowerCase()) ||
+            item.location?.toLowerCase().includes(search.value.trim().toLowerCase())
+
+
+        return matchCategory && matchSearch
+    })
     })
 
 </script>
@@ -75,22 +92,28 @@
 
             <!-- List Item -->
             <motion.div :initial="{ y: 300 }" :animate="{ y: 0, transition: {duration: 1} }" class="bg-blue-950/90 min-h-screen h-full pb-27 rounded-t-4xl">
-                <div class="flex pt-5 items-center">
-                    <!-- Filter -->
-                    <div class="pl-5 w-50 text-white font-bold">
-                        <select class="border-3 border-yellow-600/80 bg-white text-yellow-600/80 text-md px-4 py-2 rounded-lg" v-model="category">
-                            <option class="text-black" value="" default>All</option>
-                            <option class="text-black" value="Elektronik">Elektronik</option>
-                            <option class="text-black" value="Aksesoris">Aksesoris</option>
-                            <option class="text-black" value="Pribadi">Pribadi</option>
-                            <option class="text-black" value="Berharga">Berharga</option>
-                            <option class="text-black" value="Lainnya">Lainnya</option>
-                        </select>
-                    </div>
+                <div class="flex flex-col pt-5 items-center gap-5">
 
-                    <!-- Create -->
-                    <div class="flex w-full justify-end pr-5">
-                        <router-link to="/createFound" class="py-2 bg-yellow-600/80 rounded-lg p-2 font-semibold text-white border-3">Laporan Penemuan</router-link>
+                    <!-- Filter -->
+                    <div class="grid grid-cols-1 w-full">
+                        <input v-model="search" type="text" class="py-2 pl-5 shadow-lg bg-gray-200 border border-white ml-5 mr-5 rounded-lg" placeholder="Cari Barang Atau Lokasi">
+                    </div>
+                    <div class="grid grid-cols-2">
+                        <div class="pl-5 w-50 text-white font-bold">
+                            <select class="border-3 border-yellow-600/80 bg-white text-yellow-600/80 text-md px-4 py-2 rounded-lg" v-model="category">
+                                <option class="text-black" value="" default>All</option>
+                                <option class="text-black" value="Elektronik">Elektronik</option>
+                                <option class="text-black" value="Aksesoris">Aksesoris</option>
+                                <option class="text-black" value="Pribadi">Pribadi</option>
+                                <option class="text-black" value="Berharga">Berharga</option>
+                                <option class="text-black" value="Lainnya">Lainnya</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Create -->
+                        <div class="flex w-full justify-end pr-5">
+                            <router-link to="/createFound" class="py-2 bg-yellow-600/80 rounded-lg p-2 font-semibold text-white border-3">Laporan Penemuan</router-link>
+                        </div>
                     </div>
                 </div>
 

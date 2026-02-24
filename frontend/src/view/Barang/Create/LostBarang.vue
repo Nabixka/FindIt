@@ -11,13 +11,21 @@
     const API_URL = import.meta.env.VITE_API_URL
     const token = getToken()
     const previewImg = ref(null)
+    const cat = ref([
+        'Elektronik', 
+        'Aksesoris', 
+        'Pribadi', 
+        'Berharga', 
+        'Lainnya' 
+    ])
 
     const form = ref({
         title: '',
         location: '',
         description: '',
         image: null,
-        status: 'lost'
+        status: 'lost',
+        category: ''
     })
 
     const handleFile = (e) => {
@@ -40,6 +48,7 @@
             formData.append('description', form.value.description)
             formData.append('image', form.value.image)
             formData.append('status', form.value.status)
+            formData.append('category', form.value.category)
 
             const res = await fetch(`${API_URL}/item`, {
                 method: "POST",
@@ -81,6 +90,12 @@
                     </motion.div>
                     <motion.div class="w-full" :initial="{scale: 0 }" :animate="{scale: [0, 1.2, 1], transition: {duration: 1}}">
                         <input v-model="form.location" class="w-full shadow-md bg-white rounded-lg py-3 pl-5" type="text" placeholder="Nama Lokasi">
+                    </motion.div>
+                    <motion.div class="w-full" :initial="{scale: 0 }" :animate="{scale: [0, 1.2, 1], transition: {duration: 1}}">
+                        <select class="w-full text-gray-400 shadow-md bg-white rounded-lg py-3 pl-5" v-model="form.category">
+                            <option class="text-gray-400" value="" default>All</option>
+                            <option v-for="c in cat" class="text-black" :value="c">{{ c }}</option>
+                        </select>
                     </motion.div>
                     <motion.div class="w-full" :initial="{scale: 0 }" :animate="{scale: [0, 1.2, 1], transition: {duration: 1}}">
                         <textarea v-model="form.description" class="w-full shadow-md bg-white rounded-lg pl-5 pt-2 py-5" placeholder="Description Barang"></textarea>

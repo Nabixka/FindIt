@@ -108,7 +108,7 @@
                 <div class="overflow-hidden rounded-3xl shadow-xl border-4 border-white aspect-square bg-white">
                     <img
                         v-if="detail.image"
-                        class="w-full h-full object-cover"
+                        class="w-full h-full bg-cover"
                         :src="`${API_URL}${detail.image}`"
                         alt="Item Image">
                     <div v-else class="w-full h-full flex items-center justify-center bg-gray-200 text-gray-400">
