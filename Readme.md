@@ -127,6 +127,7 @@ EMAIL_USER = "YOUR_EMAIL"
 EMAIL_PASS = "YOUR_EMAIL_APP_PASS"
 ```
 
+- Here For Email "myaccount.google.com/apppasswords"
 - If You Can't Configuration The Email Please Contact Me
 
 # URL

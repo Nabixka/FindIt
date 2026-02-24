@@ -133,7 +133,7 @@
                         </div>
                         <div class="font-bold text-blue-950/90 text-lg">Laporan Kehilangan</div>
                     </router-link>
-                    <button @click="LogOut" class="shadow-lg bg-white p-4 rounded-lg flex gap-6 items-center">
+                    <button @click="LogOut" class="shadow-lg bg-white p-4 mb-10 rounded-lg flex gap-6 items-center">
                         <div class="bg-red-300 p-2 rounded-full">
                             <Icon icon="material-symbols:logout" width="24" height="24" />
                         </div>
