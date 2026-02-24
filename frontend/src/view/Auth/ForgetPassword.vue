@@ -40,7 +40,7 @@
 </script>
 
 <template>
-    <div class="bg-white">
+    <div class="bg-linear-to-r from-white to-gray-200">
         <div class="flex flex-col h-screen">
             <motion.div :initial="{ y: -200 }" :animate="{ y: 0, transition: { duration: 1.5 } }" class="flex flex-col gap-20 pt-10">
                 <div>
@@ -51,7 +51,7 @@
                     <img src="/Findit.png" class="w-50">
                 </div>
             </motion.div>
-            <motion.div :initial="{ y: 300 }" :animate="{ y: 0, transition: { duration: 1 } }" class="pl-10 pr-10 mt-10 flex flex-col gap-5 bg-blue-900/80 h-full p-5 rounded-t-4xl">
+            <motion.div :initial="{ y: 300 }" :animate="{ y: 0, transition: { duration: 1 } }" class="pl-10 pr-10 mt-10 flex flex-col gap-5 bg-linear-to-b from-blue-900/80 to-blue-950 h-full p-5 rounded-t-4xl">
                 <form @submit.prevent="Login" class="flex flex-col gap-5 pt-10">
                     <h3 class="text-red-900 font-bold text-center" v-if="message">{{ message }}</h3>
                     <div class="shadow-xl">
@@ -59,19 +59,19 @@
                             placeholder="Email">
                     </div>
                     <div class="shadow-xl">
-                        <input v-model="password" required class="shadow text-white w-full pl-3 py-2 border-2 border-white rounded"
+                        <input v-model="password" type="password" required class="shadow text-white w-full pl-3 py-2 border-2 border-white rounded"
                             placeholder="Password">
                     </div>
                     <div class="flex justify-center">
-                        <button class="bg-yellow-400/90 py-2 px-15 rounded-lg font-semibold text-blue-800">Submit</button>
+                        <button class="hover:scale-115 bg-yellow-400/90 py-2 px-15 rounded-lg font-bold text-blue-800">Submit</button>
                     </div>
                 </form>
                 <div class="pt-10 flex flex-col gap-5">
                     <div class="flex justify-center">
-                        <router-link to="/" class="text-white/80">Remember Your Account? Log In</router-link>
+                        <router-link to="/" class="text-white/80">Remember Your Account? <span class="underline text-yellow-500 font-semibold ">Login</span></router-link>
                     </div>
                     <div class="flex justify-center">
-                        <router-link to="/register" class="text-center text-white/80 underline">Don't Have A Acoount? Register</router-link>
+                        <router-link to="/register" class="text-center text-white/80">Don't Have A Acoount? <span class="underline text-blue-500 font-semibold ">Register</span></router-link>
                     </div>
                 </div>
             </motion.div>

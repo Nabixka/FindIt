@@ -67,7 +67,7 @@
 
 
 <template>
-  <div class="bg-gray-200 h-screen grid grid-cols-1">
+  <div class="bg-linear-to-r from-white to-gray-200 h-screen grid grid-cols-1">
 
     <!-- Title -->
     <div class="flex flex-col gap-5 justify-center items-center">
@@ -83,7 +83,7 @@
     </div>
 
     <!-- Form -->
-    <motion.div :initial="{y: 300}" :animate="{y: 0, transition: { duration: 0.8}}" class="bg-blue-900/80 rounded-t-4xl flex flex-col gap-10 p-5">
+    <motion.div :initial="{y: 300}" :animate="{y: 0, transition: { duration: 0.8}}" class="bg-linear-to-b from-blue-900/80 to-blue-950 rounded-t-4xl flex flex-col gap-10 p-5">
       <h3 class="text-red-500 text-center">{{ error }}</h3>
       <div class="grid grid-cols-6 gap-3">
         <input

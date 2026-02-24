@@ -41,36 +41,87 @@
 </script>
 
 <template>
-    <div class="h-screen bg-gray-300">
+    <div class="min-h-screen bg-gray-100">
         <Nav />
         <Bar />
-        <div class="h-screen flex flex-col pt-20">
-            <div class="flex flex-col gap-2">
-                <motion.h3 :initial="{scale: 0}" :animate="{scale: 1, transition: {duration: 1}}" class="text-center text-blue-950/80 text-3xl font-extrabold">Your Item Found</motion.h3>
-                <motion.div :initial="{scale: 0}" :animate="{scale: 1, transition: {duration: 1}}" class="grid grid-cols-2 gap-5 pl-5 pr-5">
-                        <router-link to="/user/lost" class="border-3 border-white text-center bg-yellow-600/80 py-1 rounded-full text-white text-xl font-bold">Lost item</router-link>        
-                        <router-link to="/user/found" class="border-3 border-yellow-600/80 bg-white text-center py-1 rounded-full text-yellow-600/80 text-xl font-bold">Found Item</router-link>
+
+        <div class="flex flex-col pt-24 pb-10 px-6 gap-8">
+            <div class="space-y-6">
+                <motion.h3 
+                    :initial="{ opacity: 0, y: -20 }" 
+                    :animate="{ opacity: 1, y: 0 }" 
+                    class="text-center text-blue-950 text-3xl font-black tracking-tight"
+                >
+                    Barang Saya
+                </motion.h3>
+
+                <motion.div 
+                    :initial="{ opacity: 0 }" 
+                    :animate="{ opacity: 1 }" 
+                    class="bg-gray-200/80 p-1.5 rounded-2xl grid grid-cols-2 gap-2 max-w-md mx-auto shadow-inner">
+                    <router-link 
+                        to="/user/lost" 
+                        class="text-center py-2.5 rounded-xl font-bold transition-all text-blue-950/80 hover:text-blue-950">
+                        Kehilangan
+                    </router-link>
+                    <router-link 
+                        to="/user/found" 
+                        class="text-center py-2.5 rounded-xl font-bold transition-all text-yellow-500 hover:text-blue-950"
+                        active-class="bg-white shadow-sm text-blue-950">
+                        Temuan
+                    </router-link>
                 </motion.div>
             </div>
-            <div>
-                <div class="grid grid-cols-1 pt-5 pl-5 pr-5 gap-5">
-                    <div v-if="found.length">
-                        <motion.button :initial="{scale: 0}" :animate="{scale: 1, transition: {duration: 1}}" @click="handleNavigate(item.id)" v-for="item in found" :value="item.id" :key="item.id" class="flex gap-5 bg-gray-200 w-full p-5 rounded-xl">
-                            <img class="w-20 h-20" :src="`${API_URL}${item.image}`">
-                            <div class="flex flex-col justify-start">
-                                <h3 class="text-start text-blue-950/80 font-bold text-lg pl-1">{{ item.title }}</h3>
-                                <div class="flex items-center gap-1">
-                                    <Icon icon="mdi:map-marker" width="24" height="24" />
-                                    <h3>{{ item.location }}</h3>
+
+            <div class="flex flex-col gap-4">
+                <template v-if="found.length">
+                    <motion.button 
+                        v-for="(item, index) in found" 
+                        :key="item.id"
+                        :initial="{ opacity: 0, x: -20 }"
+                        :animate="{ opacity: 1, x: 0, transition: { delay: index * 0.1 } }"
+                        @click="handleNavigate(item.id)"
+                        class="group flex gap-4 bg-white p-4 rounded-3xl shadow-sm hover:shadow-md transition-all active:scale-95 border border-transparent hover:border-blue-100">
+                        <div class="relative shrink-0">
+                            <img 
+                                class="w-20 h-20 object-cover rounded-2xl shadow-sm" 
+                                :src="`${API_URL}${item.image}`"
+                                onerror="this.src='https://placehold.co/200x200?text=No+Image'">
+                        </div>
+
+                        <div class="flex flex-col justify-between py-1 text-left w-full">
+                            <div>
+                                <h3 class="text-blue-950 font-bold text-lg leading-tight group-hover:text-blue-700 transition-colors">
+                                    {{ item.title }}
+                                </h3>
+                                <div class="flex items-center gap-1 mt-1 text-gray-400">
+                                    <Icon icon="solar:map-point-bold-duotone" class="text-yellow-500" width="18" />
+                                    <span class="text-sm font-medium">{{ item.location }}</span>
                                 </div>
-                                <h3 class="text-start pl-1 text-blue-950/40 font-semibold">{{ item.user.username }}</h3>
                             </div>
-                        </motion.button>
-                    </div>
-                    <motion.div :initial="{scale: 0}" :animate="{scale: 1, transition: {duration: 1}}" v-else class="pt-50">
-                        <h3 class="border-t border-b border-gray-400 w-full text-center p-2 text-blue-950/80 text-4xl font-semibold">Tidak Ada</h3>
-                    </motion.div>
-                </div>
+                            
+                            <div class="flex items-center gap-2 mt-2">
+                                <span class="text-[10px] bg-green-100 text-green-600 px-2 py-0.5 rounded-full font-bold uppercase">
+                                    Aktif
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center pr-2 text-gray-300 group-hover:text-blue-500">
+                            <Icon icon="solar:alt-arrow-right-linear" width="20" />
+                        </div>
+                    </motion.button>
+                </template>
+
+                <motion.div 
+                    v-else 
+                    :initial="{ scale: 0.9, opacity: 0 }" 
+                    :animate="{ scale: 1, opacity: 1 }"
+                    class="flex flex-col items-center justify-center pt-20 opacity-40">
+                    <Icon icon="solar:box-minimalistic-bold-duotone" width="100" class="text-blue-950" />
+                    <h3 class="text-blue-950 text-xl font-bold mt-4">Belum ada laporan</h3>
+                    <p class="text-gray-500 text-sm">Laporan temuan Anda akan muncul di sini</p>
+                </motion.div>
             </div>
         </div>
     </div>

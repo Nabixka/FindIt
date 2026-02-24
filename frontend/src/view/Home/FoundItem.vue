@@ -71,72 +71,130 @@
 </script>
 
 <template>
-    <div class="h-screen bg-gray-200">
-        <Bar />
-        <div class="flex flex-col gap-15 pt-15">
-            <!-- Title -->
-            <motion.h3 :initial="{ scale: 0 }" :animate="{ scale: [0, 1.2, 1], transition: { duration: 1, type: 'spring' } }" class="text-yellow-600 text-center text-4xl font-bold">Selamat Datang</motion.h3>
+  <div class="min-h-screen bg-slate-50">
+    <Bar />
 
-            <!-- Logo & Button -->
-            <div class="flex flex-col items-center justify-center gap-6">
-                <motion.div :initial="{ scale: 0 }" :animate="{ scale: [0, 1.2, 1], transition: { duration: 1.2 } }">
-                    <img class="w-30" src="/Findit.png">
-                </motion.div>
-                <div class="w-full pl-5 pr-5">
-                    <motion.div :initial="{ scale: 0 }" :animate="{ scale: [0, 1.1, 1], transition: { duration: 1 } }" class="grid grid-cols-2 gap-5 w-full">
-                        <router-link to="/lost" class="border-3 border-white text-center bg-yellow-600/80 w-full py-2 rounded-xl text-white text-xl font-bold">Lost item</router-link>
-                        <router-link to="/found" active-class="!border-yellow-600/80 !bg-white text-yellow-600/80" class="border-3 border-white text-center bg-yellow-600/80 w-full py-2 rounded-xl text-blue-950 text-xl font-bold">Found Item</router-link>
-                    </motion.div>
-                </div>
+    <div class="flex flex-col gap-8 pt-10">
+      <div class="px-6 text-center">
+        <motion.h3 
+          :initial="{ opacity: 0, y: -20 }" 
+          :animate="{ opacity: 1, y: 0 }" 
+          class="text-yellow-600 text-4xl font-extrabold tracking-tight"
+        >
+          Selamat Datang
+        </motion.h3>
+        
+        <motion.div 
+          :initial="{ scale: 0.8, opacity: 0 }" 
+          :animate="{ scale: 1, opacity: 1 }" 
+          class="mt-6 flex flex-col items-center gap-6"
+        >
+          <img class="w-28 drop-shadow-xl" src="/Findit.png" alt="Logo">
+          
+          <div class="grid grid-cols-2 gap-3 w-full max-w-md p-1.5 bg-gray-200/50 rounded-2xl">
+            <router-link to="/lost" class="text-center py-2.5 rounded-xl font-bold text-gray-500 transition-all hover:text-yellow-600">
+              Lost Item
+            </router-link>
+            <router-link to="/found" active-class="bg-white shadow-md text-yellow-600" class="text-center py-2.5 rounded-xl font-bold text-gray-500 transition-all">
+              Found Item
+            </router-link>
+          </div>
+        </motion.div>
+      </div>
+
+      <motion.div 
+        :initial="{ y: 100, opacity: 0 }" 
+        :animate="{ y: 0, opacity: 1 }" 
+        class="bg-blue-950 rounded-t-[3.5rem] min-h-screen pb-24 shadow-[0_-10px_40px_rgba(0,0,0,0.2)]"
+      >
+        <div class="px-6 pt-12 flex flex-col gap-6">
+          
+          <div class="space-y-4">
+            <div class="relative group">
+              <Icon icon="mdi:magnify" class="absolute left-4 top-3.5 text-gray-400 group-focus-within:text-yellow-500" width="24" />
+              <input 
+                v-model="search" 
+                type="text" 
+                class="w-full py-3.5 pl-12 pr-4 bg-white/10 border border-white/10 rounded-2xl text-white placeholder-gray-400 focus:bg-white focus:text-gray-900 focus:outline-none focus:ring-4 focus:ring-yellow-500/30 transition-all shadow-inner" 
+                placeholder="Cari nama barang atau lokasi..."
+              >
             </div>
 
-            <!-- List Item -->
-            <motion.div :initial="{ y: 300 }" :animate="{ y: 0, transition: {duration: 1} }" class="bg-blue-950/90 min-h-screen h-full pb-27 rounded-t-4xl">
-                <div class="flex flex-col pt-5 items-center gap-5">
+            <div class="flex items-center justify-between gap-3">
+              <div class="relative flex-1">
+                <select 
+                  v-model="category" 
+                  class="w-full appearance-none bg-white/10 border border-white/10 text-white py-3 px-4 pr-10 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                >
+                  <option class="text-black" value="">Semua Kategori</option>
+                  <option class="text-black" value="Elektronik">Elektronik</option>
+                  <option class="text-black" value="Aksesoris">Aksesoris</option>
+                  <option class="text-black" value="Pribadi">Pribadi</option>
+                  <option class="text-black" value="Berharga">Berharga</option>
+                  <option class="text-black" value="Lainnya">Lainnya</option>
+                </select>
+                <Icon icon="mdi:chevron-down" class="absolute right-3 top-3.5 text-white pointer-events-none" width="20" />
+              </div>
 
-                    <!-- Filter -->
-                    <div class="grid grid-cols-1 w-full">
-                        <input v-model="search" type="text" class="py-2 pl-5 shadow-lg bg-gray-200 border border-white ml-5 mr-5 rounded-lg" placeholder="Cari Barang Atau Lokasi">
-                    </div>
-                    <div class="grid grid-cols-2">
-                        <div class="pl-5 w-50 text-white font-bold">
-                            <select class="border-3 border-yellow-600/80 bg-white text-yellow-600/80 text-md px-4 py-2 rounded-lg" v-model="category">
-                                <option class="text-black" value="" default>All</option>
-                                <option class="text-black" value="Elektronik">Elektronik</option>
-                                <option class="text-black" value="Aksesoris">Aksesoris</option>
-                                <option class="text-black" value="Pribadi">Pribadi</option>
-                                <option class="text-black" value="Berharga">Berharga</option>
-                                <option class="text-black" value="Lainnya">Lainnya</option>
-                            </select>
-                        </div>
-                        
-                        <!-- Create -->
-                        <div class="flex w-full justify-end pr-5">
-                            <router-link to="/createFound" class="py-2 bg-yellow-600/80 rounded-lg p-2 font-semibold text-white border-3">Laporan Penemuan</router-link>
-                        </div>
-                    </div>
+              <router-link 
+                to="/createFound" 
+                class="bg-yellow-500 hover:bg-yellow-400 text-blue-950 font-bold py-3 px-5 rounded-xl shadow-lg shadow-yellow-500/20 transition-transform active:scale-95 flex items-center gap-2"
+              >
+                <Icon icon="mdi:plus" width="15" />
+                Lapor
+              </router-link>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 gap-4 mt-2">
+            <template v-if="filterItem.length">
+              <button 
+                v-for="item in filterItem" 
+                :key="item.id" 
+                @click="navigate(item.id)"
+                class="group flex gap-4 bg-white/5 border border-white/5 p-4 rounded-2xl hover:bg-white/10 hover:border-white/20 transition-all duration-300 backdrop-blur-sm"
+              >
+                <div class="relative shrink-0">
+                  <img 
+                    class="w-24 h-24 object-cover rounded-2xl shadow-lg border border-white/10 group-hover:scale-105 transition-transform duration-500" 
+                    :src="`${API_URL}${item.image}`"
+                    onerror="this.src='https://placehold.co/200x200?text=No+Image'"
+                  >
                 </div>
 
-                <!-- Item -->
-                <div class="grid grid-cols-1 pt-5 pl-5 pr-5 gap-5">
-                    <button v-if="filterItem.length" @click="navigate(item.id)" v-for="item in filterItem" :key="item.id" class="flex gap-5 bg-gray-200 p-5 rounded-xl">
-                        <img class="w-20 h-20" :src="`${API_URL}${item.image}`">
-                        <div class="flex flex-col justify-start">
-                            <h3 class="text-start text-blue-950/80 font-bold text-lg pl-1">{{ item.title }}</h3>
-                            <div class="flex items-center gap-1">
-                                <Icon icon="mdi:map-marker" width="24" height="24" />
-                                <h3>{{ item.location }}</h3>
-                            </div>
-                            <h3 class="text-start pl-1 text-blue-950/40 font-semibold">{{ item.user.username }}</h3>
-                        </div>
-                    </button>
-                    <h3 v-else class="text-white font-bold text-center text-4xl pt-35">Tidak Ada</h3>
+                <div class="flex flex-col justify-between py-1 text-left w-full">
+                  <div>
+                    <span class="text-[10px] font-black uppercase tracking-widest text-yellow-500 mb-1 block">
+                      {{ item.category || 'Lainnya' }}
+                    </span>
+                    <h3 class="text-white font-bold text-lg leading-tight group-hover:text-yellow-400 transition-colors">
+                      {{ item.title }}
+                    </h3>
+                    <div class="flex items-center gap-1 mt-1 text-gray-400">
+                      <Icon icon="mdi:map-marker-outline" class="text-yellow-500/70" width="16" />
+                      <span class="text-xs italic">{{ item.location }}</span>
+                    </div>
+                  </div>
+                  
+                  <div class="flex items-center gap-2 mt-3 border-t border-white/5 pt-2">
+                    <div class="w-5 h-5 rounded-full bg-gradient-to-tr from-yellow-600 to-yellow-400 flex items-center justify-center text-[10px] text-blue-950 font-bold">
+                      {{ item.user.username.charAt(0).toUpperCase() }}
+                    </div>
+                    <span class="text-[11px] text-gray-500 font-medium tracking-wide">
+                      Penemu: <span class="text-gray-300">{{ item.user.username }}</span>
+                    </span>
+                  </div>
                 </div>
+              </button>
+            </template>
 
-            </motion.div>
-
+            <div v-else class="flex flex-col items-center justify-center py-32 opacity-20">
+              <Icon icon="mdi:magnify-close" width="100" class="text-white" />
+              <p class="text-white font-medium text-xl mt-4">Belum ada barang ditemukan</p>
+            </div>
+          </div>
         </div>
-
+      </motion.div>
     </div>
-
+  </div>
 </template>

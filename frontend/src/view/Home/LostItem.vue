@@ -66,69 +66,112 @@
 </script>
 
 <template>
-    <div class="h-screen bg-gray-200">
-        <Bar />
-        <div class="flex flex-col gap-15 pt-15">
-            <!-- Title -->
-            <motion.h3 :initial="{ scale: 0 }" :animate="{ scale: [0, 1.2, 1], transition: { duration: 1, type: 'spring' } }" class="text-yellow-600 text-center text-4xl font-bold">Selamat Datang</motion.h3>
+  <div class="min-h-screen bg-gray-50 text-slate-800">
+    <Bar />
+    
+    <div class="flex flex-col gap-8 pt-10">
+      <div class="px-6 text-center">
+        <motion.h3 :initial="{ opacity: 0, y: -20 }" :animate="{ opacity: 1, y: 0 }" class="text-yellow-600 text-4xl font-extrabold tracking-tight">Selamat Datang</motion.h3>
+        
+        <motion.div :initial="{ scale: 0.8, opacity: 0 }" :animate="{ scale: 1, opacity: 1 }" class="mt-6 flex flex-col items-center gap-6" >
+          <img class="w-28 drop-shadow-md" src="/Findit.png" alt="Logo">
+          
+          <div class="grid grid-cols-2 gap-3 w-full max-w-md p-1.5 bg-gray-200/50 rounded-2xl">
+            <router-link to="/lost" active-class="bg-white shadow-md text-yellow-600" class="text-center py-2.5 rounded-xl font-bold text-gray-500 transition-all hover:text-yellow-600">
+              Lost Item
+            </router-link>
+            <router-link to="/found" class="text-center py-2.5 rounded-xl font-bold text-gray-500 transition-all">
+              Found Item
+            </router-link>
+          </div>
+        </motion.div>
+      </div>
 
-            <!-- Logo & Button -->
-            <div class="flex flex-col items-center justify-center gap-6">
-                <motion.div :initial="{ scale: 0 }" :animate="{ scale: [0, 1.2, 1], transition: { duration: 1.2 } }">
-                    <img class="w-30" src="/Findit.png">
-                </motion.div>
-                <div class="w-full pl-5 pr-5">
-                    <motion.div :initial="{ scale: 0 }" :animate="{ scale: [0, 1.1, 1], transition: { duration: 1 } }" class="grid grid-cols-2 gap-5 w-full">
-                        <router-link to="/lost" active-class="!border-yellow-600/80 !bg-white text-yellow-600/80" class="border-3 border-white text-center bg-yellow-600/80 w-full py-2 rounded-xl text-white text-xl font-bold">Lost item</router-link>
-                        <router-link to="/found" class="border-3 border-white text-center bg-yellow-600/80 w-full py-2 rounded-xl text-white text-xl font-bold">Found Item</router-link>
-                    </motion.div>
-                </div>
+      <motion.div :initial="{ y: 100, opacity: 0 }" :animate="{ y: 0, opacity: 1 }" class="bg-blue-950 rounded-t-[3rem] min-h-screen pb-20 shadow-2xl">
+        <div class="px-6 pt-10 flex flex-col gap-6">
+          
+          <div class="space-y-4">
+            <div class="relative group">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400 group-focus-within:text-yellow-500">
+                <Icon icon="mdi:magnify" width="24" />
+              </span>
+              <input 
+                v-model="search" 
+                type="text" 
+                class="w-full py-3.5 pl-12 pr-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-gray-400 focus:bg-white focus:text-gray-900 focus:outline-none focus:ring-4 focus:ring-yellow-500/40 transition-all shadow-inner" 
+                placeholder="Cari Barang atau Lokasi...">
             </div>
 
-            <!-- List Item -->
-            <motion.div :initial="{ y: 300 }" :animate="{ y: 0, transition: {duration: 1} }" class="bg-blue-950/90 min-h-screen h-full pb-27 rounded-t-4xl">
-                <div class="flex flex-col pt-5 items-center gap-5">
+            <div class="flex items-center justify-between gap-4">
+              <div class="relative flex-1">
+                <select 
+                  v-model="category" 
+                  class="w-full appearance-none bg-white/10 border border-white/20 text-white py-3 px-4 pr-10 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                  <option class="text-black" value="">Semua Kategori</option>
+                  <option class="text-black" value="Elektronik">Elektronik</option>
+                  <option class="text-black" value="Aksesoris">Aksesoris</option>
+                  <option class="text-black" value="Pribadi">Pribadi</option>
+                  <option class="text-black" value="Berharga">Berharga</option>
+                  <option class="text-black" value="Lainnya">Lainnya</option>
+                </select>
+                <Icon icon="mdi:chevron-down" class="absolute right-3 top-3.5 text-white pointer-events-none" width="20" />
+              </div>
 
-                    <!-- Filter -->
-                    <div class="grid grid-cols-1 w-full">
-                        <input v-model="search" type="text" class="py-2 pl-5 shadow-lg bg-gray-200 border border-white ml-5 mr-5 rounded-lg" placeholder="Cari Barang Atau Lokasi">
-                    </div>
-                    <div class="grid grid-cols-2">
-                        <div class="pl-5 w-50 text-white font-bold">
-                            <select class="border-3 border-yellow-600/80 bg-white text-yellow-600/80 text-md px-4 py-2 rounded-lg" v-model="category">
-                                <option class="text-black" value="" default>All</option>
-                                <option class="text-black" value="Elektronik">Elektronik</option>
-                                <option class="text-black" value="Aksesoris">Aksesoris</option>
-                                <option class="text-black" value="Pribadi">Pribadi</option>
-                                <option class="text-black" value="Berharga">Berharga</option>
-                                <option class="text-black" value="Lainnya">Lainnya</option>
-                            </select>
-                        </div>
-                        
-                        <!-- Create -->
-                        <div class="flex w-full justify-end pr-5">
-                            <router-link to="/createLost" class="py-2 bg-yellow-600/80 rounded-lg p-2 font-semibold text-white border-3">Laporan Penemuan</router-link>
-                        </div>
-                    </div>
+              <router-link 
+                to="/createLost" 
+                class="bg-yellow-500 hover:bg-yellow-400 text-blue-950 font-bold py-3 px-6 rounded-xl shadow-lg transition-transform active:scale-95">
+                + Lapor
+              </router-link>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 gap-4 mt-4">
+            <template v-if="filterItem.length">
+              <button 
+                v-for="item in filterItem" 
+                :key="item.id" 
+                @click="navigate(item.id)"
+                class="group flex gap-4 bg-white/5 border border-white/10 p-4 rounded-2xl hover:bg-white/10 transition-all duration-300">
+                <div class="relative shrink-0">
+                  <img 
+                    class="w-24 h-24 object-cover rounded-xl shadow-md border border-white/20" 
+                    :src="`${API_URL}${item.image}`"
+                    onerror="this.src='https://placehold.co/400x400?text=No+Image'"
+                  >
                 </div>
 
-                <!-- Item -->
-                <div class="grid grid-cols-1 pt-5 pl-5 pr-5 gap-5">
-                    <button v-if="filterItem.length" @click="navigate(item.id)" v-for="item in filterItem" :key="item.id" class="flex gap-5 bg-gray-200 p-5 rounded-xl">
-                        <img class="w-20 h-20" :src="`${API_URL}${item.image}`">
-                        <div class="flex flex-col justify-start">
-                            <h3 class="text-start text-blue-950/80 font-bold text-lg pl-1">{{ item.title }}</h3>
-                            <div class="flex items-center gap-1">
-                                <Icon icon="mdi:map-marker" width="24" height="24" />
-                                <h3>{{ item.location }}</h3>
-                            </div>
-                            <h3 class="text-start pl-1 text-blue-950/40 font-semibold">{{ item.user.username }}</h3>
-                        </div>
-                    </button>
-                    <h3 v-else class="text-white font-bold text-center text-4xl pt-35">Tidak Ada</h3>
+                <div class="flex flex-col justify-between items-start w-full">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-yellow-500 mb-1 block">
+                      {{ item.category || 'Lainnya' }}
+                    </span>
+                    <div class="w-full">
+                        <h3 class="text-white font-bold text-lg leading-tight group-hover:text-yellow-400 transition-colors text-left">
+                            {{ item.title }}
+                        </h3>
+                    <div class="flex items-center gap-1 mt-1 text-gray-300">
+                      <Icon icon="mdi:map-marker-outline" class="text-yellow-500" width="18" />
+                      <span class="text-sm">{{ item.location }}</span>
+                    </div>
+                  </div>
+                  
+                  <div class="flex items-center gap-2 mt-2">
+                    <div class="w-6 h-6 rounded-full bg-yellow-600 flex items-center justify-center text-[10px] text-white font-bold">
+                      {{ item.user.username.charAt(0).toUpperCase() }}
+                    </div>
+                    <span class="text-xs text-gray-400 font-medium">Oleh {{ item.user.username }}</span>
+                  </div>
                 </div>
+              </button>
+            </template>
 
-            </motion.div>
+            <div v-else class="flex flex-col items-center justify-center pt-20 gap-4 opacity-40">
+              <Icon icon="mdi:package-variant-closed" width="80" class="text-white" />
+              <h3 class="text-white font-bold text-2xl">Tidak Ada Barang</h3>
+            </div>
+          </div>
+
         </div>
+      </motion.div>
     </div>
+  </div>
 </template>
