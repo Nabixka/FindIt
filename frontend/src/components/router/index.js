@@ -18,6 +18,7 @@ import UserLost from '../../view/Member/Barang/UserBarang/UserLost.vue'
 
 // Admin
 import Dashboard from '../../view/Admin/Dashboard.vue'
+import AdminProfil from '../../view/Admin/Profil.vue'
 
 const routes = [
     {
@@ -31,7 +32,7 @@ const routes = [
         component: Register
     },
     {
-        path: "/lost",
+        path: "/member/lost",
         name: "Lost",
         component: LostItem
     },
@@ -41,7 +42,7 @@ const routes = [
         component: ForgetPassword
     },
     {
-        path: "/profil",
+        path: "/member/profil",
         name: "Profil",
         component: Profil
     },
@@ -81,9 +82,14 @@ const routes = [
         component: UserLost
     },
     {
-        path: "/admin/dashboard",
+        path: "/admin/lost",
         name: "AdminDashboard",
         component: Dashboard
+    },
+    {
+        path: "/admin/profil",
+        name: "AdminProfil",
+        component: AdminProfil
     }
 ]
 

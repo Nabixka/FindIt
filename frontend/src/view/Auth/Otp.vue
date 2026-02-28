@@ -54,7 +54,7 @@
                 router.push("/lost")
               }
               if(data.role == "admin"){
-                router.push("/admin/dashboard")
+                router.push("/admin/lost")
               }
         }
         else{

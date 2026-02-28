@@ -92,7 +92,7 @@
           <img class="w-28 drop-shadow-xl" src="/Findit.png" alt="Logo">
           
           <div class="grid grid-cols-2 gap-3 w-full max-w-md p-1.5 bg-gray-200/50 rounded-2xl">
-            <router-link to="/lost" class="text-center py-2.5 rounded-xl font-bold text-gray-500 transition-all hover:text-yellow-600">
+            <router-link to="/member/lost" class="text-center py-2.5 rounded-xl font-bold text-gray-500 transition-all hover:text-yellow-600">
               Lost Item
             </router-link>
             <router-link to="/found" active-class="bg-white shadow-md text-yellow-600" class="text-center py-2.5 rounded-xl font-bold text-gray-500 transition-all">
