@@ -1,8 +1,8 @@
 <script setup>
     import { useRouter } from 'vue-router';
-    import { getToken } from '../../../components/utils/helper';
-    import Bar from '../../Bar/Bar.vue';
-    import Nav from '../../Bar/Nav.vue';
+    import { getToken } from '../../../../components/utils/helper';
+    import Bar from '../../../Bar/Bar.vue';
+    import Nav from '../../../Bar/Nav.vue';
     import { ref, onMounted } from 'vue'
     import { Icon } from '@iconify/vue';
     import { motion } from 'motion-v';

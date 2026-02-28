@@ -49,10 +49,13 @@
         const json = await res.json()
         const data = json.data
         if(json.status == 200){
-
             localStorage.setItem('token', data.token)
-
-            router.push("/lost")
+              if(data.role == "member"){
+                router.push("/lost")
+              }
+              if(data.role == "admin"){
+                router.push("/admin/dashboard")
+              }
         }
         else{
             error.value = "Kode OTP Salah"

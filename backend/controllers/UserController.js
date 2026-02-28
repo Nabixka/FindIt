@@ -139,8 +139,8 @@ exports.getUserById = async (req, res) => {
 // Create User
 exports.createUser = async (req, res) => {
     try{
-        const { username, email, password } = req.body
-        if(!username || !email || !password){
+        const { username, email, password, role } = req.body
+        if(!username || !email || !password || !role){
             return res.status(400).json({
                 status: 400,
                 message: "Bad Request"
@@ -155,7 +155,7 @@ exports.createUser = async (req, res) => {
             })
         }
 
-        const result = await user.createUser({username, email, password})
+        const result = await user.createUser({username, email, password, role})
 
         res.status(201).json({
             status: 201,

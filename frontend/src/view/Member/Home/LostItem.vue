@@ -1,7 +1,7 @@
 <script setup>
-    import { getToken } from '../../components/utils/helper';
+    import { getToken } from '../../../components/utils/helper';
     import { useRouter} from 'vue-router'
-    import Bar from '../Bar/Bar.vue';
+    import Bar from '../../Bar/Bar.vue';
     import { ref, onMounted, computed } from 'vue';
     import { motion } from 'motion-v'
     import { Icon } from '@iconify/vue';

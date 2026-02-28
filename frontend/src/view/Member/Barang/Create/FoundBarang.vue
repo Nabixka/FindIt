@@ -1,9 +1,9 @@
 <script setup>
     import { ref, onMounted } from 'vue';
-    import Bar from '../../Bar/Bar.vue';
-    import Nav from '../../Bar/Nav.vue';
+    import Bar from '../../../Bar/Bar.vue';
+    import Nav from '../../../Bar/Nav.vue';
     import { Icon } from '@iconify/vue';
-    import { getToken } from '../../../components/utils/helper';
+    import { getToken } from '../../../../components/utils/helper';
     import { useRouter } from 'vue-router';
     import { motion } from 'motion-v';
 
@@ -24,7 +24,7 @@
         location: '',
         description: '',
         image: null,
-        status: 'lost',
+        status: 'found',
         category: ''
     })
 
@@ -59,7 +59,7 @@
             })
 
             if(res.ok){
-                router.push("/lost")
+                router.push("/found")
             }
         }
         catch(err){
@@ -80,7 +80,7 @@
                 :animate="{ opacity: 1, y: 0 }"
                 class="mb-8 text-center"
             >
-                <h2 class="text-2xl font-black text-blue-950">Lapor Barang Hilang</h2>
+                <h2 class="text-2xl font-black text-blue-950">Lapor Barang Temuan</h2>
                 <p class="text-sm text-gray-500">Isi detail barang agar mudah diidentifikasi</p>
             </motion.div>
 
@@ -89,8 +89,7 @@
                 <motion.label 
                     :initial="{ scale: 0.9, opacity: 0 }" 
                     :animate="{ scale: 1, opacity: 1 }"
-                    class="relative flex flex-col items-center justify-center w-full h-56 border-2 border-dashed border-gray-300 rounded-3xl bg-white hover:bg-gray-50 transition-all cursor-pointer group overflow-hidden"
-                >
+                    class="relative flex flex-col items-center justify-center w-full h-56 border-2 border-dashed border-gray-300 rounded-3xl bg-white hover:bg-gray-50 transition-all cursor-pointer group overflow-hidden">
                     <input type="file" @change="handleFile" accept="image/*" hidden>
                     
                     <template v-if="previewImg">

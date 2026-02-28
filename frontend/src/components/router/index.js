@@ -1,16 +1,23 @@
 import { createWebHashHistory, createRouter} from 'vue-router'
+
+// Auth
 import Login from '../../view/Auth/Login.vue'
 import Register from '../../view/Auth/Register.vue'
-import LostItem from '../../view/Home/LostItem.vue'
 import ForgetPassword from '../../view/Auth/ForgetPassword.vue'
-import Profil from '../../view/Profil/Profil.vue'
-import BarangDetail from '../../view/Barang/BarangDetail.vue'
-import FoundItem from '../../view/Home/FoundItem.vue'
 import Otp from '../../view/Auth/Otp.vue'
-import FoundBarang from '../../view/Barang/Create/FoundBarang.vue'
-import LostBarang from '../../view/Barang/Create/LostBarang.vue'
-import UserFound from '../../view/Barang/UserBarang/UserFound.vue'
-import UserLost from '../../view/Barang/UserBarang/UserLost.vue'
+
+// Member
+import Profil from '../../view/Member/Profil/Profil.vue'
+import LostItem from '../../view/Member/Home/LostItem.vue'
+import BarangDetail from '../../view/Member/Barang/BarangDetail.vue'
+import FoundItem from '../../view/Member/Home/FoundItem.vue'
+import FoundBarang from '../../view/Member/Barang/Create/FoundBarang.vue'
+import LostBarang from '../../view/Member/Barang/Create/LostBarang.vue'
+import UserFound from '../../view/Member/Barang/UserBarang/UserFound.vue'
+import UserLost from '../../view/Member/Barang/UserBarang/UserLost.vue'
+
+// Admin
+import Dashboard from '../../view/Admin/Dashboard.vue'
 
 const routes = [
     {
@@ -72,6 +79,11 @@ const routes = [
         path: "/user/lost",
         name: "UserLost",
         component: UserLost
+    },
+    {
+        path: "/admin/dashboard",
+        name: "AdminDashboard",
+        component: Dashboard
     }
 ]
 
