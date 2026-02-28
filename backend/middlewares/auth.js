@@ -9,7 +9,7 @@ const auth = async (req, res, next) => {
     }
 
     const result = await pool.query(`
-        SELECT id, username, email FROM users WHERE token = $1`,
+        SELECT id, username, email, role FROM users WHERE token = $1`,
     [req.token])
 
     if(result.rows.length === 0){

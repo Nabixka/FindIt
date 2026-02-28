@@ -25,7 +25,7 @@ async function itemSeeder(){
 
         for(let item of items){
             await pool.query(`
-                INSERT INTO items (title, description, location, image, category user_id, status) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+                INSERT INTO items (title, description, location, image, category, user_id, status) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
             [item.title, item.description, item.location, item.image, item.category, item.user_id, item.status])
         }
 

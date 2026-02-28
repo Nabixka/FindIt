@@ -19,6 +19,7 @@ async function createTable(){
             email VARCHAR UNIQUE,
             token TEXT,
             password TEXT,
+            role VARCHAR,
             otp_code VARCHAR,
             otp_expired BIGINT,
             otp_verified BOOLEAN DEFAULT false
@@ -36,7 +37,7 @@ async function createTable(){
             user_id INT,
             status VARCHAR,
 
-            FOREIGN KEY (user_id) REFERENCES users(id)
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
             )  
         `)
 

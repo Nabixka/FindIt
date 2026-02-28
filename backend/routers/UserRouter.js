@@ -2,6 +2,7 @@ const express = require("express")
 const router = express.Router()
 const userController = require("../controllers/UserController")
 const auth = require("../middlewares/auth")
+const cekRole = require("../middlewares/cekRole")
 
 // Auth
 
@@ -28,6 +29,6 @@ router.get("/", userController.getUser)
 
 // Get And Delete ById
 router.get("/:id", auth, userController.getUserById)
-router.delete("/:id", auth, userController.deleteUser )
+router.delete("/:id", auth, cekRole, userController.deleteUser )
 
 module.exports = router

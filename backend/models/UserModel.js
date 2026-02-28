@@ -31,8 +31,8 @@ const createUser = async (data) => {
     const hashedPassword = await bcrypt.hash(password, 10)
 
     const create = await pool.query(`
-        INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING id
-    `, [username, email, hashedPassword])
+        INSERT INTO users (username, email, password, role) VALUES ($1, $2, $3, $4) RETURNING id
+    `, [username, email, hashedPassword, member])
 
     const newId = create.rows[0].id
     const result = await pool.query(`

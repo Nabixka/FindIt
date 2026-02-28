@@ -172,26 +172,6 @@ exports.createUser = async (req, res) => {
     }
 }
 
-// Delete User
-exports.deleteUser = async (req, res) => {
-    try{
-        const { id } = req.params
-        
-        const result = await user.deleteUser(id)
-        res.status(200).json({
-            status: 200,
-            message: "success"
-        })
-    }
-    catch(err){
-        res.status(500).json({
-            status: 500,
-            message: err.message,
-            stack: err.stack
-        })
-    }
-}
-
 // Forgot Password
 exports.forgetPassword = async (req, res) => {
     try{
@@ -343,6 +323,26 @@ exports.getProfil = async (req, res) => {
             status: 200,
             message: "success",
             data: req.user
+        })
+    }
+    catch(err){
+        res.status(500).json({
+            status: 500,
+            message: err.message,
+            stack: err.stack
+        })
+    }
+}
+
+// Delete User
+exports.deleteUser = async (req, res) => {
+    try{
+        const { id } = req.params
+        
+        const result = await user.deleteUser(id)
+        res.status(200).json({
+            status: 200,
+            message: "success"
         })
     }
     catch(err){
