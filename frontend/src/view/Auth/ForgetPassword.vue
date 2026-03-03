@@ -40,9 +40,9 @@
 </script>
 
 <template>
-    <div class="bg-linear-to-r from-white to-gray-200">
-        <div class="flex flex-col h-screen">
-            <motion.div :initial="{ y: -200 }" :animate="{ y: 0, transition: { duration: 1.5 } }" class="flex flex-col gap-20 pt-10">
+    <div class="bg-linear-to-r from-white min-h-screen to-gray-200 lg:flex lg:justify-center lg:items-center">
+        <motion.div :initial="{ scale: 0}" :animate="{ scale: [0, 1.1, 1], transition: { duration: 1 } }" class="flex flex-col h-screen lg:h-1/2 lg:bg-white lg:rounded-lg lg:w-1/3">
+            <div class="flex flex-col gap-20 pt-10">
                 <div>
                     <h3 class="text-yellow-600 text-center text-4xl font-bold z-2">Welcome To</h3>
                     <h3 class="text-yellow-600 text-center text-2xl font-bold z-2">Reset Password Page</h3>
@@ -50,8 +50,8 @@
                 <div class="flex justify-center">
                     <img src="/Findit.png" class="w-50">
                 </div>
-            </motion.div>
-            <motion.div :initial="{ y: 300 }" :animate="{ y: 0, transition: { duration: 1 } }" class="pl-10 pr-10 mt-10 flex flex-col gap-5 bg-linear-to-b from-blue-900/80 to-blue-950 h-full p-5 rounded-t-4xl">
+            </div>
+            <div class="pl-10 pr-10 mt-10 flex flex-col gap-5 bg-linear-to-b from-blue-900/80 to-blue-950 h-full p-5 rounded-t-4xl rounded-b-lg">
                 <form @submit.prevent="Login" class="flex flex-col gap-5 pt-10">
                     <h3 class="text-red-900 font-bold text-center" v-if="message">{{ message }}</h3>
                     <div class="shadow-xl">
@@ -74,8 +74,8 @@
                         <router-link to="/register" class="text-center text-white/80">Don't Have A Acoount? <span class="underline text-blue-500 font-semibold ">Register</span></router-link>
                     </div>
                 </div>
-            </motion.div>
-        </div>
+            </div>
+        </motion.div>
     </div>
 </template>
 
