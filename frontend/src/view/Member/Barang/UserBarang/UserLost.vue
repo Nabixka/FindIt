@@ -74,7 +74,7 @@
             </div>
 
             <div class="flex flex-col gap-4">
-                <template v-if="lost.length">
+                <div v-if="lost.length" class="grid grid-cols-1 lg:grid-cols-2">
                     <motion.button 
                         v-for="(item, index) in lost" 
                         :key="item.id"
@@ -111,7 +111,7 @@
                             <Icon icon="solar:alt-arrow-right-linear" width="20" />
                         </div>
                     </motion.button>
-                </template>
+                </div>
 
                 <motion.div 
                     v-else 

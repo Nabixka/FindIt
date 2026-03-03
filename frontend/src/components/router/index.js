@@ -11,10 +11,9 @@ import Profil from '../../view/Member/Profil/Profil.vue'
 import LostItem from '../../view/Member/Home/LostItem.vue'
 import BarangDetail from '../../view/Member/Barang/BarangDetail.vue'
 import FoundItem from '../../view/Member/Home/FoundItem.vue'
-import FoundBarang from '../../view/Member/Barang/Create/FoundBarang.vue'
-import LostBarang from '../../view/Member/Barang/Create/LostBarang.vue'
 import UserFound from '../../view/Member/Barang/UserBarang/UserFound.vue'
 import UserLost from '../../view/Member/Barang/UserBarang/UserLost.vue'
+import MemberCreate from '../../view/Member/Barang/Create/createBarang.vue'
 
 // Admin
 import Dashboard from '../../view/Admin/Dashboard.vue'
@@ -57,16 +56,6 @@ const routes = [
         component: FoundItem
     },
     {
-        path: "/createFound",
-        name: "CreateFound",
-        component: FoundBarang
-    },
-    {
-        path: "/createLost",
-        name: "CreateLost",
-        component: LostBarang
-    },
-    {
         path: "/otp",
         name: "Otp",
         component: Otp
@@ -90,6 +79,11 @@ const routes = [
         path: "/admin/profil",
         name: "AdminProfil",
         component: AdminProfil
+    },
+    {
+        path: "/member/create",
+        name: "MemberCreate",
+        component: MemberCreate
     }
 ]
 

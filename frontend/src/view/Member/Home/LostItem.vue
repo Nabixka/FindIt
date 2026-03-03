@@ -63,6 +63,13 @@
     })
     })
 
+    const handleNavigate = () => {
+      router.push({
+        name: "MemberCreate",
+        query: { status: 'lost' }
+      })
+    }
+
 </script>
 
 <template>
@@ -117,15 +124,13 @@
                 <Icon icon="mdi:chevron-down" class="absolute right-3 top-3.5 text-white pointer-events-none" width="20" />
               </div>
 
-              <router-link 
-                to="/createLost" 
-                class="bg-yellow-500 hover:bg-yellow-400 text-blue-950 font-bold py-3 px-6 rounded-xl shadow-lg transition-transform active:scale-95">
+              <button @click="handleNavigate()" class="bg-yellow-500 hover:bg-yellow-400 lg:text-xl text-blue-950 font-bold py-3 px-6 lg:px-25 rounded-xl shadow-lg shadow-yellow-500/20 transition-transform active:scale-95 flex items-center gap-2">
                 + Lapor
-              </router-link>
+              </button>
             </div>
           </div>
 
-          <div class="grid grid-cols-1 gap-4 mt-4">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
             <template v-if="filterItem.length">
               <button 
                 v-for="item in filterItem" 
@@ -164,9 +169,9 @@
               </button>
             </template>
 
-            <div v-else class="flex flex-col items-center justify-center pt-20 gap-4 opacity-40">
-              <Icon icon="mdi:package-variant-closed" width="80" class="text-white" />
-              <h3 class="text-white font-bold text-2xl">Tidak Ada Barang</h3>
+            <div v-else class="col-span-2 flex flex-col justify-center items-center py-32 opacity-20">
+              <Icon icon="mdi:magnify-close" width="100" class="text-white" />
+              <p class="text-white font-medium text-xl mt-4">Belum ada barang ditemukan</p>
             </div>
           </div>
 

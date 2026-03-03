@@ -68,6 +68,13 @@
     })
     })
 
+    const handleNavigate = () => {
+      router.push({
+        name: "MemberCreate",
+        query: { status: 'found' }
+      })
+    }
+
 </script>
 
 <template>
@@ -105,8 +112,7 @@
       <motion.div 
         :initial="{ y: 100, opacity: 0 }" 
         :animate="{ y: 0, opacity: 1 }" 
-        class="bg-blue-950 rounded-t-[3.5rem] min-h-screen pb-24 shadow-[0_-10px_40px_rgba(0,0,0,0.2)]"
-      >
+        class="bg-blue-950 rounded-t-[3.5rem] min-h-screen pb-24 shadow-[0_-10px_40px_rgba(0,0,0,0.2)]">
         <div class="px-6 pt-12 flex flex-col gap-6">
           
           <div class="space-y-4">
@@ -136,17 +142,13 @@
                 <Icon icon="mdi:chevron-down" class="absolute right-3 top-3.5 text-white pointer-events-none" width="20" />
               </div>
 
-              <router-link 
-                to="/createFound" 
-                class="bg-yellow-500 hover:bg-yellow-400 text-blue-950 font-bold py-3 px-5 rounded-xl shadow-lg shadow-yellow-500/20 transition-transform active:scale-95 flex items-center gap-2"
-              >
-                <Icon icon="mdi:plus" width="15" />
-                Lapor
-              </router-link>
+              <button @click="handleNavigate()" class="bg-yellow-500 hover:bg-yellow-400 lg:text-xl text-blue-950 font-bold py-3 px-6 lg:px-25 rounded-xl shadow-lg shadow-yellow-500/20 transition-transform active:scale-95 flex items-center gap-2">
+                + Lapor
+              </button>
             </div>
           </div>
 
-          <div class="grid grid-cols-1 gap-4 mt-2">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-2">
             <template v-if="filterItem.length">
               <button 
                 v-for="item in filterItem" 
@@ -188,7 +190,7 @@
               </button>
             </template>
 
-            <div v-else class="flex flex-col items-center justify-center py-32 opacity-20">
+            <div v-else class="col-span-2 flex flex-col justify-center items-center py-32 opacity-20">
               <Icon icon="mdi:magnify-close" width="100" class="text-white" />
               <p class="text-white font-medium text-xl mt-4">Belum ada barang ditemukan</p>
             </div>

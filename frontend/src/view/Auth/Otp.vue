@@ -51,7 +51,7 @@ const verifyOtp = async () => {
     if (json.status == 200) {
       localStorage.setItem('token', data.token)
       if (data.role == "member") {
-        router.push("/lost")
+        router.push("/member/lost")
       }
       if (data.role == "admin") {
         router.push("/admin/lost")
@@ -90,7 +90,7 @@ const verifyOtp = async () => {
       <div class="pl-10 pr-10 pb-10 mt-10 flex flex-col gap-5 bg-linear-to-b from-blue-900/80 to-blue-950 h-full p-5 rounded-t-4xl rounded-b-lg">
         <h3 class="text-red-500 text-center">{{ error }}</h3>
         <div class="grid grid-cols-6 gap-3">
-          <input v-for="(item, index) in otp" :key="index" ref="inputs" type="number" v-model="otp[index]"
+          <input v-for="(item, index) in otp" :key="index" ref="inputs" inputmode="numeric" v-model="otp[index]"
             @input="handleInput($event, index)" @keydown.backspace="handleBackspace($event, index)" maxlength="1"
             class="text-center py-5 text-2xl bg-white rounded-md border-2 border-yellow-400" />
         </div>

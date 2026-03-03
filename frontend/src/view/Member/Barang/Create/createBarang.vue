@@ -1,15 +1,17 @@
 <script setup>
-    import { ref, onMounted } from 'vue';
+    import { ref, computed } from 'vue';
     import Bar from '../../../Bar/Bar.vue';
     import Nav from '../../../Bar/Nav.vue';
     import { Icon } from '@iconify/vue';
     import { getToken } from '../../../../components/utils/helper';
-    import { useRouter } from 'vue-router';
+    import { useRouter, useRoute } from 'vue-router';
     import { motion } from 'motion-v';
 
     const router = useRouter()
+    const route = useRoute()
     const API_URL = import.meta.env.VITE_API_URL
     const token = getToken()
+    const status = computed(() => route.query.status)
     const previewImg = ref(null)
     const cat = ref([
         'Elektronik', 
@@ -24,7 +26,6 @@
         location: '',
         description: '',
         image: null,
-        status: 'lost',
         category: ''
     })
 
@@ -47,7 +48,7 @@
             formData.append('location', form.value.location)
             formData.append('description', form.value.description)
             formData.append('image', form.value.image)
-            formData.append('status', form.value.status)
+            formData.append('status', status.value)
             formData.append('category', form.value.category)
 
             const res = await fetch(`${API_URL}/item`, {
@@ -59,7 +60,7 @@
             })
 
             if(res.ok){
-                router.push("/lost")
+                router.push("/member/lost")
             }
         }
         catch(err){
@@ -70,27 +71,24 @@
 </script>
 
 <template>
-    <div class="bg-slate-50 min-h-screen">
+    <div class="bg-linear-to-r from-white min-h-screen to-gray-200">
         <Nav />
         <Bar />
 
-        <div class="max-w-md mx-auto px-6 pt-24 pb-12">
+        <div class="pt-20 mb-20 lg:pt-10 lg:mb-10 flex flex-col min-h-screen lg:justify-center lg:items-center">
             <motion.div 
                 :initial="{ opacity: 0, y: -20 }" 
                 :animate="{ opacity: 1, y: 0 }"
-                class="mb-8 text-center"
-            >
+                class="mb-8 text-center">
                 <h2 class="text-2xl font-black text-blue-950">Lapor Barang Hilang</h2>
                 <p class="text-sm text-gray-500">Isi detail barang agar mudah diidentifikasi</p>
             </motion.div>
 
-            <form @submit.prevent="uploadBarang" class="space-y-6">
-                
+            <form @submit.prevent="uploadBarang" class="lg:w-1/3 p-5 lg:shadow-lg lg:bg-white lg:rounded-lg">
                 <motion.label 
                     :initial="{ scale: 0.9, opacity: 0 }" 
                     :animate="{ scale: 1, opacity: 1 }"
-                    class="relative flex flex-col items-center justify-center w-full h-56 border-2 border-dashed border-gray-300 rounded-3xl bg-white hover:bg-gray-50 transition-all cursor-pointer group overflow-hidden"
-                >
+                    class="relative flex flex-col items-center justify-center w-full h-45 border-2 border-dashed border-gray-300 rounded-3xl bg-white hover:bg-gray-50 transition-all cursor-pointer group overflow-hidden">
                     <input type="file" @change="handleFile" accept="image/*" hidden>
                     
                     <template v-if="previewImg">
@@ -145,7 +143,7 @@
                 <motion.div 
                     :initial="{ y: 20, opacity: 0 }" 
                     :animate="{ y: 0, opacity: 1, transition: { delay: 0.5 } }"
-                    class="pt-4 pb-10">
+                    class="pt-4">
                     <button class="w-full bg-yellow-500 hover:bg-yellow-400 active:scale-95 text-blue-950 text-lg font-black py-4 rounded-2xl shadow-lg shadow-yellow-500/30 transition-all flex items-center justify-center gap-2">
                         <Icon icon="solar:cloud-upload-bold" width="24" />
                         Publikasikan Laporan
