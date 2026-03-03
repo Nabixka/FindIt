@@ -136,7 +136,7 @@
                 v-for="item in filterItem" 
                 :key="item.id" 
                 @click="navigate(item.id)"
-                class="group flex gap-4 bg-white/5 border border-white/10 p-4 rounded-2xl hover:bg-white/10 transition-all duration-300">
+                class="group flex gap-4 bg-white/5 overflow-hidden border border-white/10 p-4 rounded-2xl hover:bg-white/10 transition-all duration-300">
                 <div class="relative shrink-0">
                   <img 
                     class="w-24 h-24 object-cover rounded-xl shadow-md border border-white/20" 
