@@ -42,6 +42,15 @@ async function createTable(){
         `)
 
         await pool.query(`
+            CREATE TABLE IF NOT EXISTS report(
+            id SERIAL PRImARY KEY,
+            user_id INT,
+            reason TEXT,
+
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+            )`)
+
+        await pool.query(`
             CREATE TABLE IF NOT EXISTS chat_room(
             id SERIAL PRIMARY KEY,
             user_found INT,

@@ -69,6 +69,64 @@ const deleteUser = async (id) => {
     [id])
 }
 
+const getReport = async () => {
+    const result = await pool.query(`
+        SELECT 
+        json_build_object(
+        'id', u.id,
+        'username', u.username,
+        'email', u.email
+        ) AS user,
+        r.reason
+        
+        FROM report r
+        LEFT JOIN users u ON r.user_id = u.id`)
+
+    return result.rows
+}
+
+const getReportById = async (id) => {
+    const result = await pool.query(`
+        SELECT 
+        json_build_object(
+        'id', u.id,
+        'username', u.username,
+        'email', u.email
+        ) AS user,
+        r.reason
+        
+        FROM report r
+        LEFT JOIN users u ON r.user_id = u.id
+        WHERE r.id = $1`, [id])
+
+    return result.rows[0]
+}
+
+const createReport = async (data) => {
+    const { user_id, reason } = data
+
+    const create = await pool.query(`
+        INSERT INTO report (user_id, reason) VALUES ($1, $2) RETURNING id`,
+    [user_id, reason])
+
+    const newId = create.rows[0].id
+    const result = await pool.query(`
+        SELECT 
+        json_build_object(
+        'id', u.id,
+        'username', u.username,
+        'email', u.email
+        ) AS user,
+        r.reason
+        
+        FROM report r
+        LEFT JOIN users u ON r.user_id = u.id
+        WHERE r.id = $1`, [newId])
+    
+    return result.rows[0]
+    
+}
+
 // Exports
 module.exports = { 
     getUser,
@@ -76,5 +134,8 @@ module.exports = {
     createUser,
     forgetPassword,
     getUserByEmail,
-    deleteUser
+    deleteUser,
+    getReport,
+    getReportById,
+    createReport
 }

@@ -353,3 +353,83 @@ exports.deleteUser = async (req, res) => {
         })
     }
 }
+
+exports.getReport = async (req, res) => {
+    try{
+        const result = await user.getReport()
+
+        res.status(200).json({
+            status: 200,
+            message: "success",
+            data: result
+        })
+    }
+    catch(err){
+        res.status(500).json({
+            status: 500,
+            message: err.message,
+            stack: err.stack
+        })
+    }
+}
+
+exports.getReportById = async (req, res) => {
+    try{
+        const { id } = req.params
+        const result = await user.getReportById(id)
+
+        if(!result){
+            return res.status(404).json({
+                status: 404,
+                message: "Tidak Ada"
+            })
+        }
+
+        res.status(200).json({
+            status: 200,
+            message: "success",
+            data: result
+        })
+    }
+    catch(err){
+        res.status(500).json({
+            status: 500,
+            message: err.message,
+            stack: err.stack
+        })
+    }
+}
+
+exports.createReport = async (req, res) => {
+    try{
+        const { user_id, reason } = req.body
+        if(!user_id || !reason){
+            return res.status(400).json({
+                status: 400,
+                message: "Isi yang Benar Wok"
+            })
+        }
+
+        const exist = await user.getUserById(user_id)
+        if(!exist){
+            return res.status(404).json({
+                status: 404,
+                message: "Tidak Ada"
+            })
+        }
+
+        const result = await user.createReport({user_id, reason})
+        res.status(200).json({
+            status: 200,
+            message: "success",
+            data: result
+        })
+    }
+    catch(err){
+        res.status(500).json({
+            status: 500,
+            message: err.message,
+            stack: err.stack
+        })
+    }
+}
