@@ -91,7 +91,7 @@
 
         <div class="flex justify-center items-center lg:h-screen h-full">
             <div class="lg:grid lg:grid-cols-3 pt-10 pb-10 lg:gap-10">
-                <div class="lg:col-span-1 flex flex-col gap-10">
+                <div class="lg:col-span-1 flex flex-col pl-10 pr-10 gap-10">
 
                     <motion.div :initial="{ scale: 0 }" :animate="{ scale: [0, 1.1, 1], transition: { duration: 0.8 } }" class="bg-white/10 backdrop-blur-lg rounded-3xl p-8 flex flex-col items-center gap-4 shadow-xl">
                         <div class="w-32 h-32 bg-white overflow-hidden rounded-full border-4 border-yellow-400">
@@ -127,7 +127,7 @@
                 </div>
 
                 <motion.div :initial="{ scale: 0 }" :animate="{ scale: [0, 1.05, 1], transition: { duration: 0.8 } }" class="lg:col-span-2 mt-10 pb-10 lg:mt-0">
-                    <div class="bg-white rounded-3xl p-10 shadow-2xl">
+                    <div class="bg-white rounded-3xl ml-5 mr-5 p-10 shadow-2xl">
 
                         <h3 class="text-2xl font-bold text-blue-950 mb-8">
                             Pengaturan Akun
@@ -138,20 +138,20 @@
                             <router-link to="/user/found"
                                 class="flex items-center gap-6 bg-gray-50 hover:bg-gray-100 transition p-5 rounded-xl shadow-md">
                                 <div class="bg-sky-300 p-3 rounded-full">
-                                    <Icon icon="iconoir:page" width="24" height="24" />
+                                    <Icon icon="solar:box-bold" width="24" height="24" />
                                 </div>
                                 <div class="font-bold text-blue-950 text-lg">
                                     Laporan Penemuan
                                 </div>
                             </router-link>
 
-                            <router-link to="/user/lost"
+                            <router-link to="/member/report"
                                 class="flex items-center gap-6 bg-gray-50 hover:bg-gray-100 transition p-5 rounded-xl shadow-md">
                                 <div class="bg-sky-300 p-3 rounded-full">
-                                    <Icon icon="mdi:bell" width="24" height="24" />
+                                    <Icon icon="boxicons:user-filled" width="24" height="24" />
                                 </div>
                                 <div class="font-bold text-blue-950 text-lg">
-                                    Laporan Kehilangan
+                                    Lapor User Usil
                                 </div>
                             </router-link>
 

@@ -14,6 +14,7 @@ import FoundItem from '../../view/Member/Home/FoundItem.vue'
 import UserFound from '../../view/Member/Barang/UserBarang/UserFound.vue'
 import UserLost from '../../view/Member/Barang/UserBarang/UserLost.vue'
 import MemberCreate from '../../view/Member/Barang/Create/createBarang.vue'
+import MemberReport from '../../view/Member/Report/Report.vue'
 
 // Admin
 import Dashboard from '../../view/Admin/Dashboard.vue'
@@ -96,6 +97,11 @@ const routes = [
         path: "/admin/user",
         name: "ListUser",
         component: ListUser
+    },
+    {
+        path: "/member/report",
+        name: "MemberReport",
+        component: MemberReport
     }
 ]
 

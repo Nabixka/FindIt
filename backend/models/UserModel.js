@@ -72,6 +72,7 @@ const deleteUser = async (id) => {
 const getReport = async () => {
     const result = await pool.query(`
         SELECT 
+        r.id,
         json_build_object(
         'id', u.id,
         'username', u.username,
@@ -88,6 +89,7 @@ const getReport = async () => {
 const getReportById = async (id) => {
     const result = await pool.query(`
         SELECT 
+        r.id,
         json_build_object(
         'id', u.id,
         'username', u.username,
@@ -112,6 +114,7 @@ const createReport = async (data) => {
     const newId = create.rows[0].id
     const result = await pool.query(`
         SELECT 
+        r.id,
         json_build_object(
         'id', u.id,
         'username', u.username,
