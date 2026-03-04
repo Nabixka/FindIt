@@ -74,7 +74,7 @@
             </div>
 
             <div class="flex flex-col gap-4">
-                <div v-if="found.length" class="grid grid-cols-1 lg:grid-cols-2">
+                <div v-if="found.length" class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                     <motion.button 
                         v-for="(item, index) in found" 
                         :key="item.id"

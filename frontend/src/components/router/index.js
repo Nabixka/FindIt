@@ -18,6 +18,8 @@ import MemberCreate from '../../view/Member/Barang/Create/createBarang.vue'
 // Admin
 import Dashboard from '../../view/Admin/Dashboard.vue'
 import AdminProfil from '../../view/Admin/Profil.vue'
+import ListBarang from '../../view/Admin/Laporan/ListBarang.vue'
+import ListUser from '../../view/Admin/Laporan/ListUser.vue'
 
 const routes = [
     {
@@ -84,6 +86,16 @@ const routes = [
         path: "/member/create",
         name: "MemberCreate",
         component: MemberCreate
+    },
+    {
+        path: "/admin/barang",
+        name: "ListBarang",
+        component: ListBarang
+    },
+    {
+        path: "/admin/user",
+        name: "ListUser",
+        component: ListUser
     }
 ]
 

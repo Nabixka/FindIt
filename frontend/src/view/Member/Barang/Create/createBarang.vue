@@ -75,7 +75,7 @@
         <Nav />
         <Bar />
 
-        <div class="pt-20 mb-20 lg:pt-10 lg:mb-10 flex flex-col min-h-screen lg:justify-center lg:items-center">
+        <div class="pt-20 pb-20 flex flex-col h-full lg:justify-center lg:items-center">
             <motion.div 
                 :initial="{ opacity: 0, y: -20 }" 
                 :animate="{ opacity: 1, y: 0 }"
