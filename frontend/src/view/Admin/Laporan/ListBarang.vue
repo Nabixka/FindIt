@@ -37,7 +37,8 @@
     })
 
     const buttonColor = (active) => {
-        return ["py-2 rounded-xl font-bold m-1 text-md", selectedFilter.value === active ? "bg-white text-yellow-500" : "text-blue-950"
+        return [
+            "py-2 rounded-xl font-bold m-1 text-md w-full", selectedFilter.value === active ? "bg-white text-yellow-500" : "text-blue-950"
         ]
     }
 
@@ -49,15 +50,15 @@
         <Bar />
 
         <div class="pt-25">
-            <h3 class="font-extrabold text-center pb-10 text-3xl text-gray-700/90">List Barang</h3>
+            <h3 class="font-extrabold text-center pb-5 text-3xl text-gray-700/90">List Barang</h3>
             <div class="flex justify-center">
-                <div class="grid grid-cols-2 w-1/3 bg-gray-200 rounded-2xl p-1">
+                <div class="lg:grid lg:grid-cols-2 flex w-full justify-around ml-4 mr-4 lg:w-1/3 bg-gray-300 rounded-2xl p-1">
                     <button @click="selectedFilter = 'lost'" :class="buttonColor('lost')">Kehilangan</button>
                     <button @click="selectedFilter = 'found'" :class="buttonColor('found')">Penemuan</button>
                 </div>
             </div>
 
-            <div v-if="listItem.length" class="grid grid-cols-2 gap-4 p-5">
+            <div v-if="listItem.length" class="grid grid-cols-1 lg:grid-cols-3 gap-4 p-5">
                 <button v-for="item in filterItem" :key="item.id" @click="handleNavigate(item.id)"
                     class="group flex gap-4 bg-white p-4 rounded-3xl shadow-sm hover:shadow-md transition-all active:scale-95 border border-transparent hover:border-blue-100">
                     <div class="relative shrink-0">

@@ -4,6 +4,7 @@
     import { onMounted, ref } from 'vue';
     import { Icon } from '@iconify/vue';
     import { useRouter } from 'vue-router';
+    import { motion } from 'motion-v';
 
     const router = useRouter()
     const profil = ref({})
@@ -57,7 +58,7 @@
     <div class="min-h-screen bg-linear-to-b from-blue-900/80 to-blue-950">
         <Bar />
 
-        <div class="flex justify-center items-center lg:h-screen h-full">
+        <div class="pl-8 pr-8 lg:flex lg:justify-center lg:items-center lg:h-screen h-full pb-10">
             <div class="lg:grid lg:grid-cols-3 pt-10 pb-10 lg:gap-10">
                 <div class="lg:col-span-1 flex flex-col gap-10">
 
@@ -76,20 +77,20 @@
                         </div>
                     </motion.div>
 
-                    <div class="grid grid-cols-2 gap-6">
-                        <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 text-center shadow-lg">
+                    <div class="grid grid-cols-2 gap-6 pb-5">
+                        <motion.div :initial="{ scale: 0 }" :animate="{ scale: [0, 1.1, 1], transition: { duration: 0.8 } }" class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 text-center shadow-lg">
                             <h3 class="text-yellow-400 text-4xl font-bold">
                                 {{ listUser.length }}
                             </h3>
                             <p class="text-white font-semibold mt-2">USER</p>
-                        </div>
+                        </motion.div>
 
-                        <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 text-center shadow-lg">
+                        <motion.div :initial="{ scale: 0 }" :animate="{ scale: [0, 1.1, 1], transition: { duration: 0.8 } }" class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 text-center shadow-lg">
                             <h3 class="text-yellow-400 text-4xl font-bold">
                                 {{ listItem.length }}
                             </h3>
                             <p class="text-white font-semibold mt-2">BARANG</p>
-                        </div>
+                        </motion.div>
                     </div>
 
                 </div>
