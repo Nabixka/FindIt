@@ -13,9 +13,6 @@ const router = useRouter()
 
 const Register = async () => {
     try {
-        if (!email || !password || !username) {
-            message.value = "Isi Yang Benar"
-        }
 
         const res = await fetch(`${API_URL}/user/register`, {
             method: "POST",
@@ -30,11 +27,15 @@ const Register = async () => {
             })
         })
 
-        if (!res.ok) {
+        if(res.status == 400){
+            message.value = "Isi Yang Benar"
+        }
+        if(res.status == 409){
             message.value = "Email Sudah Terdaftar"
         }
-
-        router.push('/')
+        else{
+            router.push('/')
+        }
     }
     catch (err) {
         console.log(err)

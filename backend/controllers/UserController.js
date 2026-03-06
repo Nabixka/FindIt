@@ -175,7 +175,7 @@ exports.createUser = async (req, res) => {
 // Forgot Password
 exports.forgetPassword = async (req, res) => {
     try{
-        const { email, otp, password} = req.body
+        const { email, password} = req.body
         
         if(!email || !password){
             return res.status(400).json({
@@ -189,13 +189,6 @@ exports.forgetPassword = async (req, res) => {
             return res.status(404).json({
                 status: 404,
                 message: "User Tidak Ada"
-            })
-        }
-
-        if(otp != exist.otp_code){
-            return res.status(400).json({
-                status: 400,
-                message: "Kode OTP Tidak Sesuai"
             })
         }
 

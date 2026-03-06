@@ -19,7 +19,6 @@ router.post("/login", userController.loginUser)
 router.post("/login/verify", userController.verifyLoginOtp)
 
 // Forgot Password
-router.post("/forgot/otp", userController.sendOtpCode)
 router.put("/forgot/password", userController.forgetPassword)
 
 // Profil
@@ -34,7 +33,7 @@ router.get("/report/:id", userController.getReportById)
 router.post("/report", upload.single("proof"), userController.createReport)
 
 // Update Status User 
-router.put("/")
+router.put("/status", userController.updateStatusUser)
 
 // Get And Delete ById
 router.get("/:id", auth, userController.getUserById)

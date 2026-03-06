@@ -2,6 +2,7 @@
     import { ref } from 'vue'
     import { useRouter } from 'vue-router'
     import { motion } from 'motion-v'
+    import { Icon } from '@iconify/vue'
 
     const API_URL = import.meta.env.VITE_API_URL
 
@@ -9,6 +10,7 @@
     const password = ref("")
     const message = ref("")
     const router = useRouter()
+    const modal = ref(false)
 
     const Login = async () => {
         try {
@@ -23,8 +25,11 @@
                 })
             })
 
-            if (!res.ok) {
-                message.value = "Email Atau Password Tidak Sesuai"
+            if(res.status == 404 || 401){
+                message.value = "Email Atau Password Salah"
+            }
+            if(res.status == 403){
+                modal.value = true
             }
 
             const json = await res.json()
@@ -46,7 +51,7 @@
 
 <template>
     <div class="bg-linear-to-r from-white min-h-screen to-gray-200 lg:flex lg:justify-center lg:items-center">
-        <motion.div :initial="{ scale: 0}" :animate="{ scale: [0, 1.1, 1], transition: { duration: 1 } }" class="flex flex-col lg:mt-5 lg:mb-5 h-screen lg:h-1/2 lg:bg-white lg:rounded-lg lg:w-1/3">
+        <motion.div :initial="{ scale: 0}" :animate="{ scale: [0, 1.1, 1], transition: { duration: 1 } }" v-if="modal == false" class="flex flex-col lg:mt-5 lg:mb-5 h-screen lg:h-1/2 lg:bg-white lg:rounded-lg lg:w-1/3">
             <div class="flex flex-col gap-20 pt-10">
                 <div>
                     <h3 class="text-yellow-600 text-center text-4xl font-bold">Welcome To</h3>
@@ -82,6 +87,16 @@
                 </div>
             </div>
         </motion.div>
+
+        <div v-else class="bg-white w-1/3 h-50 p-5 shadow-lg rounded-xl">
+            <div class="flex justify-end">
+                <Icon @click="modal = false" icon="material-symbols:close" width="24" height="24" class="text-gray-500" />
+            </div>
+            <div class="flex flex-col h-full gap-2 justify-center items-center">
+                <h3 class="text-red-600 font-extrabold text-2xl">Akun Telah Dibanned</h3>
+                <Icon icon="lets-icons:sad" width="50" height="50" />
+            </div>
+        </div>
     </div>
 </template>
 
