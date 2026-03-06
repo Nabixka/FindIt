@@ -7,6 +7,7 @@ async function userSeeder(){
             {
                 username: "User 1",
                 email: "user1@gmail.com",
+                status: "active",
                 password: "admin123",
                 role: "member"
             },
@@ -14,12 +15,14 @@ async function userSeeder(){
                 username: "User 2",
                 email: "user2@gmail.com",
                 password: "admin123",
+                status: "banned",
                 role: "member"
             },
             {
                 username: "Admin 1",
                 email: "admin1@gmail.com",
                 password: "admin123",
+                status: "active",
                 role: "admin"
             }
         ]
@@ -35,8 +38,8 @@ async function userSeeder(){
             const hash = await bcrypt.hash(user.password, 10)
 
             await pool.query(`
-                INSERT INTO users (username, email, password, role) VALUES ($1, $2, $3, $4) ON CONFLICT DO NOTHING`,
-            [user.username, user.email, hash, user.role])
+                INSERT INTO users (username, email, password, role, status) VALUES ($1, $2, $3, $4, $5) ON CONFLICT DO NOTHING`,
+            [user.username, user.email, hash, user.role, user.status])
         }
 
         for(let report of reports){

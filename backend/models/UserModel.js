@@ -133,6 +133,20 @@ const createReport = async (data) => {
     
 }
 
+const updateStatusUser = async (data) => {
+    const { id, status} = data
+    const update = await pool.query(`
+        UPDATE users SET status = $1 WHERE id = $2 RETURNING id`,
+    [status, id])
+
+    const newId = update.rows[0].id
+    const result = await pool.query(`
+        SELECT * FROM users WHERE id =$1`,
+    [newId])
+
+    return result.rows[0]
+}
+
 // Exports
 module.exports = { 
     getUser,
@@ -143,5 +157,6 @@ module.exports = {
     deleteUser,
     getReport,
     getReportById,
-    createReport
+    createReport,
+    updateStatusUser
 }

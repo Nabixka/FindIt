@@ -28,14 +28,17 @@ router.get("/profil", auth, userController.getProfil)
 // Get All User
 router.get("/", userController.getUser)
 
+// Laporan Pengguna Usil
 router.get("/report", userController.getReport)
 router.get("/report/:id", userController.getReportById)
 router.post("/report", upload.single("proof"), userController.createReport)
+
+// Update Status User 
+router.put("/")
 
 // Get And Delete ById
 router.get("/:id", auth, userController.getUserById)
 router.delete("/:id", auth, cekRole, userController.deleteUser )
 
-// Laporan Pengguna Usil
 
 module.exports = router

@@ -243,6 +243,13 @@ exports.loginUser = async (req, res) => {
             })
         }
 
+        if(exist.status == "banned"){
+            return res.status(403).json({
+                status: 403,
+                message: "AKun Telah DiBan"
+            })
+        }
+
         const otp = generateOTP()
         const expired = Date.now() + 5 * 60 * 1000
 
@@ -354,6 +361,7 @@ exports.deleteUser = async (req, res) => {
     }
 }
 
+// Get All Report
 exports.getReport = async (req, res) => {
     try{
         const result = await user.getReport()
@@ -373,6 +381,7 @@ exports.getReport = async (req, res) => {
     }
 }
 
+// Get Report By Id
 exports.getReportById = async (req, res) => {
     try{
         const { id } = req.params
@@ -400,6 +409,7 @@ exports.getReportById = async (req, res) => {
     }
 }
 
+// Create Report
 exports.createReport = async (req, res) => {
     try{
         const { user_id, reason } = req.body
@@ -426,6 +436,36 @@ exports.createReport = async (req, res) => {
             message: "success",
             data: result
         })
+    }
+    catch(err){
+        res.status(500).json({
+            status: 500,
+            message: err.message,
+            stack: err.stack
+        })
+    }
+}
+
+exports.updateStatusUser = async (req, res) => {
+    try{
+        const { id } = req.params
+        const { status } = req.body
+
+        const exist = await user.getUserById(id)
+        if(!exist){
+            return res.status(404).json({
+                status: 404,
+                message: "User Tidak Ada"
+            })
+        }
+
+        const result = await user.updateStatusUser({id, status})
+        res.status(200).json({
+            status: 200,
+            message: "Success",
+            data: result
+        })
+
     }
     catch(err){
         res.status(500).json({
