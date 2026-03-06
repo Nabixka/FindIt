@@ -3,6 +3,7 @@ const router = express.Router()
 const userController = require("../controllers/UserController")
 const auth = require("../middlewares/auth")
 const cekRole = require("../middlewares/cekRole")
+const { upload } = require("../multer")
 
 // Auth
 
@@ -29,7 +30,7 @@ router.get("/", userController.getUser)
 
 router.get("/report", userController.getReport)
 router.get("/report/:id", userController.getReportById)
-router.post("/report", userController.createReport)
+router.post("/report", upload.single("proof"), userController.createReport)
 
 // Get And Delete ById
 router.get("/:id", auth, userController.getUserById)

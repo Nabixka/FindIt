@@ -49,7 +49,7 @@
             </div>
 
             <div v-if="listUser.length" class="grid grid-cols-1 lg:grid-cols-4 gap-10 pl-5 pr-5">
-                <div v-for="user in filter" class="bg-linear-to-b from-blue-950/80 rounded-2xl to-blue-700 flex flex-col gap-2 items-center p-5 shadow-xl">
+                <div v-for="user in filter" class="bg-linear-to-b from-blue-950/80 rounded-2xl to-blue-950 flex flex-col gap-2 items-center p-5 shadow-xl">
                     <img src="/F.png" class="w-30 h-30 bg-white rounded-full">
                     <div class="flex flex-col items-center">
                         <h3 class="text-yellow-500 font-extrabold">{{ user.username }}</h3>

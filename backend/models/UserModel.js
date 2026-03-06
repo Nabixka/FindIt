@@ -78,6 +78,7 @@ const getReport = async () => {
         'username', u.username,
         'email', u.email
         ) AS user,
+        r.proof,
         r.reason
         
         FROM report r
@@ -95,6 +96,7 @@ const getReportById = async (id) => {
         'username', u.username,
         'email', u.email
         ) AS user,
+        r.proof,
         r.reason
         
         FROM report r
@@ -105,11 +107,11 @@ const getReportById = async (id) => {
 }
 
 const createReport = async (data) => {
-    const { user_id, reason } = data
+    const { user_id, reason, proof } = data
 
     const create = await pool.query(`
-        INSERT INTO report (user_id, reason) VALUES ($1, $2) RETURNING id`,
-    [user_id, reason])
+        INSERT INTO report (user_id, reason, proof) VALUES ($1, $2, $3) RETURNING id`,
+    [user_id, reason, proof])
 
     const newId = create.rows[0].id
     const result = await pool.query(`
@@ -120,6 +122,7 @@ const createReport = async (data) => {
         'username', u.username,
         'email', u.email
         ) AS user,
+        r.proof,
         r.reason
         
         FROM report r

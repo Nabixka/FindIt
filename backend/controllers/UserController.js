@@ -403,7 +403,9 @@ exports.getReportById = async (req, res) => {
 exports.createReport = async (req, res) => {
     try{
         const { user_id, reason } = req.body
-        if(!user_id || !reason){
+        const imageUrl = req.file ? `/uploads/${req.file.filename}` : null
+
+        if(!user_id || !reason || !imageUrl){
             return res.status(400).json({
                 status: 400,
                 message: "Isi yang Benar Wok"
@@ -418,7 +420,7 @@ exports.createReport = async (req, res) => {
             })
         }
 
-        const result = await user.createReport({user_id, reason})
+        const result = await user.createReport({user_id, reason, proof: imageUrl})
         res.status(200).json({
             status: 200,
             message: "success",

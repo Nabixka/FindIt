@@ -45,6 +45,7 @@ async function createTable(){
             CREATE TABLE IF NOT EXISTS report(
             id SERIAL PRImARY KEY,
             user_id INT,
+            proof TEXT,
             reason TEXT,
 
             FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE

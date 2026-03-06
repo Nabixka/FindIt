@@ -1,5 +1,7 @@
 import axios from "axios"
 
+const URL = import.meta.env.VITE_API_URL
+
 export const getToken = () => {
     return localStorage.getItem('token')
 }
@@ -9,7 +11,7 @@ export const removeToken = () => {
 }
 
 export const api = axios.create({
-    baseURL: "http://localhost:3000"
+    baseURL: `${URL}`
 })
 
 api.interceptors.request.use(
