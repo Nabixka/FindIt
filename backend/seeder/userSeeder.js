@@ -30,6 +30,7 @@ async function userSeeder(){
         const reports = [
             {
                 user_id: 1,
+                proof: "/blackscreen.png",
                 reason: "Baldjadkjakjdakjdjakdjkdl"
             }
         ]
@@ -44,8 +45,8 @@ async function userSeeder(){
 
         for(let report of reports){
             await pool.query(`
-                INSERT INTO report (user_id, reason) VALUES ($1, $2) ON CONFLICT DO NOTHING`,
-            [report.user_id, report.reason])
+                INSERT INTO report (user_id, proof, reason) VALUES ($1, $2, $3) ON CONFLICT DO NOTHING`,
+            [report.user_id, report.proof, report.reason])
         }
 
         console.log("Berhasil Membuat User")

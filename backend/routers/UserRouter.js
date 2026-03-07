@@ -33,7 +33,7 @@ router.get("/report/:id", userController.getReportById)
 router.post("/report", upload.single("proof"), userController.createReport)
 
 // Update Status User 
-router.put("/status", userController.updateStatusUser)
+router.put("/status/:id", userController.updateStatusUser)
 
 // Get And Delete ById
 router.get("/:id", auth, userController.getUserById)

@@ -75,6 +75,7 @@ const createItem =  async (data) => {
     return result.rows[0]
 }
 
+// Get Lost Item
 const getItemLost = async () => {
     const result = await pool.query(`
         SELECT 
@@ -96,6 +97,7 @@ const getItemLost = async () => {
     return result.rows
 }
 
+// Get Found Item
 const getItemFound = async () => {
     const result = await pool.query(`
         SELECT 
@@ -117,6 +119,7 @@ const getItemFound = async () => {
     return result.rows
 }
 
+// Get User Lost Item
 const getItemUserLost = async (id) => {
     const result = await pool.query(`
         SELECT 
@@ -139,6 +142,7 @@ const getItemUserLost = async (id) => {
     return result.rows
 }
 
+// Get User Found Item
 const getItemUserFound = async (id) => {
     const result  = await pool.query(`
         SELECT 
@@ -161,10 +165,18 @@ const getItemUserFound = async (id) => {
     return result.rows
 }
 
+// Delete Item
 const deleteItem = async (id) => {
     const result = await pool.query(`
         DELETE FROM items WHERE id = $1`
     ,[id])
+}
+
+// Delete User Item
+const deleteItemUser = async (id) => {
+    const result = await pool.query(`
+        DELETE FROM items WHERE user_id = $1`,
+    [id])
 }
 
 module.exports = {
@@ -175,5 +187,6 @@ module.exports = {
     getItemFound,
     getItemUserLost,
     getItemUserFound,
-    deleteItem
+    deleteItem,
+    deleteItemUser
 }

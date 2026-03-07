@@ -1,60 +1,73 @@
 <script setup>
-import { api } from '../../components/utils/helper';
-import Bar from '../Bar/Bar.vue';
-import { ref, onMounted, computed } from 'vue';
-import { Icon } from '@iconify/vue';
-import { motion } from 'motion-v'
+    import { api } from '../../components/utils/helper';
+    import Bar from '../Bar/Bar.vue';
+    import { ref, onMounted, computed } from 'vue';
+    import { Icon } from '@iconify/vue';
+    import { motion } from 'motion-v'
 
-const listReport = ref([])
-const report = ref({})
-const API_URL = import.meta.env.VITE_API_URL
+    const listReport = ref([])
+    const report = ref({})
+    const API_URL = import.meta.env.VITE_API_URL
 
-const active = ref(false)
-const reportId = ref(null)
-const userId = ref(null)
+    const active = ref(false)
+    const reportId = ref(null)
+    const userId = ref(null)
 
-const getListReport = async () => {
-    try {
-        const res = await api.get("/user/report")
-        listReport.value = res.data.data
+    const getListReport = async () => {
+        try {
+            const res = await api.get("/user/report")
+            listReport.value = res.data.data
+        }
+        catch (err) {
+            console.log(err)
+        }
     }
-    catch (err) {
-        console.log(err)
+
+    const getReport = async () => {
+        try {
+            const res = await api.get(`/user/report/${reportId.value}`)
+            report.value = res.data.data
+        }
+        catch (err) {
+            console.log(err.message)
+        }
     }
-}
 
-const getReport = async () => {
-    try {
-        const res = await api.get(`/user/report/${reportId.value}`)
-        report.value = res.data.data
+    const openModal = async (id) => {
+        reportId.value = id
+        await getReport()
+        active.value = true
     }
-    catch (err) {
-        console.log(err.message)
+
+    const deleteUser = async (id) => {
+        try {
+            const res = await api.delete(`/user/${id}`)
+
+            active.value = false
+            getListReport()
+        }
+        catch (err) {
+            console.log(err)
+        }
     }
-}
 
-const openModal = async (id) => {
-    reportId.value = id
-    await getReport()
-    active.value = true
-}
+    const banUser = async (id) => {
+        try{
+            const res = await api.put(`/user/status/${id}`, {
+                status: " banned"
+            })
+            
+            active.value = false
+            getListReport()
+        }
+        catch(err){
+            console.log(err)
+        }
+    }
 
-const deleteUser = async (id) => {
-    try {
-        const res = await api.delete(`/user/${id}`)
-
-        active.value = false
+    onMounted(() => {
         getListReport()
-    }
-    catch (err) {
-        console.log(err)
-    }
-}
-
-
-onMounted(() => {
-    getListReport()
-})
+    })
 
 </script>
 
@@ -94,18 +107,18 @@ onMounted(() => {
             </div>
         </div>
 
-        <div v-else class="flex justify-center items-center pb-20">
-            <div class="bg-linear-to-r rounded-2xl from-blue-950/90 to-blue-950/80 w-1/2 pb-5 pl-5 pr-5">
+        <div v-else class="flex justify-center items-center pb-20 pr-5 pl-5">
+            <div class="bg-linear-to-r rounded-2xl from-blue-950/90 to-blue-950/80 lg:w-1/2 pb-5 pl-2 pr-2 lg:pl-5 lg:pr-5">
                 <h3 class="text-white pt-5 text-center text-4xl font-extrabold border-b border-gray-400 pb-5">Detail
                     Laporan</h3>
-                <div class="flex flex-col pl-5 pt-5 gap-10">
+                <div class="flex flex-col lg:pl-5 pt-5 gap-10">
                     <img :src="`${API_URL}${report.proof}`" class="h-100 rounded-lg">
                     <div class="flex flex-col justify-between text-lg font-semibold text-white">
                         <div>
                             <h3>User: <span class="font-extrabold">{{ report.user.username }}</span></h3>
                             <h3>Email: <span class="font-extrabold">{{ report.user.email }}</span></h3>
                             <h3>Nomor: <span class="font-extrabold">08xxxxxx</span></h3>
-                            <div>
+                            <div class="pt-5 pb-10">
                                 <h3 class="text-center font-extrabold">Alasan</h3>
                                 <h3 class="text-center break-all break-words">{{ report.reason }}</h3>
                             </div>
@@ -113,11 +126,9 @@ onMounted(() => {
                         <div class="flex flex-col gap-5">
                             <h3 class="text-center">Apa Yang Anda Akan Lakukan Terhadap User Tersebut?</h3>
                             <div class="grid grid-cols-3 gap-5">
-                                <button @click="active = false"
-                                    class="hover:bg-gray-600 text-gray-100 text-white rounded-lg bg-gray-500 py-2">Biarkan</button>
-                                <button
-                                    class="hover:bg-yellow-600 text-white rounded-lg bg-yellow-400 py-2">Ban</button>
-                                <button class="hover:bg-red-700 text-white rounded-lg bg-red-500 py-2">Delete</button>
+                                <button @click="active = false" class="hover:bg-gray-600 text-gray-100 text-white rounded-lg bg-gray-500 py-2">Biarkan</button>
+                                <button @click="banUser(report.user.id)" class="hover:bg-yellow-600 text-white rounded-lg bg-yellow-400 py-2">Ban</button>
+                                <button @click="deleteUser(report.user.id)" class="hover:bg-red-700 text-white rounded-lg bg-red-500 py-2">Delete</button>
                             </div>
                         </div>
                     </div>

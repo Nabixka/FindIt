@@ -69,6 +69,7 @@ const deleteUser = async (id) => {
     [id])
 }
 
+// Get All Report
 const getReport = async () => {
     const result = await pool.query(`
         SELECT 
@@ -87,6 +88,7 @@ const getReport = async () => {
     return result.rows
 }
 
+// Get Report ById
 const getReportById = async (id) => {
     const result = await pool.query(`
         SELECT 
@@ -106,6 +108,7 @@ const getReportById = async (id) => {
     return result.rows[0]
 }
 
+// Create Report
 const createReport = async (data) => {
     const { user_id, reason, proof } = data
 
@@ -133,6 +136,13 @@ const createReport = async (data) => {
     
 }
 
+const deleteReport = async (id) => {
+    const result = await pool.query(`
+        DELETE FROM report WHERE user_id = $1`,
+    [id])
+}
+
+// Update Status User
 const updateStatusUser = async (data) => {
     const { id, status} = data
     const update = await pool.query(`
@@ -141,13 +151,12 @@ const updateStatusUser = async (data) => {
 
     const newId = update.rows[0].id
     const result = await pool.query(`
-        SELECT * FROM users WHERE id =$1`,
+        SELECT * FROM users WHERE id = $1`,
     [newId])
 
     return result.rows[0]
 }
 
-// Exports
 module.exports = { 
     getUser,
     getUserById,
@@ -158,5 +167,6 @@ module.exports = {
     getReport,
     getReportById,
     createReport,
-    updateStatusUser
+    updateStatusUser,
+    deleteReport
 }

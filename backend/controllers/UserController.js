@@ -1,4 +1,5 @@
 const user = require("../models/UserModel")
+const item = require("../models/ItemModel")
 const pool = require("../database/db")
 const bcrypt = require("bcrypt")
 const crypto = require("crypto")
@@ -453,6 +454,8 @@ exports.updateStatusUser = async (req, res) => {
         }
 
         const result = await user.updateStatusUser({id, status})
+        const deleteItem = await item.deleteItemUser(id)
+        const deleteReport = await user.deleteReport(id)
         res.status(200).json({
             status: 200,
             message: "Success",

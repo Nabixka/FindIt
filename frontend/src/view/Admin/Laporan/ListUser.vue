@@ -39,7 +39,7 @@
         <Bar />
         <Nav />
     
-        <div class="pt-25 flex flex-col gap-5">
+        <div class="pt-25 flex flex-col gap-5 pb-25">
             <h3 class="font-extrabold text-center text-3xl text-gray-700/90">List User</h3>
             <div class="flex justify-center">
                 <div class="lg:grid lg:grid-cols-2 flex w-full shadow-lg justify-around ml-4 mr-4 lg:w-1/3 bg-gray-300 rounded-2xl p-1">
