@@ -11,8 +11,6 @@
     const profil = ref({})
     const token = getToken()
     const router = useRouter()
-    const lost = ref([])
-    const found = ref([])
 
     const getProfil = async () => {
         try {
@@ -34,53 +32,13 @@
         }
     }
 
-    const getLost = async () => {
-        try {
-            if (!token) {
-                router.push("/")
-            }
-
-            const res = await fetch(`${API_URL}/item/user/lost`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-
-            const json = await res.json()
-            lost.value = json.data
-        }
-        catch (err) {
-            console.log(err)
-        }
-    }
-
-    const getFound = async () => {
-        try {
-            if (!token) {
-                router.push("/")
-            }
-
-            const res = await fetch(`${API_URL}/item/user/found`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-
-            const json = await res.json()
-            found.value = json.data
-        }
-        catch (err) {
-            console.log(err)
-        }
-    }
-
     const LogOut = async () => {
         removeToken()
         router.push("/")
     }
 
     onMounted(() => {
-        getProfil(), getLost(), getFound()
+        getProfil()
     })
 
 </script>
@@ -111,14 +69,14 @@
                     <div class="grid grid-cols-2 gap-6">
                         <motion.div :initial="{ scale: 0 }" :animate="{ scale: [0, 1.1, 1], transition: { duration: 0.8 } }" class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 text-center shadow-lg">
                             <h3 class="text-yellow-400 text-4xl font-bold">
-                                {{ lost.length }}
+                                {{ profil.lost_item }}
                             </h3>
                             <p class="text-white font-semibold mt-2">KEHILANGAN</p>
                         </motion.div>
 
                         <motion.div :initial="{ scale: 0 }" :animate="{ scale: [0, 1.1, 1], transition: { duration: 0.8 } }" class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 text-center shadow-lg">
                             <h3 class="text-yellow-400 text-4xl font-bold">
-                                {{ found.length }}
+                                {{  profil.found_item }}
                             </h3>
                             <p class="text-white font-semibold mt-2">MENEMUKAN</p>
                         </motion.div>
