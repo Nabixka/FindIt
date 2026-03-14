@@ -49,7 +49,7 @@ exports.createItem = async (req, res) => {
     try{
         const user_id = req.user.id
         const {title, location, category, description, status } = req.body
-        const imageUrl = req.file ? `/uploads/${req.file.filename}` : null
+        const imageUrl = req.file ? `/uploads/items/${req.file.filename}` : null
 
         if(!title || !location || !category || !description){
             return res.status(400).json({

@@ -7,7 +7,7 @@ async function itemSeeder(){
                 title: "Dompet",
                 description: "Berwarna Coklat Merek Atlo",
                 location: "Jalan Sudirman",
-                image: `/uploads/dompet.jpg`,
+                image: `/uploads/items/dompet.jpg`,
                 category: 'Pribadi',
                 user_id: 1,
                 status: 'lost'
@@ -16,7 +16,7 @@ async function itemSeeder(){
                 title: "Dompet",
                 description: "Berwarna Coklat Merek Atlo",
                 location: "Jalan Sudirman",
-                image: `/uploads/dompet.jpg`,
+                image: `/uploads/items/dompet.jpg`,
                 category: 'Pribadi',
                 user_id: 2,
                 status: 'found'

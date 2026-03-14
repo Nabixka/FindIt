@@ -3,7 +3,7 @@ const router = express.Router()
 const userController = require("../controllers/UserController")
 const auth = require("../middlewares/auth")
 const cekRole = require("../middlewares/cekRole")
-const { upload } = require("../multer")
+const { uploadReport } = require("../multer")
 
 // Auth
 
@@ -30,7 +30,7 @@ router.get("/", userController.getUser)
 // Laporan Pengguna Usil
 router.get("/report", userController.getReport)
 router.get("/report/:id", userController.getReportById)
-router.post("/report", upload.single("proof"), userController.createReport)
+router.post("/report", uploadReport.single("proof"), userController.createReport)
 
 // Update Status User 
 router.put("/status/:id", userController.updateStatusUser)

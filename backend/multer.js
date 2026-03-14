@@ -4,6 +4,12 @@ const path = require("path")
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         let folder = "uploads"
+        if(file.fieldname === "image" && req.baseUrl.includes("item")){
+            folder = "uploads/items"
+        }
+        if(file.fieldname === "image" && req.baseUrl.includes("report")){
+            folder = "uploads/report"
+        }
 
         cb(null, folder)
     },
@@ -12,8 +18,12 @@ const storage = multer.diskStorage({
     }
 })
 
-const upload = multer({
+const uploadItems = multer({
     storage
 })
 
-module.exports = { upload }
+const uploadReport = multer({
+    storage
+})
+
+module.exports = { uploadItems, uploadReport }

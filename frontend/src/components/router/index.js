@@ -22,6 +22,8 @@ import ListBarang from '../../view/Admin/Laporan/ListBarang.vue'
 import ListUser from '../../view/Admin/Laporan/ListUser.vue'
 
 const routes = [
+
+    // Auth
     {
         path: "/",
         name: "Login",
@@ -33,14 +35,22 @@ const routes = [
         component: Register
     },
     {
-        path: "/member/lost",
-        name: "Lost",
-        component: LostItem
+        path: "/otp",
+        name: "Otp",
+        component: Otp
     },
     {
         path: "/forget",
         name: "Forget",
         component: ForgetPassword
+    },
+
+
+    // Member
+    {
+        path: "/member/lost",
+        name: "Lost",
+        component: LostItem
     },
     {
         path: "/member/profil",
@@ -58,25 +68,22 @@ const routes = [
         component: FoundItem
     },
     {
-        path: "/otp",
-        name: "Otp",
-        component: Otp
-    },
-    {
-        path: "/admin/lost",
-        name: "AdminDashboard",
-        component: Dashboard
-    },
-    {
-        path: "/admin/profil",
-        name: "AdminProfil",
-        component: AdminProfil
-    },
-    {
-        path: "/member/create",
+        path: "/member/create/item",
         name: "MemberCreate",
         component: MemberCreate
     },
+    {
+        path: "/member/report",
+        name: "MemberReport",
+        component: MemberReport
+    },
+    {
+        path: "/member/item",
+        name: "MemberItem",
+        component: MemberItem
+    },
+
+    // Admin
     {
         path: "/admin/barang",
         name: "ListBarang",
@@ -88,14 +95,14 @@ const routes = [
         component: ListUser
     },
     {
-        path: "/member/report",
-        name: "MemberReport",
-        component: MemberReport
+        path: "/admin/dashboard",
+        name: "AdminDashboard",
+        component: Dashboard
     },
     {
-        path: "/member/item",
-        name: "MemberItem",
-        component: MemberItem
+        path: "/admin/profil",
+        name: "AdminProfil",
+        component: AdminProfil
     }
 ]
 

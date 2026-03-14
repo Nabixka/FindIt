@@ -2,13 +2,13 @@ const express = require("express")
 const router = express.Router()
 const ItemController = require("../controllers/ItemController")
 const auth = require("../middlewares/auth")
-const { upload } = require("../multer")
+const { uploadItems } = require("../multer")
 
 // GetAll
 router.get("/", auth, ItemController.getItem)
 
 // Create Item
-router.post("/", auth, upload.single("image"), ItemController.createItem)
+router.post("/", auth, uploadItems.single("image"), ItemController.createItem)
 
 // Get Item Found/Lost
 router.get("/found", auth, ItemController.getItemFound)

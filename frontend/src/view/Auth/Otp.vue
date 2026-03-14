@@ -54,7 +54,7 @@ const verifyOtp = async () => {
         router.push("/member/lost")
       }
       if (data.role == "admin") {
-        router.push("/admin/lost")
+        router.push("/admin/dashboard")
       }
     }
     else {
