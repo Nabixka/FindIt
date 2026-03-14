@@ -51,10 +51,10 @@ const verifyOtp = async () => {
     if (json.status == 200) {
       localStorage.setItem('token', data.token)
       if (data.role == "member") {
-        router.push("/member/lost")
+        router.push("/member/home")
       }
       if (data.role == "admin") {
-        router.push("/admin/dashboard")
+        router.push("/admin/home")
       }
     }
     else {

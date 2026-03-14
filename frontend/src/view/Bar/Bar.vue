@@ -43,7 +43,7 @@
 <template>
   <div class="fixed bottom-0 left-0 right-0 z-50">
     <div class="flex justify-around bg-blue-900 p-3">
-      <button @click="handleNavigate('lost')">
+      <button @click="handleNavigate('home')">
         <Icon icon="mdi:home-variant" class="text-white" width="30" height="30" />
       </button>
       <button @click="handleNavigate('profil')">

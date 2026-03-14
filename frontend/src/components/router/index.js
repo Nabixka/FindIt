@@ -8,18 +8,17 @@ import Otp from '../../view/Auth/Otp.vue'
 
 // Member
 import Profil from '../../view/Member/Profil/Profil.vue'
-import LostItem from '../../view/Member/Home/LostItem.vue'
 import BarangDetail from '../../view/Member/Barang/BarangDetail.vue'
-import FoundItem from '../../view/Member/Home/FoundItem.vue'
 import MemberCreate from '../../view/Member/Barang/Create/createBarang.vue'
 import MemberReport from '../../view/Member/Report/Report.vue'
 import MemberItem from '../../view/Member/Barang/UserBarang/UserBarang.vue'
 
 // Admin
-import Dashboard from '../../view/Admin/Dashboard.vue'
+import AdminHome from '../../view/Admin/AdminHome.vue'
 import AdminProfil from '../../view/Admin/Profil.vue'
 import ListBarang from '../../view/Admin/Laporan/ListBarang.vue'
 import ListUser from '../../view/Admin/Laporan/ListUser.vue'
+import Home from '../../view/Member/Home/Home.vue'
 
 const routes = [
 
@@ -48,11 +47,6 @@ const routes = [
 
     // Member
     {
-        path: "/member/lost",
-        name: "Lost",
-        component: LostItem
-    },
-    {
         path: "/member/profil",
         name: "Profil",
         component: Profil
@@ -63,9 +57,9 @@ const routes = [
         component: BarangDetail
     },
     {
-        path: "/found",
-        name: "Found",
-        component: FoundItem
+        path: "/member/home",
+        name: "MemberHome",
+        component: Home
     },
     {
         path: "/member/create/item",
@@ -95,9 +89,9 @@ const routes = [
         component: ListUser
     },
     {
-        path: "/admin/dashboard",
-        name: "AdminDashboard",
-        component: Dashboard
+        path: "/admin/home",
+        name: "AdminHome",
+        component: AdminHome
     },
     {
         path: "/admin/profil",
