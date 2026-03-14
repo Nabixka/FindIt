@@ -135,7 +135,7 @@
 
                         <div class="flex flex-col gap-6">
 
-                            <router-link to="/user/found"
+                            <router-link to="/member/item"
                                 class="flex items-center gap-6 bg-gray-50 hover:bg-gray-100 transition p-5 rounded-xl shadow-md">
                                 <div class="bg-sky-300 p-3 rounded-full">
                                     <Icon icon="solar:box-bold" width="24" height="24" />

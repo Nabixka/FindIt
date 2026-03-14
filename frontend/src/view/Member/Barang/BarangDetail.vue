@@ -43,13 +43,11 @@
 
       await nextTick();
 
-      // Bersihkan instance lama secara menyeluruh
       if (mapInstance) {
         mapInstance.remove();
         mapInstance = null;
       }
 
-      // Inisialisasi
       mapInstance = L.map('map').setView([lat, lng], 15);
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -58,7 +56,6 @@
 
       L.marker([lat, lng]).addTo(mapInstance).bindPopup(locationText);
 
-      // Invalidate size dengan delay untuk menunggu transisi UI/Animasi
       setTimeout(() => {
         if (mapInstance) {
           mapInstance.invalidateSize({ animate: true });

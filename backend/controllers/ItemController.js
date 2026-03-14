@@ -114,54 +114,24 @@ exports.getItemFound = async (req, res) => {
     }
 }
 
-exports.getItemUserLost = async (req, res) => {
+exports.getItemUser = async (req, res) => {
     try{
-        const user_id  = req.user.id 
+        const id = req.user.id
 
-        const exist = await user.getUserById(user_id)
+        const exist = await user.getUserById(id)
         if(!exist){
             return res.status(404).json({
                 status: 404,
-                message: "Not Found"
+                message: "User Tidak Ada"
             })
         }
 
-        const result = await item.getItemUserLost(user_id)
+        const result = await item.getItemUser(id)
         res.status(200).json({
             status: 200,
             message: "success",
             data: result
         })
-        
-    }
-    catch(err){
-        res.status(500).json({
-            status: 500,
-            message: err.message,
-            stack: err.stack
-        })
-    }
-}
-
-exports.getItemUserFound = async (req, res) => {
-    try{
-        const user_id = req.user.id 
-
-        const exist = await user.getUser(user_id)
-        if(!exist){
-            return res.status(404).json({
-                status: 404,
-                message: "Not Found"
-            })
-        }
-
-        const result = await item.getItemUserFound(user_id)
-        res.status(200).json({
-            status: 200,
-            message: "success",
-            data: result
-        })
-        
     }
     catch(err){
         res.status(500).json({

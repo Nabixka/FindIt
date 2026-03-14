@@ -119,51 +119,29 @@ const getItemFound = async () => {
     return result.rows
 }
 
-// Get User Lost Item
-const getItemUserLost = async (id) => {
+// Get All User Item
+const getItemUser = async (id) => {
     const result = await pool.query(`
         SELECT 
         i.id,
         i.title,
         i.description,
-        i.location,
         i.category,
         i.image,
         i.status,
         json_build_object(
         'id', u.id,
-        'username', u.username) AS user
+        'username', u.username ) AS User
 
         FROM items i
         LEFT JOIN users u ON i.user_id = u.id
-        WHERE i.user_id = $1 AND i.status = 'lost' `,
-    [id])
-    
-    return result.rows
-}
-
-// Get User Found Item
-const getItemUserFound = async (id) => {
-    const result  = await pool.query(`
-        SELECT 
-        i.id,
-        i.title,
-        i.description,
-        i.location,
-        i.image,
-        i.category,
-        i.status,
-        json_build_object(
-        'id', u.id,
-        'username', u.username) AS user
-
-        FROM items i
-        LEFT JOIN users u ON i.user_id = u.id
-        WHERE i.user_id = $1 AND i.status = 'found' `,
+        WHERE i.user_id = $1
+        `,
     [id])
 
     return result.rows
 }
+
 
 // Delete Item
 const deleteItem = async (id) => {
@@ -185,8 +163,7 @@ module.exports = {
     createItem,
     getItemLost,
     getItemFound,
-    getItemUserLost,
-    getItemUserFound,
+    getItemUser,
     deleteItem,
     deleteItemUser
 }

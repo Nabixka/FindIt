@@ -14,9 +14,8 @@ router.post("/", auth, upload.single("image"), ItemController.createItem)
 router.get("/found", auth, ItemController.getItemFound)
 router.get("/lost", auth, ItemController.getItemLost)
 
-// Get Item User Found/Lost
-router.get("/user/found", auth, ItemController.getItemUserFound)
-router.get("/user/lost", auth, ItemController.getItemUserLost)
+// Get Item User
+router.get('/user', auth, ItemController.getItemUser)
 
 // Item By Id
 router.get("/:id", auth, ItemController.getItemById)

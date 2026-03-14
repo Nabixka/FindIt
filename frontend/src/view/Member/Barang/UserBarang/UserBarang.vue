@@ -1,32 +1,30 @@
 <script setup>
+    import { ref, onMounted, computed } from 'vue';
+    import { api } from '../../../../components/utils/helper';
     import { useRouter } from 'vue-router';
-    import { getToken } from '../../../../components/utils/helper';
     import Bar from '../../../Bar/Bar.vue';
     import Nav from '../../../Bar/Nav.vue';
-    import { ref, onMounted } from 'vue'
-    import { Icon } from '@iconify/vue';
     import { motion } from 'motion-v';
 
-    const router = useRouter()
     const API_URL = import.meta.env.VITE_API_URL
-    const lost = ref([])
-    const token = getToken()
+    const router = useRouter()
+    const selectedItem = ref( "" || "lost")
 
-    const getLost = async () => {
+    const items = ref([])
+
+    const getItem = async () => {
         try{
-            const res = await fetch(`${API_URL}/item/user/lost`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-            const json = await res.json()
-
-            lost.value = json.data
+            const res = await api.get('/item/user')
+            items.value = res.data.data
         }
         catch(err){
-            console.log(err)
+
         }
     }
+
+    onMounted(() => {
+        getItem()
+    })
 
     const handleNavigate = (id) => {
         router.push({
@@ -35,9 +33,16 @@
         })
     }
 
-    onMounted(() => {
-        getLost()
+    const filter = computed(() => {
+        return items.value.filter(item => item.status == selectedItem.value)
     })
+
+    const buttonColor = (active) => {
+        return [
+            "text-center py-2.5 rounded-xl font-bold transition-all", selectedItem.value == active ? "text-blue-950 bg-white" : "text-yellow-500" 
+        ]
+    }
+
 </script>
 
 <template>
@@ -50,8 +55,7 @@
                 <motion.h3 
                     :initial="{ opacity: 0, y: -20 }" 
                     :animate="{ opacity: 1, y: 0 }" 
-                    class="text-center text-blue-950 text-3xl font-black tracking-tight"
-                >
+                    class="text-center text-blue-950 text-3xl font-black tracking-tight" >
                     Barang Saya
                 </motion.h3>
 
@@ -59,24 +63,23 @@
                     :initial="{ opacity: 0 }" 
                     :animate="{ opacity: 1 }" 
                     class="bg-gray-200/80 p-1.5 rounded-2xl grid grid-cols-2 gap-2 max-w-md mx-auto shadow-inner">
-                    <router-link 
-                        to="/user/lost" 
-                        active-class="bg-white shadow-sm text-blue-950"
-                        class="text-center py-2.5 rounded-xl font-bold transition-all text-yellow-500 hover:text-blue-950">
+                    <button
+                        @click="selectedItem = 'lost'"
+                        :class="buttonColor('lost')">
                         Kehilangan
-                    </router-link>
-                    <router-link 
-                        to="/user/found" 
-                        class="text-center py-2.5 rounded-xl font-bold transition-all text-blue-950/80 hover:text-blue-950">
+                    </button>
+                    <button
+                        @click="selectedItem = 'found'"
+                        :class="buttonColor('found')">
                         Temuan
-                    </router-link>
+                    </button>
                 </motion.div>
             </div>
 
             <div class="flex flex-col gap-4">
-                <div v-if="lost.length" class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                <div v-if="items.length" class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                     <motion.button 
-                        v-for="(item, index) in lost" 
+                        v-for="(item, index) in filter" 
                         :key="item.id"
                         :initial="{ opacity: 0, x: -20 }"
                         :animate="{ opacity: 1, x: 0, transition: { delay: index * 0.1 } }"
@@ -86,7 +89,7 @@
                             <img 
                                 class="w-20 h-20 object-cover rounded-2xl shadow-sm" 
                                 :src="`${API_URL}${item.image}`"
-                                onerror="this.src='https://placehold.co/200x200?text=No+Image'">  
+                                onerror="this.src='https://placehold.co/200x200?text=No+Image'">
                         </div>
 
                         <div class="flex flex-col justify-between py-1 text-left w-full">
