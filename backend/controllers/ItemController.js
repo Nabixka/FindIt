@@ -74,46 +74,6 @@ exports.createItem = async (req, res) => {
     }
 }
 
-exports.getItemLost = async (req, res) => {
-    try{
-
-        const result = await item.getItemLost()
-        res.status(200).json({
-            status: 200,
-            message: "success",
-            data: result
-        })
-
-    }
-    catch(err){
-        res.status(500).json({
-            status: 500,
-            message: err.message,
-            stack: err.stack
-        })
-    }
-}
-
-exports.getItemFound = async (req, res) => {
-    try{
-
-        const result = await item.getItemFound()
-        res.status(200).json({
-            status: 200,
-            message: "success",
-            data: result
-        })
-        
-    }
-    catch(err){
-        res.status(500).json({
-            status: 500,
-            message: err.message,
-            stack: err.stack
-        })
-    }
-}
-
 exports.getItemUser = async (req, res) => {
     try{
         const id = req.user.id

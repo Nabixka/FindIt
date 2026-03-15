@@ -75,50 +75,6 @@ const createItem =  async (data) => {
     return result.rows[0]
 }
 
-// Get Lost Item
-const getItemLost = async () => {
-    const result = await pool.query(`
-        SELECT 
-        i.id,
-        i.title,
-        i.description,
-        i.location,
-        i.image,
-        i.category,
-        i.status,
-        json_build_object(
-        'id', u.id,
-        'username', u.username) AS user
-
-        FROM items i
-        LEFT JOIN users u ON i.user_id = u.id
-        WHERE i.status = 'lost' `)
-
-    return result.rows
-}
-
-// Get Found Item
-const getItemFound = async () => {
-    const result = await pool.query(`
-        SELECT 
-        i.id,
-        i.title,
-        i.description,
-        i.location,
-        i.category,
-        i.image,
-        i.status,
-        json_build_object(
-        'id', u.id,
-        'username', u.username) AS user
-
-        FROM items i
-        LEFT JOIN users u ON i.user_id = u.id
-        WHERE i.status = 'found' `)
-
-    return result.rows
-}
-
 // Get All User Item
 const getItemUser = async (id) => {
     const result = await pool.query(`
@@ -162,8 +118,6 @@ module.exports = {
     getItem,
     getItemById,
     createItem,
-    getItemLost,
-    getItemFound,
     getItemUser,
     deleteItem,
     deleteItemUser

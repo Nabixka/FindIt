@@ -10,10 +10,6 @@ router.get("/", auth, ItemController.getItem)
 // Create Item
 router.post("/", auth, uploadItems.single("image"), ItemController.createItem)
 
-// Get Item Found/Lost
-router.get("/found", auth, ItemController.getItemFound)
-router.get("/lost", auth, ItemController.getItemLost)
-
 // Get Item User
 router.get('/user', auth, ItemController.getItemUser)
 
