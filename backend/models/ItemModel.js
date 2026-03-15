@@ -128,6 +128,7 @@ const getItemUser = async (id) => {
         i.description,
         i.category,
         i.image,
+        i.location,
         i.status,
         json_build_object(
         'id', u.id,

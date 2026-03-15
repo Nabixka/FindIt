@@ -5,6 +5,7 @@
     import Bar from '../../../Bar/Bar.vue';
     import Nav from '../../../Bar/Nav.vue';
     import { motion } from 'motion-v';
+    import { Icon } from '@iconify/vue';
 
     const API_URL = import.meta.env.VITE_API_URL
     const router = useRouter()

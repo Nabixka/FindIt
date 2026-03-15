@@ -14,7 +14,7 @@
 
     const Login = async () => {
         try {
-            const res = await fetch(`${API_URL}/user/login`, {
+            const res = await fetch(`${API_URL}/auth/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

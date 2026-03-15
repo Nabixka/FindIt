@@ -60,7 +60,7 @@
             })
 
             if(res.ok){
-                router.push("/member/lost")
+                router.push("/member/home")
             }
         }
         catch(err){

@@ -5,22 +5,6 @@ const auth = require("../middlewares/auth")
 const cekRole = require("../middlewares/cekRole")
 const { uploadReport } = require("../multer")
 
-// Auth
-
-// Register
-router.post("/register", userController.createUser)
-
-// OTP
-router.post("/otp/send", userController.sendOtpCode)
-router.post("/otp/verify", userController.verifyOtp)
-
-// Login
-router.post("/login", userController.loginUser)
-router.post("/login/verify", userController.verifyLoginOtp)
-
-// Forgot Password
-router.put("/forgot/password", userController.forgetPassword)
-
 // Profil
 router.get("/profil", auth, userController.getProfil)
 

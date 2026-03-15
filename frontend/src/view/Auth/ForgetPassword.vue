@@ -13,7 +13,7 @@
 
     const Login = async () => {
         try {
-            const res = await fetch(`${API_URL}/user/forgot/password`, {
+            const res = await fetch(`${API_URL}/auth/forgot/password`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json"

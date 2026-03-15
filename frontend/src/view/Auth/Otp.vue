@@ -35,7 +35,7 @@ const verifyOtp = async () => {
   }
 
   try {
-    const res = await fetch(`${API_URL}/user/login/verify`, {
+    const res = await fetch(`${API_URL}/auth/login/verify`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
