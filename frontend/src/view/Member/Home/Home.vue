@@ -19,8 +19,12 @@
             items.value = res.data.data
         }
         catch (err) {
-            if (res.status == 500) {
-                message.value = "Maaf, Terjadi Gangguan Server"
+            if (err.status == 500) {
+                message.value = "Maaf, Terjadi Gangguan Untuk Terhubung Dengan Server"
+            }
+            if (err.status == 403 || 401) {
+                message.value = "Anda Tidak Berhak Mengakses Page Ini"
+                router.push("/")
             }
         }
     }
@@ -114,7 +118,7 @@
                         <div class="flex items-center justify-between gap-3">
                             <div class="relative flex-1">
                                 <select v-model="category"
-                                    class="w-full appearance-none bg-white/10 border border-white/10 text-white py-3 px-4 pr-10 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                                    class="w-full appearance-none bg-white/10 border border-white/10 text-white font-semibold py-3 px-4 pr-10 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-500">
                                     <option class="text-black" value="">Semua Kategori</option>
                                     <option class="text-black" value="Elektronik">Elektronik</option>
                                     <option class="text-black" value="Aksesoris">Aksesoris</option>

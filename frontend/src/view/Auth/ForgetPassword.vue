@@ -1,11 +1,12 @@
 <script setup>
-    import { ref, onMounted } from 'vue'
+    import { ref } from 'vue'
     import { useRouter } from 'vue-router'
     import { motion } from 'motion-v'
 
 
     const API_URL = import.meta.env.VITE_API_URL
 
+    const clicked = ref(false)
     const email = ref("")
     const password = ref("")
     const message = ref("")
@@ -13,6 +14,7 @@
 
     const Login = async () => {
         try {
+            clicked.value = true
             const res = await fetch(`${API_URL}/auth/forgot/password`, {
                 method: "PUT",
                 headers: {
@@ -63,7 +65,7 @@
                             placeholder="Password">
                     </div>
                     <div class="flex justify-center">
-                        <button class="hover:scale-115 bg-yellow-400/90 py-2 px-15 rounded-lg font-bold text-blue-800">Submit</button>
+                        <button :disabled="clicked" type="submit" class="hover:scale-115 bg-yellow-400/90 py-2 px-15 rounded-lg font-bold text-blue-800">Submit</button>
                     </div>
                 </form>
                 <div class="pt-10 flex flex-col gap-5">

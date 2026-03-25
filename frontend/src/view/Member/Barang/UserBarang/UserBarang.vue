@@ -9,17 +9,23 @@
 
     const API_URL = import.meta.env.VITE_API_URL
     const router = useRouter()
-    const selectedItem = ref( "" || "lost")
+    const selectedItem = ref("" || "lost")
 
     const items = ref([])
 
     const getItem = async () => {
-        try{
+        try {
             const res = await api.get('/item/user')
             items.value = res.data.data
         }
-        catch(err){
-
+        catch (err) {
+            if (err.status == 500) {
+                message.value = "Maaf, Terjadi Gangguan Untuk Terhubung Dengan Server"
+            }
+            if (err.status == 403 || 401) {
+                message.value = "Anda Tidak Berhak Mengakses Page Ini"
+                router.push("/")
+            }
         }
     }
 
@@ -30,7 +36,7 @@
     const handleNavigate = (id) => {
         router.push({
             name: "Barang",
-            state: {id}
+            state: { id }
         })
     }
 
@@ -40,7 +46,7 @@
 
     const buttonColor = (active) => {
         return [
-            "text-center py-2.5 rounded-xl font-bold transition-all", selectedItem.value == active ? "text-blue-950 bg-white" : "text-yellow-500" 
+            "text-center py-2.5 rounded-xl font-bold transition-all", selectedItem.value == active ? "text-blue-950 bg-white" : "text-yellow-500"
         ]
     }
 
@@ -53,25 +59,17 @@
 
         <div class="flex flex-col pt-24 pb-10 px-6 gap-8">
             <div class="space-y-6">
-                <motion.h3 
-                    :initial="{ opacity: 0, y: -20 }" 
-                    :animate="{ opacity: 1, y: 0 }" 
-                    class="text-center text-blue-950 text-3xl font-black tracking-tight" >
+                <motion.h3 :initial="{ opacity: 0, y: -20 }" :animate="{ opacity: 1, y: 0 }"
+                    class="text-center text-blue-950 text-3xl font-black tracking-tight">
                     Barang Saya
                 </motion.h3>
 
-                <motion.div 
-                    :initial="{ opacity: 0 }" 
-                    :animate="{ opacity: 1 }" 
+                <motion.div :initial="{ opacity: 0 }" :animate="{ opacity: 1 }"
                     class="bg-gray-200/80 p-1.5 rounded-2xl grid grid-cols-2 gap-2 max-w-md mx-auto shadow-inner">
-                    <button
-                        @click="selectedItem = 'lost'"
-                        :class="buttonColor('lost')">
+                    <button @click="selectedItem = 'lost'" :class="buttonColor('lost')">
                         Kehilangan
                     </button>
-                    <button
-                        @click="selectedItem = 'found'"
-                        :class="buttonColor('found')">
+                    <button @click="selectedItem = 'found'" :class="buttonColor('found')">
                         Temuan
                     </button>
                 </motion.div>
@@ -79,22 +77,10 @@
 
             <div class="flex flex-col gap-4">
                 <div v-if="items.length" class="grid grid-cols-1 gap-4 lg:grid-cols-2">
-                    <motion.button 
-                        v-for="(item, index) in filter" 
-                        :key="item.id"
-                        :initial="{ opacity: 0, x: -20 }"
-                        :animate="{ opacity: 1, x: 0, transition: { delay: index * 0.1 } }"
-                        @click="handleNavigate(item.id)"
-                        class="group flex gap-4 bg-white p-4 rounded-3xl shadow-sm hover:shadow-md transition-all active:scale-95 border border-transparent hover:border-blue-100">
-                        <div class="relative shrink-0">
-                            <img 
-                                class="w-20 h-20 object-cover rounded-2xl shadow-sm" 
-                                :src="`${API_URL}${item.image}`"
-                                onerror="this.src='https://placehold.co/200x200?text=No+Image'">
-                        </div>
-
-                        <div class="flex flex-col justify-between py-1 text-left w-full">
-                            <div>
+                    <motion.div :initial="{ x: -100}" :animate="{ x: 0}" v-for="item in filter" class="flex justify-between bg-white py-2 rounded-lg pl-2">
+                        <button @click="handleNavigate(item.id)" class="flex gap-2 items-center">
+                            <img class="shadow rounded-lg p-2 w-23 h-23" :src="`${API_URL}${item.image}`">
+                            <div class="text-start">
                                 <h3 class="text-blue-950 font-bold text-lg leading-tight group-hover:text-blue-700 transition-colors">
                                     {{ item.title }}
                                 </h3>
@@ -103,24 +89,15 @@
                                     <span class="text-sm font-medium">{{ item.location }}</span>
                                 </div>
                             </div>
-                            
-                            <div class="flex items-center gap-2 mt-2">
-                                <span class="text-[10px] bg-green-100 text-green-600 px-2 py-0.5 rounded-full font-bold uppercase">
-                                    Aktif
-                                </span>
-                            </div>
-                        </div>
+                        </button>
 
-                        <div class="flex items-center pr-2 text-gray-300 group-hover:text-blue-500">
-                            <Icon icon="solar:alt-arrow-right-linear" width="20" />
-                        </div>
-                    </motion.button>
+                        <button @click="console.log('Hai')" class="flex items-center pr-2 text-red-500 group-hover:text-blue-500">
+                            <Icon icon="weui:delete-filled" width="24" height="24" />
+                        </button>
+                    </motion.div>
                 </div>
 
-                <motion.div 
-                    v-else 
-                    :initial="{ scale: 0.9, opacity: 0 }" 
-                    :animate="{ scale: 1, opacity: 1 }"
+                <motion.div v-else :initial="{ scale: 0.9, opacity: 0 }" :animate="{ scale: 1, opacity: 1 }"
                     class="flex flex-col items-center justify-center pt-20 opacity-40">
                     <Icon icon="solar:box-minimalistic-bold-duotone" width="100" class="text-blue-950" />
                     <h3 class="text-blue-950 text-xl font-bold mt-4">Belum ada laporan</h3>

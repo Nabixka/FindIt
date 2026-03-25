@@ -1,34 +1,28 @@
 <script setup>
     import { ref, onMounted } from 'vue';
     import Bar from '../../Bar/Bar.vue';
-    import { getToken, removeToken } from '../../../components/utils/helper';
+    import { api, removeToken } from '../../../components/utils/helper';
     import { useRouter } from 'vue-router';
     import { Icon } from '@iconify/vue';
     import { motion } from 'motion-v';
 
-    const API_URL = import.meta.env.VITE_API_URL
     const message = ref("")
     const profil = ref({})
-    const token = getToken()
     const router = useRouter()
 
     const getProfil = async () => {
         try {
-            if (!token) {
-                router.push("/")
-            }
-
-            const res = await fetch(`${API_URL}/user/profil`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-
-            const json = await res.json()
-            profil.value = json.data
+            const res = await api.get('/user/profil')
+            profil.value = res.data.data   
         }
         catch (err) {
-            console.log(err)
+            if ( err.status == 500){
+                message.value = "Maaf, Terjadi Gangguan Untuk Terhubung Dengan Server"
+            }
+            if ( err.status == 403 || 401){
+                message.value = "Anda Tidak Berhak Mengakses Page Ini"
+                LogOut()
+            }
         }
     }
 

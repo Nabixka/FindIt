@@ -6,6 +6,7 @@
 
     const API_URL = import.meta.env.VITE_API_URL
 
+    const clicked = ref(false)
     const email = ref("")
     const password = ref("")
     const message = ref("")
@@ -14,6 +15,7 @@
 
     const Login = async () => {
         try {
+            clicked.value = true
             const res = await fetch(`${API_URL}/auth/login`, {
                 method: "POST",
                 headers: {
@@ -73,8 +75,7 @@
                             placeholder="Password">
                     </div>
                     <div class="flex justify-center">
-                        <button class="hover:scale-115 cursor-pointer bg-yellow-400/90 py-2 px-15 text-lg rounded-lg font-bold text-blue-800">LOG
-                            IN</button>
+                        <button type="submit" :disabled="clicked" class="hover:scale-115 cursor-pointer bg-yellow-400/90 py-2 px-15 text-lg rounded-lg font-bold text-blue-800">{{ clicked ? 'Loading' : 'Log In' }}</button>
                     </div>
                 </form>
                 <div class="pt-10 flex flex-col gap-5">

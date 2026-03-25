@@ -1,6 +1,6 @@
 <script setup>
   import { ref, onMounted, nextTick, computed } from 'vue'
-  import { getToken } from '../../../components/utils/helper'
+  import { api, getToken } from '../../../components/utils/helper'
   import Bar from '../../Bar/Bar.vue'
   import Nav from '../../Bar/Nav.vue'
   import { Icon } from '@iconify/vue'
@@ -25,6 +25,7 @@
   const API_URL = import.meta.env.VITE_API_URL
   const token = getToken()
   const detail = ref({})
+  const message = ref("")
   let mapInstance = null;
   const user = computed(() => detail.value?.user)
 
@@ -77,18 +78,23 @@
       const id = state?.id
       if (!id) return;
 
-      const res = await fetch(`${API_URL}/item/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      })
-
-      const json = await res.json()
-      detail.value = json.data
+      const res = await api.get(`/item/${id}`)
+      detail.value = res.data.data
 
       if (detail.value.location) {
         showMap(detail.value.location)
       }
     } catch (err) {
-      console.log(err)
+      if(err.status == 500){
+        message.value = "Maaf, Terjadi Gangguan Untuk Terhubung Dengan Server"
+      }
+      if(err.status == 403 || 401) {
+        message.value = "Anda Tidak Berhak Mengakses Page Ini"
+        router.push("/")
+      }
+      if(err.status == 404){
+        message.value = "Barang Tersebut Tidak Ada"
+      }
     }
   }
 

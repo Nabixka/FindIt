@@ -95,7 +95,7 @@ const verifyOtp = async () => {
             class="text-center py-5 text-2xl bg-white rounded-md border-2 border-yellow-400" />
         </div>
 
-        <button @click="verifyOtp" class="bg-yellow-400 text-white font-bold py-3 text-2xl rounded-full">
+        <button @click.once="verifyOtp" class="bg-yellow-400 text-white font-bold py-3 text-2xl rounded-full">
           Verifikasi Akun
         </button>
         <router-link to="/" class="text-center font-semibold text-blue-400">Kembali Ke Login</router-link>

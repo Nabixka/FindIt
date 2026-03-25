@@ -3,13 +3,12 @@
     import Bar from '../../../Bar/Bar.vue';
     import Nav from '../../../Bar/Nav.vue';
     import { Icon } from '@iconify/vue';
-    import { getToken } from '../../../../components/utils/helper';
+    import { api, getToken } from '../../../../components/utils/helper';
     import { useRouter, useRoute } from 'vue-router';
     import { motion } from 'motion-v';
 
     const router = useRouter()
     const route = useRoute()
-    const API_URL = import.meta.env.VITE_API_URL
     const token = getToken()
     const status = computed(() => route.query.status)
     const previewImg = ref(null)
@@ -51,20 +50,13 @@
             formData.append('status', status.value)
             formData.append('category', form.value.category)
 
-            const res = await fetch(`${API_URL}/item`, {
-                method: "POST",
-                headers: {
-                    Authorization: `Bearer ${token}`
-                },
-                body: formData
-            })
-
-            if(res.ok){
-                router.push("/member/home")
-            }
+            const res = await api.post('/item', formData)
+            router.push("/member/home")
         }
         catch(err){
-            console.log(err)
+            if(err.status == 500){
+                message.value = "Maaf, Terjadi Gangguan Untuk Terhubung Dengan Server"
+            }
         }
     }
 

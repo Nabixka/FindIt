@@ -5,6 +5,7 @@ import { motion } from 'motion-v'
 
 const API_URL = import.meta.env.VITE_API_URL
 
+const clicked = ref(false)
 const username = ref("")
 const email = ref("")
 const password = ref("")
@@ -13,7 +14,7 @@ const router = useRouter()
 
 const Register = async () => {
     try {
-
+        clicked.value = true
         const res = await fetch(`${API_URL}/auth/register`, {
             method: "POST",
             headers: {
@@ -77,7 +78,7 @@ const Register = async () => {
                             placeholder="Password">
                     </div>
                     <div class="flex justify-center">
-                        <button
+                        <button type="submit" :disabled="clicked"
                             class="hover:scale-115 bg-yellow-400/90 py-2 px-15 rounded-lg text-lg font-bold text-blue-800">Register</button>
                     </div>
                 </form>
