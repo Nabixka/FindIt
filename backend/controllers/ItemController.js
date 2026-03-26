@@ -105,7 +105,6 @@ exports.getItemUser = async (req, res) => {
 exports.deleteItem = async (req, res) => {
     try{
         const { id } = req.params
-        const result = await item.deleteItem(id)
 
         const exist = await item.getItemById(id)
         if(!exist){
@@ -114,6 +113,8 @@ exports.deleteItem = async (req, res) => {
                 message: "Not Found"
             })
         }
+
+        const result = await item.deleteItem(id)
 
         res.status(200).json({
             status: 200,

@@ -9,7 +9,9 @@
 
     const API_URL = import.meta.env.VITE_API_URL
     const router = useRouter()
+    const isActive = ref(false)
     const selectedItem = ref("" || "lost")
+    const itemId = ref(null)
 
     const items = ref([])
 
@@ -32,6 +34,27 @@
     onMounted(() => {
         getItem()
     })
+
+    const handleOpenModal = (id) => {
+        isActive.value = true
+        itemId.value = id
+    }
+
+    const handleDelete = async () => {
+        try{
+            const id = itemId.value
+            const res = await api.delete(`/item/${id}`)
+
+            isActive.value = false
+            itemId.value = null
+            getItem()
+        }
+        catch(err){
+            if (err.status == 500) {
+                message.value = "Maaf, Terjadi Gangguan Untuk Terhubung Dengan Server"
+            }
+        }
+    }
 
     const handleNavigate = (id) => {
         router.push({
@@ -57,7 +80,24 @@
         <Nav />
         <Bar />
 
-        <div class="flex flex-col pt-24 pb-10 px-6 gap-8">
+        <div v-if="isActive" class="flex justify-center items-center min-h-screen">
+            <motion.div :initial="{ scale: 0}" :animate="{ scale: [0, 1.1, 1], duration: 1}" class="bg-white w-full ml-5 mr-5 pb-5 rounded-lg">
+                <button @click="isActive = false" class="w-full flex justify-end pr-2 pt-2">
+                    <Icon icon="lets-icons:close-round" class="text-gray-700" width="24" height="24" />
+                </button>
+                <div class="flex-col flex items-center justify-center gap-5">
+                    <Icon icon="carbon:close-outline" class="text-red-500" width="75" height="75" />
+                    <h3 class="text-gray-800 text-lg pl-5 pr-5 font-bold text-center">Apakah Anda Yakin Ingin Menghapusnya?</h3>
+                    <h3>{{ itemId }}</h3>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button @click="isActive = false" class="border border-gray-400 font-bold rounded-md">Batal</button>
+                        <button @click="handleDelete()" class="bg-red-500 text-white font-bold rounded-md px-5 border-gray-400 border py-2">Hapus</button>
+                    </div>
+                </div>
+            </motion.div>
+        </div>
+
+        <div v-else class="flex flex-col pt-24 pb-10 px-6 gap-8">
             <div class="space-y-6">
                 <motion.h3 :initial="{ opacity: 0, y: -20 }" :animate="{ opacity: 1, y: 0 }"
                     class="text-center text-blue-950 text-3xl font-black tracking-tight">
@@ -91,7 +131,7 @@
                             </div>
                         </button>
 
-                        <button @click="console.log('Hai')" class="flex items-center pr-2 text-red-500 group-hover:text-blue-500">
+                        <button @click="handleOpenModal(item.id)" class="flex items-center pr-2 text-red-500 group-hover:text-blue-500">
                             <Icon icon="weui:delete-filled" width="24" height="24" />
                         </button>
                     </motion.div>
@@ -105,5 +145,6 @@
                 </motion.div>
             </div>
         </div>
+
     </div>
 </template>
