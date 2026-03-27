@@ -88,7 +88,6 @@
                 <div class="flex-col flex items-center justify-center gap-5">
                     <Icon icon="carbon:close-outline" class="text-red-500" width="75" height="75" />
                     <h3 class="text-gray-800 text-lg pl-5 pr-5 font-bold text-center">Apakah Anda Yakin Ingin Menghapusnya?</h3>
-                    <h3>{{ itemId }}</h3>
                     <div class="grid grid-cols-2 gap-2">
                         <button @click="isActive = false" class="border border-gray-400 font-bold rounded-md">Batal</button>
                         <button @click="handleDelete()" class="bg-red-500 text-white font-bold rounded-md px-5 border-gray-400 border py-2">Hapus</button>

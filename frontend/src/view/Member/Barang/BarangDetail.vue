@@ -101,6 +101,13 @@
   onMounted(() => {
     getDetail()
   })
+
+  const handleLapor = async (id, userId) => {
+    router.push({
+      name : 'MemberReport',
+      state: {id, userId}
+    })
+  }
   
 </script>
 
@@ -180,17 +187,22 @@
           </div>
 
           <!-- BUTTON -->
-          <div class="flex gap-3">
-            <button
-              class="flex-1 bg-blue-950 hover:bg-blue-900 transition py-3 lg:py-4 text-sm lg:text-lg font-bold text-white rounded-2xl shadow-lg flex items-center justify-center gap-2">
-              <Icon icon="solar:phone-calling-bold" width="20" />
-              Hubungi Pelapor
-            </button>
+          <div class="flex flex-col gap-2">
+            <div class="flex gap-3">
+              <button class="w-full flex items-center justify-center gap-2 break-words text-white font-bold bg-blue-700 hover:bg-blue-900 rounded-xl p-3">
+                <Icon icon="solar:phone-calling-bold" width="24"  />
+                Hubungi Pelapor
+              </button>
 
-            <button
-              class="bg-white border-2 border-gray-100 p-3 lg:p-4 rounded-2xl shadow-sm text-blue-950 hover:bg-gray-50">
-              <Icon icon="solar:share-bold" width="20" />
-            </button>
+              <button class="bg-white shadow w-20 flex justify-center items-center hover:bg-gray-200 rounded-lg">
+                <Icon icon="solar:share-bold" width="20" />
+              </button>
+            </div>
+
+              <button @click="handleLapor(detail.id, detail.user.id)" class="flex items-center justify-center gap-2 text-white font-bold bg-red-600 hover:bg-red-800 rounded-xl p-3">
+                <Icon icon="solar:danger-bold" width="24" height="24" />
+                Laporkan
+              </button>
           </div>
 
         </div>

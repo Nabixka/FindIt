@@ -27,26 +27,12 @@ async function userSeeder(){
             }
         ]
 
-        const reports = [
-            {
-                user_id: 1,
-                proof: "/blackscreen.png",
-                reason: "Baldjadkjakjdakjdjakdjkdl"
-            }
-        ]
-
         for(let user of users){
             const hash = await bcrypt.hash(user.password, 10)
 
             await pool.query(`
                 INSERT INTO users (username, email, password, role, status) VALUES ($1, $2, $3, $4, $5) ON CONFLICT DO NOTHING`,
             [user.username, user.email, hash, user.role, user.status])
-        }
-
-        for(let report of reports){
-            await pool.query(`
-                INSERT INTO report (user_id, proof, reason) VALUES ($1, $2, $3) ON CONFLICT DO NOTHING`,
-            [report.user_id, report.proof, report.reason])
         }
 
         console.log("Berhasil Membuat User")

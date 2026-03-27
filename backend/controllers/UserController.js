@@ -135,13 +135,20 @@ exports.getReportById = async (req, res) => {
 // Create Report
 exports.createReport = async (req, res) => {
     try{
-        const { user_id, reason } = req.body
+        const { item_id, user_id, reason } = req.body
         const imageUrl = req.file ? `/uploads/report/${req.file.filename}` : null
 
-        if(!user_id || !reason || !imageUrl){
+        if(!item_id || !user_id || !reason || !imageUrl){
             return res.status(400).json({
                 status: 400,
                 message: "Isi yang Benar Wok"
+            })
+        }
+        const itemExist = await item.getItemById(item_id)
+        if(!itemExist){
+            return res.status(404).json({
+                status: 404,
+                message: "Tidak Ada Item"
             })
         }
 
@@ -149,11 +156,11 @@ exports.createReport = async (req, res) => {
         if(!exist){
             return res.status(404).json({
                 status: 404,
-                message: "Tidak Ada"
+                message: "Tidak Ada User"
             })
         }
 
-        const result = await user.createReport({user_id, reason, proof: imageUrl})
+        const result = await user.createReport({item_id, user_id, reason, proof: imageUrl})
         res.status(200).json({
             status: 200,
             message: "success",

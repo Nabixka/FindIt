@@ -46,36 +46,13 @@ async function createTable(){
             CREATE TABLE IF NOT EXISTS report(
             id SERIAL PRImARY KEY,
             user_id INT,
+            item_id INT,
             proof TEXT,
             reason TEXT,
 
-            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+            FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+            FOREIGN KEY (item_id) REFERENCES items(id) ON DELETE CASCADE
             )`)
-
-        await pool.query(`
-            CREATE TABLE IF NOT EXISTS chat_room(
-            id SERIAL PRIMARY KEY,
-            user_found INT,
-            user_owner INT,
-            items_id INT,
-
-            FOREIGN KEY (user_found) REFERENCES users(id),
-            FOREIGN KEY (user_owner) REFERENCES users(id),
-            FOREIGN KEY (items_id) REFERENCES items(id)
-            )
-        `)
-
-        await pool.query(`
-            CREATE TABLE IF NOT EXISTS chat(
-            id SERIAL PRIMARY KEY,
-            user_id INT,
-            chat_room_id INT,
-            message TEXT,
-
-            FOREIGN KEY (user_id) REFERENCES users(id),
-            FOREIGN KEY (chat_room_id) REFERENCES chat_room(id)
-            )
-        `)
 
         console.log("Berhasil Membuat Table")
     }
