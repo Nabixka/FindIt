@@ -12,6 +12,7 @@ import BarangDetail from '../../view/Member/Barang/BarangDetail.vue'
 import MemberCreate from '../../view/Member/Barang/Create/createBarang.vue'
 import MemberReport from '../../view/Member/Report/Report.vue'
 import MemberItem from '../../view/Member/Barang/UserBarang/UserBarang.vue'
+import CreateReport from '../../view/Member/Report/CreateReport.vue'
 
 // Admin
 import AdminHome from '../../view/Admin/AdminHome.vue'
@@ -75,6 +76,11 @@ const routes = [
         path: "/member/item",
         name: "MemberItem",
         component: MemberItem
+    },
+    {
+        path: "/member/create/report",
+        name: "MemberCreateReport",
+        component: CreateReport
     },
 
     // Admin

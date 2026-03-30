@@ -93,7 +93,7 @@
                                     <Icon icon="solar:box-bold" width="24" height="24" />
                                 </div>
                                 <div class="font-bold text-blue-950 text-lg">
-                                    Laporan Penemuan
+                                    Laporan Pembuatan Barang
                                 </div>
                             </router-link>
 
@@ -103,7 +103,7 @@
                                     <Icon icon="boxicons:user-filled" width="24" height="24" />
                                 </div>
                                 <div class="font-bold text-blue-950 text-lg">
-                                    Lapor User Usil
+                                    Laporan Anda
                                 </div>
                             </router-link>
 

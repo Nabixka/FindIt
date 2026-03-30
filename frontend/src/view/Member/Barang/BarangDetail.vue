@@ -104,7 +104,7 @@
 
   const handleLapor = async (id, userId) => {
     router.push({
-      name : 'MemberReport',
+      name : 'MemberCreateReport',
       state: {id, userId}
     })
   }

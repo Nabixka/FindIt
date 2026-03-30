@@ -56,7 +56,8 @@ const getReport = async () => {
 
         json_build_object(
         'id', i.id,
-        'title', i.title
+        'title', i.title,
+        'image', i.image
         ) AS item,
          
         r.proof,
@@ -75,15 +76,19 @@ const getReportById = async (id) => {
     const result = await pool.query(`
         SELECT 
         r.id,
+
         json_build_object(
         'id', u.id,
         'username', u.username,
         'email', u.email
         ) AS user,
+         
         json_build_object(
         'id', i.id,
-        'title', i.title
+        'title', i.title,
+        'image', i.image
         ) AS item,
+
         r.proof,
         r.reason
         
@@ -107,15 +112,19 @@ const createReport = async (data) => {
     const result = await pool.query(`
         SELECT 
         r.id,
+
         json_build_object(
         'id', u.id,
         'username', u.username,
         'email', u.email
         ) AS user,
+
         json_build_object(
         'id', i.id,
-        'title', i.title
+        'title', i.title,
+        'image', i.image
         ) AS item,
+         
         r.proof,
         r.reason
         
