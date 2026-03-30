@@ -10,6 +10,8 @@
     const view = ref(false)
     const API_URL = import.meta.env.VITE_API_URL
     const image = ref(null)
+    const title = ref("")
+    const text = ref("")
 
     const getReport = async () => {
         try {
@@ -23,10 +25,17 @@
         }
     }
 
-    const viewImage = (url) => {
+    const viewDetail = (type, data) => {
+        if(type == 'image'){
+            title.value = "Detail Bukti"
+            image.value = data
+        }
+        if(type == 'text'){
+            title.value = "Detail Alasan"
+            text.value = data
+        }
+
         view.value = true
-        image.value = url
-        console.log(url)
     }
 
     onMounted(() => {
@@ -48,9 +57,19 @@
 
         <div v-if="view" class="min-h-screen bg-blue-950/60">
             <div class="flex justify-center items-center min-h-screen">
-                <div class="bg-black w-75 lg:w-100 rounded-lg pl-5 pr-5 pb-5 pt-3">
-                    <button @click="view = false" class="text-white font-bold text-end w-full text-2xl pb-3">X</button>
-                    <img :src="`${API_URL}${image}`" class="rounded-lg w-full">
+                <div class="bg-white w-75 lg:w-100 rounded-lg pl-5 pr-5 pb-5 pt-3">
+                    <div class="flex justify-between items-center border-b-2 border-gray-200 pb-2">
+                        <h3 class="font-semibold text-lg">{{ title }}</h3>
+                        <button @click="view = false" class="font-bold text-2xl">X</button>
+                    </div>
+                    <img v-if="image" :src="`${API_URL}${image}`" class="pt-2 rounded-lg w-full">
+                    <p v-else class="break-all break-words pt-2">
+                        <h3>{{ text }}</h3>
+                        <div>
+                            <button>Ban</button>
+                            <button>Delete</button>
+                        </div>
+                    </p>
                 </div>
             </div>
         </div>
@@ -82,14 +101,14 @@
                             </td>
                             <td class="border-r border-blue-500/30">
                                 <div class="flex flex-col justify-center items-center">
-                                    <button @click="viewImage(report.proof)">
+                                    <button @click="viewDetail('image', report.proof)">
                                         <img class="w-20 h-20 rounded-lg" :src="`${API_URL}${report.proof}`">
                                     </button>
                                 </div>
                             </td>
                             <td class="border-r border-blue-500/30">
                                 <div class="flex flex-col justify-center items-center">
-                                    <button class="font-bold bg-blue-950/80 text-white py-2 px-5 rounded-lg">View</button>
+                                    <button @click="viewDetail('text', report.reason)" class="font-bold bg-blue-950/80 text-white py-2 px-5 rounded-lg">View</button>
                                 </div>
                             </td>
                         </tr>
