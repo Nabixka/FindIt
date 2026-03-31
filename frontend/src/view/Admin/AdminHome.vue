@@ -1,7 +1,7 @@
 <script setup>
     import { ref, onMounted } from 'vue';
     import Bar from '../Bar/Bar.vue';
-    import { api } from '../../components/utils/helper';
+    import { api, getToken, removeToken } from '../../components/utils/helper';
     import { useRouter } from 'vue-router';
 
     const router = useRouter()
@@ -12,6 +12,7 @@
     const image = ref(null)
     const title = ref("")
     const text = ref("")
+    const userId = ref("")
 
     const getReport = async () => {
         try {
@@ -22,10 +23,52 @@
             if (err.status == 500) {
                 message.value = "TIdak Dapat Terhubung Ke Server"
             }
+            if(err.status == 403 || err.status == 401){
+                message.value = "Anda Tidak Berhak Mengakses Page Ini"
+                removeToken()
+                router.push("/")
+            }
         }
     }
 
-    const viewDetail = (type, data) => {
+    const handleButton = async (event, id) => {
+        try{
+            if(event == "delete"){
+                const res = await api.delete(`/user/${id}`)
+                
+                view.value = false
+                getReport()
+            }
+            if(event == "ban"){
+                const res = await api.delete(`/user/status/${id}`)
+                
+                view.value = false
+                getReport()
+            }
+            else{
+                message.value = "What"
+            }
+        }
+        catch(err){
+            if (err.status == 500) {
+                message.value = "TIdak Dapat Terhubung Ke Server"
+            }
+            if(err.status == 403 || err.status == 401){
+                message.value = "Anda Tidak Berhak Mengakses Page Ini"
+                removeToken()
+                router.push("/")
+            }
+            if(err.status == 404){
+                message.value = "User Tidak Ada"
+            }
+        }
+    }
+
+    const viewDetail = (type, data, id) => {
+        
+        title.value = ""
+        image.value = null
+
         if(type == 'image'){
             title.value = "Detail Bukti"
             image.value = data
@@ -33,6 +76,7 @@
         if(type == 'text'){
             title.value = "Detail Alasan"
             text.value = data
+            userId.value = id
         }
 
         view.value = true
@@ -40,6 +84,9 @@
 
     onMounted(() => {
         getReport()
+        if(!getToken()){
+            router.push("/")
+        }
     })
 
     const handleNavigate = (id) => {
@@ -63,13 +110,13 @@
                         <button @click="view = false" class="font-bold text-2xl">X</button>
                     </div>
                     <img v-if="image" :src="`${API_URL}${image}`" class="pt-2 rounded-lg w-full">
-                    <p v-else class="break-all break-words pt-2">
-                        <h3>{{ text }}</h3>
-                        <div>
-                            <button>Ban</button>
-                            <button>Delete</button>
+                    <div v-else class="pt-2">
+                        <h3 class="break-all break-words">{{ text }}</h3>
+                        <div class="grid grid-cols-2 pt-2 gap-3">
+                            <button @click="handleButton('ban', userId)" class="rounded-lg bg-yellow-500 py-2 border-2 border-red-500 font-bold text-lg text-white">Ban</button>
+                            <button @click="handleButton('delete', userId)" class="rounded-lg bg-red-500 py-2 border-2 border-yellow-500 font-bold text-lg text-white">Delete</button>
                         </div>
-                    </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -83,14 +130,14 @@
                 <table class="min-w-200 min-h-50">
                     <thead class="bg-blue-900 text-white">
                         <tr>
-                            <th class="py-1 border-r border-blue-500/30">User</th>
-                            <th class="py-1 border-r border-blue-500/30">Item</th>
-                            <th class="py-1 border-r border-blue-500/30">Proof</th>
-                            <th class="py-1 border-r border-blue-500/30">Alasan</th>
+                            <th class="border-r border-blue-500/30">User</th>
+                            <th class="border-r border-blue-500/30">Item</th>
+                            <th class="border-r border-blue-500/30">Proof</th>
+                            <th class="border-r border-blue-500/30">Alasan</th>
                         </tr>
                     </thead>
                     <tbody class="bg-sky-900/10">
-                        <tr v-for="report in reports">
+                        <tr v-if="reports.length" v-for="report in reports">
                             <td class="text-center font-bold border-r border-blue-500/30">{{ report.user.username }}
                             </td>
                             <td class="border-r border-blue-500/30">
@@ -108,9 +155,12 @@
                             </td>
                             <td class="border-r border-blue-500/30">
                                 <div class="flex flex-col justify-center items-center">
-                                    <button @click="viewDetail('text', report.reason)" class="font-bold bg-blue-950/80 text-white py-2 px-5 rounded-lg">View</button>
+                                    <button @click="viewDetail('text', report.reason, report.user.id)" class="font-bold bg-blue-950/80 text-white py-2 px-5 rounded-lg">View</button>
                                 </div>
                             </td>
+                        </tr>
+                        <tr v-else>
+                            <td class="text-center font-bold text-gray-700 text-lg" colspan=4>Tidak Ada</td>
                         </tr>
                     </tbody>
                 </table>

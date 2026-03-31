@@ -3,7 +3,14 @@ const auth = require("../models/AuthModel")
 const pool = require("../database/db")
 const bcrypt = require("bcrypt")
 const crypto = require("crypto")
-const { generateOTP, sendOTP } = require("../utils/otp")
+let generateOTP, sendOTP
+
+if(process.env.MODE ==="dev"){
+    ({ generateOTP, sendOTP } = require("../utils/otpNodemailer"))
+}
+else{
+    ({ generateOTP, sendOTP } = require("../utils/otp"))
+}
 
 // Kirim Kode OTP
 exports.sendOtpCode = async (req, res) => {
@@ -31,7 +38,7 @@ exports.sendOtpCode = async (req, res) => {
             UPDATE users SET otp_code = $1, otp_expired = $2 WHERE email = $3`,
         [otp, expired, email])
 
-        await sendOTP(email, otp)
+        sendOTP(email, otp)
 
         res.json({
             message: "Kode OTP Berhasil dikirim"
@@ -169,7 +176,7 @@ exports.loginUser = async (req, res) => {
             UPDATE users SET otp_code = $1, otp_expired = $2 WHERE email = $3`,
         [otp, expired, email])
         
-        await sendOTP(email, otp)
+        sendOTP(email, otp)
 
         const result = await user.getUserById(exist.id)
         res.status(200).json({

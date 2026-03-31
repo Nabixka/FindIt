@@ -1,17 +1,13 @@
-const nodemailer = require("nodemailer")
+// For Prod
 
-const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    }
-})
+const { Resend } = require("resend")
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 exports.sendOTP = async (to, otp) => {
-    await transporter.sendMail({
-        from: `"Kode OTP" <${process.env.EMAIL_USER}>`,
-        to,
+    await resend.emails.send({
+        from: "Findit <onboarding@resend.dev>",
+        to: to,
         subject: "Kode OTP Anda",
         text: `Kode OTP Anda Adalah ${otp}. Berlaku 5 Menit`
     })
