@@ -3,14 +3,7 @@ const auth = require("../models/AuthModel")
 const pool = require("../database/db")
 const bcrypt = require("bcrypt")
 const crypto = require("crypto")
-let generateOTP, sendOTP
-
-if(process.env.MODE ==="dev"){
-    ({ generateOTP, sendOTP } = require("../utils/otpNodemailer"))
-}
-else{
-    ({ generateOTP, sendOTP } = require("../utils/otp"))
-}
+const { generateOTP, sendOTP } = require("../utils/otp")
 
 // Kirim Kode OTP
 exports.sendOtpCode = async (req, res) => {
