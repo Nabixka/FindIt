@@ -1,6 +1,6 @@
 # 🔎 FindIt
 
-Aplikasi web untuk melaporkan **barang hilang** dan **barang ditemukan**, dibangun menggunakan **Node.js 22, Vue.js, dan PostgreSQL**.
+Aplikasi web untuk melaporkan **barang hilang** dan **barang ditemukan**, dibangun menggunakan **Node.js 22, Vue, dan PostgreSQL**.
 
 FindIt membantu pengguna menemukan kembali barang yang hilang atau melaporkan barang yang ditemukan dengan sistem yang sederhana dan cepat.
 
@@ -37,20 +37,30 @@ FindIt membantu pengguna menemukan kembali barang yang hilang atau melaporkan ba
 
 ---
 
-# 🏗️ Teknologi yang Digunakan
+# 🏗️ Library yang Digunakan
 
 ## Backend
 - Node.js 22
 - Express.js
-- PostgreSQL
+- Pg
 - Multer
 - dotenv
+- Nodemailer
+- Resend
+- Hash
+- JWT Bearer
 - Arsitektur MVC
 
 ## Frontend
-- Vue.js
+- Vue
 - Vite
 - Capacitor (Untuk Android)
+- Iconify
+- Tailwind
+- Motion-v
+- Axios
+- Leaflet
+- vue-router
 
 ## Database
 - PostgreSQL
@@ -123,6 +133,10 @@ DB_USER = YOUR_DB_USER
 
 PORT = 3000
 
+MODE = "dev" # else if you use resend
+
+RESEND_API_KEY = "YOUR_RESEND_API KEY"  # if you not use resend, comment the OTP code for resend
+
 EMAIL_USER = "YOUR_EMAIL"
 EMAIL_PASS = "YOUR_EMAIL_APP_PASS"
 ```
@@ -132,7 +146,7 @@ EMAIL_PASS = "YOUR_EMAIL_APP_PASS"
 
 # URL
 
-- Menggunakan Cloudflared
+- Menggunakan Cloudflared Agar Menjadi HTTPS
 ## Download Di Windows Powershell sebagai Admin
 ```powershell
 winget install --id Cloudflare.cloudflared
@@ -143,3 +157,5 @@ cloudflared tunnel login
 cloudflared tunnel --url http://localhost:3000
 
 ```
+
+Or Maybet Just Deploy For Static URL
