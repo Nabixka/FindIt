@@ -40,7 +40,7 @@
                 getReport()
             }
             if(event == "ban"){
-                const res = await api.delete(`/user/status/${id}`)
+                const res = await api.put(`/user/status/${id}`, { status: "banned"})
                 
                 view.value = false
                 getReport()

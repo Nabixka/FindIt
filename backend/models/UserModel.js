@@ -133,8 +133,36 @@ const createReport = async (data) => {
         LEFT JOIN items i ON r.item_id = i.id
         WHERE r.id = $1`, [newId])
     
-    return result.rows[0]
-    
+    return result.rows[0]   
+}
+
+const getReportByUser = async (id) => {
+    const result  =await pool.query(`
+        SELECT
+        r.id,
+        
+        json_build_object(
+        'id', u.id,
+        'username', u.username,
+        'email', u.email
+        ) AS user,
+
+        json_build_object(
+        'id', i.id,
+        'title', i.title,
+        'image', i.image
+        ) AS item,
+
+        r.proof,
+        r.reason
+
+        FROM report r
+        LEFT JOIN users u ON r.user_id = u.id
+        LEFT JOIN items i ON r.item_id = i.id
+        WHERE u.id = $1
+        `, [id])
+
+        return result.rows
 }
 
 const deleteReport = async (id) => {
@@ -167,5 +195,6 @@ module.exports = {
     getReportById,
     createReport,
     updateStatusUser,
-    deleteReport
+    deleteReport,
+    getReportByUser
 }

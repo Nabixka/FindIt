@@ -188,16 +188,10 @@
 
           <!-- BUTTON -->
           <div class="flex flex-col gap-2">
-            <div class="flex gap-3">
               <button class="w-full flex items-center justify-center gap-2 break-words text-white font-bold bg-blue-700 hover:bg-blue-900 rounded-xl p-3">
                 <Icon icon="solar:phone-calling-bold" width="24"  />
                 Hubungi Pelapor
               </button>
-
-              <button class="bg-white shadow w-20 flex justify-center items-center hover:bg-gray-200 rounded-lg">
-                <Icon icon="solar:share-bold" width="20" />
-              </button>
-            </div>
 
               <button @click="handleLapor(detail.id, detail.user.id)" class="flex items-center justify-center gap-2 text-white font-bold bg-red-600 hover:bg-red-800 rounded-xl p-3">
                 <Icon icon="solar:danger-bold" width="24" height="24" />

@@ -29,6 +29,7 @@
 
             if(res.status == 404 || 401){
                 message.value = "Email Atau Password Salah"
+                clicked.value = false
             }
             if(res.status == 403){
                 modal.value = true
