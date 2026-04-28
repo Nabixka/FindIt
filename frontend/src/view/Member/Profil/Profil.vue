@@ -26,6 +26,13 @@
         }
     }
 
+    const handleNavigate = (id) => {
+        router.push({
+            name: 'MemberReport',
+            state: { id }
+        })
+    }
+
     const LogOut = async () => {
         removeToken()
         router.push("/")
@@ -97,7 +104,7 @@
                                 </div>
                             </router-link>
 
-                            <router-link to="/member/report"
+                            <button @click="handleNavigate(profil.id)"
                                 class="flex items-center gap-6 bg-gray-50 hover:bg-gray-100 transition p-5 rounded-xl shadow-md">
                                 <div class="bg-sky-300 p-3 rounded-full">
                                     <Icon icon="boxicons:user-filled" width="24" height="24" />
@@ -105,7 +112,7 @@
                                 <div class="font-bold text-blue-950 text-lg">
                                     Laporan Anda
                                 </div>
-                            </router-link>
+                            </button>
 
                             <button @click="LogOut"
                                 class="flex items-center gap-6 bg-red-50 hover:bg-red-100 transition p-5 rounded-xl shadow-md">

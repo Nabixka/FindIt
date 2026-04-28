@@ -1,5 +1,37 @@
 <script setup>
+    import { ref, onMounted } from 'vue';
     import Bar from '../../Bar/Bar.vue';
+    import { api } from '../../../components/utils/helper';
+    import { useRouter } from 'vue-router';
+
+    const reports = ref([]);
+    const message = ref(null);
+    const API_URL = import.meta.env.VITE_API_URL;
+    const router = useRouter();
+    const { state } = history;
+    const id = state?.id;
+
+    const getReports = async () => {
+        try {
+            const res = await api.get(`/user/report/user/${id}`);
+            reports.value = res.data.data;
+        } catch (err) {
+            if (err.status == 500) {
+                message.value = "Maaf, Terjadi Gangguan Untuk Terhubung Dengan Server";
+            }
+        }
+    };
+
+    onMounted(() => {
+        getReports();
+    });
+
+    const handleNavigate = (id) => {
+        router.push({
+            name: 'Barang',
+            state: { id }
+        });
+    };
 </script>
 
 <template>
@@ -10,16 +42,33 @@
             <h3 class="text-4xl font-extrabold text-blue-950">Laporan Anda</h3>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 pt-15 pl-10 pr-10">
-            <div class="flex p-5 rounded-lg bg-white gap-5">
-                <div class="shadow rounded-md">
-                    <img class="w-25 h-25" src="/dompet.jpg">
+        <div v-if="message" class="flex justify-center pt-5">
+            <h3 class="text-red-500 font-semibold">{{ message }}</h3>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 pt-10 pl-10 pr-10 pb-20">
+            <div v-if="reports.length" v-for="report in reports" class="bg-white rounded-lg shadow-lg p-5 flex flex-col gap-4">
+                <div class="flex items-center gap-4">
+                    <img class="w-16 h-16 rounded-full object-cover" :src="`${API_URL}${report.item.image}`" alt="Item Image">
+                    <div>
+                        <h3 class="font-extrabold text-blue-950">{{ report.item.title }}</h3>
+                        <h3 class="font-semibold text-red-600 break-words">User yang dilaporkan: {{ report.user.username }}</h3>
+                    </div>
                 </div>
-                <div class="flex flex-col">
-                    <h3 class="font-extrabold text-blue-950">User 1</h3>
-                    <h3 class="font-bold text-yellow-700">Dompet</h3>
-                    <h3 class="break-words">Blabladnljaslklasdaass;llkdlkajka daddlkajsdhasssssssssssssssssssdsaioh dasiupoooooooooooooooooooooo</h3>
+                <div>
+                    <h4 class="font-bold text-gray-700">Alasan:</h4>
+                    <p class="text-sm text-gray-600 break-words">{{ report.reason }}</p>
                 </div>
+                <div v-if="report.proof">
+                    <h4 class="font-bold text-gray-700">Bukti:</h4>
+                    <img class="w-full h-32 object-cover rounded-lg" :src="`${API_URL}${report.proof}`" alt="Proof Image">
+                </div>
+                <button @click="handleNavigate(report.item.id)" class="bg-blue-500 text-white py-2 px-4 rounded-lg font-semibold hover:bg-blue-600 transition">
+                    Lihat Barang
+                </button>
+            </div>
+            <div v-else class="col-span-full flex justify-center items-center py-20">
+                <h3 class="text-gray-500 text-lg font-semibold">Belum ada laporan yang Anda buat.</h3>
             </div>
         </div>
     </div>

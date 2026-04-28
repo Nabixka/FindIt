@@ -48,6 +48,13 @@ const getReport = async () => {
     const result = await pool.query(`
         SELECT 
         r.id,
+
+        json_build_object(
+        'id', ru.id,
+        'username', ru.username,
+        'email', ru.email
+        ) AS user_report,
+
         json_build_object(
         'id', u.id,
         'username', u.username,
@@ -65,6 +72,7 @@ const getReport = async () => {
         
         FROM report r
         LEFT JOIN users u ON r.user_id = u.id
+        LEFT JOIN users ru ON r.report_user_id = ru.id
         LEFT JOIN items i ON r.item_id = i.id
         `)
 
@@ -78,6 +86,12 @@ const getReportById = async (id) => {
         r.id,
 
         json_build_object(
+        'id', ru.id,
+        'username', ru.username,
+        'email', ru.email
+        ) AS user_report,
+
+        json_build_object(
         'id', u.id,
         'username', u.username,
         'email', u.email
@@ -94,6 +108,7 @@ const getReportById = async (id) => {
         
         FROM report r
         LEFT JOIN users u ON r.user_id = u.id
+        LEFT JOIN users ru ON r.report_user_id = ru.id
         LEFT JOIN items i ON r.item_id = i.id
         WHERE r.id = $1`, [id])
 
@@ -102,16 +117,22 @@ const getReportById = async (id) => {
 
 // Create Report
 const createReport = async (data) => {
-    const { item_id, user_id, reason, proof } = data
+    const { item_id, report_user_id, user_id, reason, proof } = data
 
     const create = await pool.query(`
-        INSERT INTO report (item_id, user_id, reason, proof) VALUES ($1, $2, $3, $4) RETURNING id`,
-    [item_id, user_id, reason, proof])
+        INSERT INTO report (item_id, report_user_id, user_id, reason, proof) VALUES ($1, $2, $3, $4, $5) RETURNING id`,
+    [item_id, report_user_id, user_id, reason, proof])
 
     const newId = create.rows[0].id
     const result = await pool.query(`
         SELECT 
         r.id,
+
+        json_build_object(
+        'id', ru.id,
+        'username', ru.username,
+        'email', ru.email
+        ) AS user_report,
 
         json_build_object(
         'id', u.id,
@@ -129,6 +150,8 @@ const createReport = async (data) => {
         r.reason
         
         FROM report r
+        
+        LEFT JOIN users ru ON r.report_user_id = ru.id
         LEFT JOIN users u ON r.user_id = u.id
         LEFT JOIN items i ON r.item_id = i.id
         WHERE r.id = $1`, [newId])
@@ -137,9 +160,15 @@ const createReport = async (data) => {
 }
 
 const getReportByUser = async (id) => {
-    const result  =await pool.query(`
+    const result  = await pool.query(`
         SELECT
         r.id,
+
+        json_build_object(
+        'id', ru.id,
+        'username', ru.username,
+        'email', ru.email
+        ) AS user_report,
         
         json_build_object(
         'id', u.id,
@@ -157,9 +186,11 @@ const getReportByUser = async (id) => {
         r.reason
 
         FROM report r
+        
+        LEFT JOIN users ru ON r.report_user_id = ru.id
         LEFT JOIN users u ON r.user_id = u.id
         LEFT JOIN items i ON r.item_id = i.id
-        WHERE u.id = $1
+        WHERE ru.id = $1
         `, [id])
 
         return result.rows
