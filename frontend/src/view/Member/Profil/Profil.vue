@@ -53,8 +53,11 @@
     <div class="min-h-screen bg-linear-to-b from-white to-gray-200 dark:bg-linear-to-b dark:from-gray-950/90 dark:to-blue-950">
         <Bar />
 
-        <div v-if="isShow" class="flex h-screen items-center justify-center pl-5 pr-5">
-            <div class="bg-linear-to-b bg-linear-to-b from-gray-800 to-gray-950 dark:from-white dark:to-gray-300 shadow p-3 pb-5 rounded-lg w-full flex flex-col gap-1">
+        <div v-if="isShow" class="fixed inset-0 z-50 flex h-screen items-center justify-center pl-5 pr-5">
+            
+            <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" @click="isShow = false"></div>
+    
+            <div class="bg-linear-to-b bg-linear-to-b z-50 from-gray-800 to-gray-950 dark:from-white dark:to-gray-300 shadow p-3 pb-5 rounded-lg w-full flex flex-col gap-1">
                 <button @click="isShow = false" class="flex justify-end dark:text-black text-white">
                     <Icon icon="meteor-icons:xmark" width="24" height="24" />
                 </button>
@@ -67,7 +70,7 @@
             </div>
         </div>
 
-        <div v-else class="flex justify-center items-center lg:h-screen h-full">
+        <div class="flex justify-center items-center lg:h-screen h-full">
             <div class="lg:grid lg:grid-cols-3 pt-10 pb-10 lg:gap-10">
                 <div class="lg:col-span-1 flex flex-col pl-10 pr-10 gap-10">
 
