@@ -5,10 +5,15 @@
     import { useRouter } from 'vue-router';
     import { Icon } from '@iconify/vue';
     import { motion } from 'motion-v';
+    import { useDark, useToggle } from '@vueuse/core';
 
     const message = ref("")
     const profil = ref({})
     const router = useRouter()
+    const isDark = useDark()
+    const darkToggle = useToggle(isDark)
+    const isShow = ref(false)
+    
 
     const getProfil = async () => {
         try {
@@ -45,50 +50,64 @@
 </script>
 
 <template>
-    <div class="min-h-screen bg-linear-to-b from-blue-900/80 to-blue-950">
+    <div class="min-h-screen bg-linear-to-b from-white to-gray-200 dark:bg-linear-to-b dark:from-blue-900/80 dark:to-blue-950">
         <Bar />
 
-        <div class="flex justify-center items-center lg:h-screen h-full">
+        <div v-if="isShow" class="flex h-screen items-center justify-center pl-5 pr-5">
+            <div class="bg-linear-to-b bg-linear-to-b from-gray-800 to-gray-950 dark:from-white dark:to-gray-300 shadow p-3 pb-5 rounded-lg w-full flex flex-col gap-1">
+                <button @click="isShow = false" class="flex justify-end dark:text-black text-white">
+                    <Icon icon="meteor-icons:xmark" width="24" height="24" />
+                </button>
+                <div class="w-full flex gap-3 justify-center items-center">
+                    <Icon :icon="isDark ? 'solar:moon-line-duotone' : 'tabler:sun'" class="dark:text-black text-white" width="24" height="24" />
+                    <button @click="isDark = !isDark" :class="isDark ? 'justify-end' : 'justify-start'"  class="bg-gray-500 w-1/3 flex rounded-full h-8">
+                        <div :class="isDark ? 'bg-gray-800' : 'bg-yellow-200' " class="rounded-full w-2/4 h-8"></div>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div v-else class="flex justify-center items-center lg:h-screen h-full">
             <div class="lg:grid lg:grid-cols-3 pt-10 pb-10 lg:gap-10">
                 <div class="lg:col-span-1 flex flex-col pl-10 pr-10 gap-10">
 
-                    <motion.div :initial="{ scale: 0 }" :animate="{ scale: [0, 1.1, 1], transition: { duration: 0.8 } }" class="bg-white/10 backdrop-blur-lg rounded-3xl p-8 flex flex-col items-center gap-4 shadow-xl">
+                    <motion.div :initial="{ scale: 0 }" :animate="{ scale: [0, 1.1, 1], transition: { duration: 0.8 } }" class="bg-blue-950/80 dark:bg-white backdrop-blur-lg rounded-3xl p-8 flex flex-col items-center gap-4 shadow-xl">
                         <div class="w-32 h-32 bg-white overflow-hidden rounded-full border-4 border-yellow-400">
                             <img src="/F.png" class="w-full h-full object-cover">
                         </div>
 
                         <div class="text-center">
-                            <h3 class="font-extrabold text-white text-2xl">
+                            <h3 class="font-extrabold dark:text-blue-950/90 text-white text-2xl">
                                 {{ profil.username }}
                             </h3>
-                            <p class="text-gray-300 text-sm">
+                            <p class="dark:text-blue-700/40 text-gray-300 text-sm">
                                 {{ profil.email }}
                             </p>
                         </div>
                     </motion.div>
 
                     <div class="grid grid-cols-2 gap-6">
-                        <motion.div :initial="{ scale: 0 }" :animate="{ scale: [0, 1.1, 1], transition: { duration: 0.8 } }" class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 text-center shadow-lg">
+                        <motion.div :initial="{ scale: 0 }" :animate="{ scale: [0, 1.1, 1], transition: { duration: 0.8 } }" class="bg-blue-950/80 dark:bg-white backdrop-blur-lg rounded-2xl p-6 text-center shadow-lg">
                             <h3 class="text-yellow-400 text-4xl font-bold">
                                 {{ profil.lost_item }}
                             </h3>
-                            <p class="text-white font-semibold mt-2">KEHILANGAN</p>
+                            <p class="text-white dark:text-blue-950/90 font-semibold mt-2">KEHILANGAN</p>
                         </motion.div>
 
-                        <motion.div :initial="{ scale: 0 }" :animate="{ scale: [0, 1.1, 1], transition: { duration: 0.8 } }" class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 text-center shadow-lg">
+                        <motion.div :initial="{ scale: 0 }" :animate="{ scale: [0, 1.1, 1], transition: { duration: 0.8 } }" class="bg-blue-950/80 dark:bg-white backdrop-blur-lg rounded-2xl p-6 text-center shadow-lg">
                             <h3 class="text-yellow-400 text-4xl font-bold">
                                 {{  profil.found_item }}
                             </h3>
-                            <p class="text-white font-semibold mt-2">MENEMUKAN</p>
+                            <p class="text-white dark:text-blue-950/90 font-semibold mt-2">MENEMUKAN</p>
                         </motion.div>
                     </div>
 
                 </div>
 
                 <motion.div :initial="{ scale: 0 }" :animate="{ scale: [0, 1.05, 1], transition: { duration: 0.8 } }" class="lg:col-span-2 mt-10 pb-10 lg:mt-0">
-                    <div class="bg-white rounded-3xl ml-5 mr-5 p-10 shadow-2xl">
+                    <div class="bg-blue-950/80 dark:bg-white rounded-3xl ml-5 mr-5 p-10 shadow-2xl">
 
-                        <h3 class="text-2xl font-bold text-blue-950 mb-8">
+                        <h3 class="text-2xl font-bold text-white dark:text-blue-950 mb-8">
                             Pengaturan Akun
                         </h3>
 
@@ -111,6 +130,16 @@
                                 </div>
                                 <div class="font-bold text-blue-950 text-lg">
                                     Laporan Anda
+                                </div>
+                            </button>
+
+                            <button @click="isShow = true"
+                                class="flex items-center gap-6 bg-gray-50 hover:bg-gray-100 transition p-5 rounded-xl shadow-md">
+                                <div class="bg-sky-300 p-3 rounded-full">
+                                    <Icon icon="weui:setting-filled" width="24" height="24" />
+                                </div>
+                                <div class="font-bold text-blue-950 text-lg">
+                                    Pengaturan Layar
                                 </div>
                             </button>
 
