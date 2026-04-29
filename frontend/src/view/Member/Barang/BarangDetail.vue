@@ -112,7 +112,7 @@
 </script>
 
 <template>
-  <div class="bg-gray-50 min-h-screen pt-20 pb-32 lg:pt-24 lg:pb-24">
+  <div class="bg-gray-50 dark:bg-linear-to-b dark:from-gray-950/90 dark:to-blue-950 min-h-screen pt-20 pb-32 lg:pt-24 lg:pb-24">
     <Nav />
 
     <div class="max-w-md lg:max-w-6xl mx-auto px-4">
@@ -128,7 +128,7 @@
             </span>
           </div>
 
-          <div class="overflow-hidden rounded-3xl shadow-xl border-4 border-white bg-white">
+          <div class="overflow-hidden rounded-3xl shadow-xl border-4 dark:border-gray-300 border-white bg-white">
             <img v-if="detail.image" class="w-full object-cover aspect-square lg:aspect-auto lg:h-[500px]"
               :src="`${API_URL}${detail.image}`" alt="Item Image" />
             <div v-else class="w-full aspect-square flex items-center justify-center bg-gray-200 text-gray-400">
@@ -141,23 +141,23 @@
         <div class="flex flex-col gap-5 mt-6 lg:mt-0">
 
           <!-- DETAIL -->
-          <div class="bg-white rounded-3xl p-5 lg:p-8 shadow-sm">
-            <h1 class="text-xl lg:text-3xl font-extrabold text-blue-950 break-words">
+          <div class="bg-white dark:bg-white/10 rounded-3xl p-5 lg:p-8 shadow-sm">
+            <h1 class="text-xl lg:text-3xl font-extrabold dark:text-white text-blue-950 break-words">
               {{ detail.title || 'Loading...' }}
             </h1>
 
             <div class="flex items-center gap-2 mt-3 text-gray-600">
               <Icon icon="solar:map-point-bold-duotone" class="text-blue-600" width="20" />
-              <span class="text-sm lg:text-base break-words">
+              <span class="text-sm dark:text-white/70 lg:text-base break-words">
                 {{ detail.location }}
               </span>
             </div>
 
             <div class="mt-5">
-              <h4 class="text-xs font-bold text-gray-400 uppercase mb-2">
+              <h4 class="text-xs font-bold dark:text-white text-gray-400 uppercase mb-2">
                 Deskripsi
               </h4>
-              <p class="text-sm lg:text-lg text-blue-900/80 leading-relaxed break-words">
+              <p class="text-sm lg:text-lg dark:text-white/70 text-blue-900/80 leading-relaxed break-words">
                 {{ detail.description }}
               </p>
             </div>
@@ -169,17 +169,17 @@
           </div>
 
           <!-- USER -->
-          <div class="bg-blue-50 rounded-2xl p-4 flex items-center justify-between border border-blue-100">
+          <div class="dark:bg-white/10 bg-blue-50 rounded-2xl p-4 flex items-center justify-between dark:border-none border border-blue-100">
             <div class="flex items-center gap-3">
               <div
-                class="w-9 h-9 bg-blue-950 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                class="w-9 h-9 dark:bg-white/50 bg-blue-950 rounded-full flex items-center justify-center text-white font-bold text-sm">
                 {{ detail.user_found_id || 'P' }}
               </div>
               <div v-if="user">
-                <p class="text-xs text-blue-900/50 font-bold uppercase">
+                <p class="text-xs dark:text-white text-blue-900/50 font-bold uppercase">
                   Pelapor
                 </p>
-                <p class="text-blue-950 font-bold text-sm lg:text-base">
+                <p class="text-blue-950 dark:text-white/70 font-bold text-sm lg:text-base">
                   {{ user.username }}
                 </p>
               </div>

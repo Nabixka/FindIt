@@ -82,14 +82,14 @@
 </script>
 
 <template>
-    <div class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <div class="dark:bg-linear-to-b dark:from-gray-950/90 dark:to-blue-950 bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
         <Bar />
         <div class="flex justify-center pt-20 px-4">
-            <div class="bg-white rounded-xl shadow-2xl flex flex-col w-full max-w-lg gap-6 p-8">
-                <h3 class="border-b pb-4 border-gray-300 w-full text-center text-blue-950 text-3xl font-extrabold">
+            <div class="dark:bg-white/10 bg-white rounded-xl shadow-2xl flex flex-col w-full max-w-lg gap-6 p-8">
+                <h3 class="dark:text-white border-b pb-4 border-gray-300 w-full text-center text-blue-950 text-3xl font-extrabold">
                     Laporkan Pengguna
                 </h3>
-                <h3 class="font-semibold text-center text-gray-600 text-lg">Tuliskan masalah yang disebabkan pengguna ini</h3>
+                <h3 class="dark:text-white font-semibold text-center text-gray-600 text-lg">Tuliskan masalah yang disebabkan pengguna ini</h3>
                 
                 <div v-if="message" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg">
                     {{ message }}
@@ -97,24 +97,24 @@
                 
                 <form @submit.prevent="createReport" class="w-full flex flex-col gap-6">
                     <div>
-                        <label class="block text-gray-700 font-semibold mb-2">Alasan Laporan</label>
+                        <label class="block text-gray-700 font-semibold mb-2 dark:text-white">Alasan Laporan</label>
                         <textarea v-model="form.reason" 
-                                  class="shadow-md w-full pl-4 py-3 h-32 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none" 
+                                  class="dark:text-white shadow-md w-full pl-4 py-3 h-32 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none" 
                                   placeholder="Silahkan tulis laporan Anda di sini..."></textarea>
                     </div>
                     
                     <div>
-                        <label class="block text-gray-700 font-semibold mb-2">Bukti (Opsional)</label>
+                        <label class="block text-gray-700 font-semibold mb-2 dark:text-white">Bukti</label>
                         <div class="w-full border-2 border-dashed border-gray-300 rounded-lg pl-4 pr-4 py-4 hover:border-blue-400 transition-colors">
                             <input @change="handleFileChange" id="img" type="file" accept="image/*" class="hidden">
                             <label for="img" class="block flex justify-between items-center w-full cursor-pointer">
                                 <div class="flex flex-col">
                                     <template v-if="fileName">
                                         <h3 class="font-semibold text-blue-600">{{ fileName }}</h3>
-                                        <p class="text-sm text-gray-500">Klik untuk mengganti file</p>
+                                        <p class="text-sm text-gray-500 dark:text-white">Klik untuk mengganti file</p>
                                     </template>
                                     <template v-else>
-                                        <h3 class="font-semibold text-gray-700">Pilih file bukti</h3>
+                                        <h3 class="font-semibold text-gray-700 dark:text-white/50">Pilih file bukti</h3>
                                         <p class="text-sm text-gray-500">Format: JPG, PNG, GIF (Max 5MB)</p>
                                     </template>
                                 </div>

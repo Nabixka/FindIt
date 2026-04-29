@@ -76,7 +76,7 @@
 </script>
 
 <template>
-    <div class="min-h-screen bg-gray-100">
+    <div class="min-h-screen dark:bg-linear-to-b dark:from-gray-950/90 dark:to-blue-950">
         <Nav />
         <Bar />
 
@@ -99,7 +99,7 @@
         <div v-else class="flex flex-col pt-24 pb-10 px-6 gap-8">
             <div class="space-y-6">
                 <motion.h3 :initial="{ opacity: 0, y: -20 }" :animate="{ opacity: 1, y: 0 }"
-                    class="text-center text-blue-950 text-3xl font-black tracking-tight">
+                    class="text-center text-blue-950 dark:text-white text-3xl font-black tracking-tight">
                     Barang Saya
                 </motion.h3>
 
@@ -116,15 +116,15 @@
 
             <div class="flex flex-col gap-4">
                 <div v-if="items.length" class="grid grid-cols-1 gap-4 lg:grid-cols-2">
-                    <motion.div :initial="{ x: -100}" :animate="{ x: 0}" v-for="item in filter" class="flex justify-between bg-white py-2 rounded-lg pl-2">
+                    <motion.div :initial="{ x: -100}" :animate="{ x: 0}" v-for="item in filter" class="flex justify-between dark:bg-white/10 bg-white py-2 rounded-lg pl-2">
                         <button @click="handleNavigate(item.id)" class="flex gap-2 items-center">
-                            <img class="shadow rounded-lg p-2 w-23 h-23" :src="`${API_URL}${item.image}`">
+                            <img class="shadow rounded-lg p-2 w-23 h-23 bg-white/20" :src="`${API_URL}${item.image}`">
                             <div class="text-start">
-                                <h3 class="text-blue-950 font-bold text-lg leading-tight group-hover:text-blue-700 transition-colors">
+                                <h3 class="text-blue-950 dark:text-white font-bold text-lg leading-tight group-hover:text-blue-700 transition-colors">
                                     {{ item.title }}
                                 </h3>
                                 <div class="flex items-center gap-1 mt-1 text-gray-400">
-                                    <Icon icon="solar:map-point-bold-duotone" class="text-yellow-500" width="18" />
+                                    <Icon icon="solar:map-point-bold-duotone" class="dark:text-yellow-400 text-yellow-500" width="18" />
                                     <span class="text-sm font-medium">{{ item.location }}</span>
                                 </div>
                             </div>

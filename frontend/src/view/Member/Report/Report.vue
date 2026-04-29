@@ -35,11 +35,11 @@
 </script>
 
 <template>
-    <div class="bg-gray-100 min-h-screen">
+    <div class="dark:bg-linear-to-b dark:from-gray-950/90 dark:to-blue-950 bg-gray-100 min-h-screen">
         <Bar />
         
         <div class="flex justify-center pt-5">
-            <h3 class="text-4xl font-extrabold text-blue-950">Laporan Anda</h3>
+            <h3 class="dark:text-white text-4xl font-extrabold text-blue-950">Laporan Anda</h3>
         </div>
 
         <div v-if="message" class="flex justify-center pt-5">
@@ -47,20 +47,20 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 pt-10 pl-10 pr-10 pb-20">
-            <div v-if="reports.length" v-for="report in reports" class="bg-white rounded-lg shadow-lg p-5 flex flex-col gap-4">
+            <div v-if="reports.length" v-for="report in reports" class="dark:bg-white/10 bg-white rounded-lg shadow-lg p-5 flex flex-col gap-4">
                 <div class="flex items-center gap-4">
                     <img class="w-16 h-16 rounded-full object-cover" :src="`${API_URL}${report.item.image}`" alt="Item Image">
                     <div>
-                        <h3 class="font-extrabold text-blue-950">{{ report.item.title }}</h3>
-                        <h3 class="font-semibold text-red-600 break-words">User yang dilaporkan: {{ report.user.username }}</h3>
+                        <h3 class="font-extrabold dark:text-white text-blue-950">{{ report.item.title }}</h3>
+                        <h3 class="font-semibold dark:text-red-500 text-red-600 break-words">User yang dilaporkan: <strong>{{ report.user.username }}</strong></h3>
                     </div>
                 </div>
                 <div>
-                    <h4 class="font-bold text-gray-700">Alasan:</h4>
-                    <p class="text-sm text-gray-600 break-words">{{ report.reason }}</p>
+                    <h4 class="font-bold dark:text-white text-gray-700">Alasan:</h4>
+                    <p class="text-sm dark:text-white/70 text-gray-600 break-words">{{ report.reason }}</p>
                 </div>
                 <div v-if="report.proof">
-                    <h4 class="font-bold text-gray-700">Bukti:</h4>
+                    <h4 class="font-bold dark:text-white text-gray-700">Bukti:</h4>
                     <img class="w-full h-32 object-cover rounded-lg" :src="`${API_URL}${report.proof}`" alt="Proof Image">
                 </div>
                 <button @click="handleNavigate(report.item.id)" class="bg-blue-500 text-white py-2 px-4 rounded-lg font-semibold hover:bg-blue-600 transition">
