@@ -4,6 +4,7 @@
     import Bar from '../../Bar/Bar.vue';
     import { useRouter } from 'vue-router';
     import { motion } from 'motion-v';
+    import { useDark } from '@vueuse/core';
 
     const items = ref([])
     const message = ref(null)
@@ -12,6 +13,7 @@
     const router = useRouter()
     const category = ref("")
     const search = ref("")
+    const isDark = useDark()
 
     const getItems = async () => {
         try {
@@ -77,21 +79,21 @@
 </script>
 
 <template>
-    <div class="min-h-screen bg-slate-50">
+    <div class="min-h-screen dark:bg-linear-to-b dark:from-gray-950/90 dark:to-blue-950 bg-slate-50">
         <Bar />
 
         <div class="flex flex-col gap-8 pt-10">
             <div class="px-6 text-center">
                 <motion.h3 :initial="{ opacity: 0, y: -20 }" :animate="{ opacity: 1, y: 0 }"
-                    class="text-yellow-600 text-4xl font-extrabold tracking-tight">
+                    class="dark:text-white text-yellow-600 text-4xl font-extrabold tracking-tight">
                     Selamat Datang
                 </motion.h3>
 
                 <motion.div :initial="{ scale: 0.8, opacity: 0 }" :animate="{ scale: 1, opacity: 1 }"
                     class="mt-6 flex flex-col items-center gap-6">
-                    <img class="w-28 drop-shadow-xl" src="/Findit.png" alt="Logo">
+                    <img :class="isDark ? 'w-35' : 'w-28'" class="drop-shadow-xl" :src="isDark ? 'Putih.png' : '/Findit.png'" alt="Logo">
 
-                    <div class="grid grid-cols-2 gap-3 w-full max-w-md p-1.5 bg-gray-200/50 rounded-2xl">
+                    <div class="grid grid-cols-2 gap-3 w-full max-w-md p-1.5 dark:bg-white/10 bg-gray-200/50 rounded-2xl">
                         <button @click="filter = 'lost'" :class="buttonColor('lost')">
                             Lost Item
                         </button>
@@ -103,7 +105,7 @@
             </div>
 
             <motion.div :initial="{ y: 100, opacity: 0 }" :animate="{ y: 0, opacity: 1 }"
-                class="bg-blue-950 rounded-t-[3.5rem] min-h-screen pb-24 shadow-[0_-10px_40px_rgba(0,0,0,0.2)]">
+                class="dark:bg-white/10 bg-blue-950 rounded-t-[3.5rem] min-h-screen pb-24 shadow-[0_-10px_40px_rgba(0,0,0,0.2)]">
                 <div class="px-6 pt-12 flex flex-col gap-6">
                     <div class="space-y-4">
                         <div class="relative group">
@@ -177,7 +179,7 @@
                         </template>
 
                         <div v-else class="col-span-2 flex flex-col justify-center items-center py-32 opacity-20">
-                            <Icon icon="mdi:magnify-close" width="100" class="text-white" />
+                            <Icon icon="mdi:magnify-close" width="100" class="text-white dark:text-black" />
                             <p class="text-white font-medium text-xl mt-4">Belum ada barang ditemukan</p>
                         </div>
                     </div>

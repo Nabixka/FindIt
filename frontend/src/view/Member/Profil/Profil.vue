@@ -105,7 +105,7 @@
                 </div>
 
                 <motion.div :initial="{ scale: 0 }" :animate="{ scale: [0, 1.05, 1], transition: { duration: 0.8 } }" class="lg:col-span-2 mt-10 pb-10 lg:mt-0">
-                    <div class="bg-white/10 rounded-3xl ml-5 mr-5 p-10 shadow-2xl">
+                    <div class="bg-blue-950/80 dark:bg-white/10 rounded-3xl ml-5 mr-5 p-10 shadow-2xl">
 
                         <h3 class="text-2xl font-bold text-white mb-8">
                             Pengaturan Akun
@@ -114,41 +114,41 @@
                         <div class="flex flex-col gap-6">
 
                             <router-link to="/member/item"
-                                class="flex items-center gap-6 bg-black/20 hover:bg-gray-100 transition p-5 rounded-xl shadow-md">
+                                class="flex items-center gap-6 bg-white/90 dark:bg-black/20 hover:bg-gray-100 transition p-5 rounded-xl shadow-md">
                                 <div class="bg-sky-300 p-3 rounded-full">
                                     <Icon icon="solar:box-bold" width="24" height="24" />
                                 </div>
-                                <div class="font-bold text-white text-lg">
+                                <div class="font-bold text-black dark:text-white text-lg">
                                     Laporan Pembuatan Barang
                                 </div>
                             </router-link>
 
                             <button @click="handleNavigate(profil.id)"
-                                class="flex items-center gap-6 bg-black/20 hover:bg-gray-100 transition p-5 rounded-xl shadow-md">
+                                class="flex items-center gap-6 bg-white/90 dark:bg-black/20 hover:bg-gray-100 transition p-5 rounded-xl shadow-md">
                                 <div class="bg-sky-300 p-3 rounded-full">
                                     <Icon icon="boxicons:user-filled" width="24" height="24" />
                                 </div>
-                                <div class="font-bold text-white text-lg">
+                                <div class="font-bold text-black dark:text-white text-lg">
                                     Laporan Anda
                                 </div>
                             </button>
 
                             <button @click="isShow = true"
-                                class="flex items-center gap-6 bg-black/20 hover:bg-gray-100 transition p-5 rounded-xl shadow-md">
+                                class="flex items-center gap-6 bg-white/90 dark:bg-black/20 hover:bg-gray-100 transition p-5 rounded-xl shadow-md">
                                 <div class="bg-sky-300 p-3 rounded-full">
                                     <Icon icon="weui:setting-filled" width="24" height="24" />
                                 </div>
-                                <div class="font-bold text-white text-lg">
+                                <div class="font-bold text-black dark:text-white text-lg">
                                     Pengaturan Layar
                                 </div>
                             </button>
 
                             <button @click="LogOut"
-                                class="flex items-center gap-6 bg-black/20 hover:bg-red-100 transition p-5 rounded-xl shadow-md">
+                                class="flex items-center gap-6 bg-white/90 dark:bg-black/20 hover:bg-red-100 transition p-5 rounded-xl shadow-md">
                                 <div class="bg-red-300 p-3 rounded-full">
                                     <Icon icon="material-symbols:logout" width="24" height="24" />
                                 </div>
-                                <div class="font-bold text-white text-lg">
+                                <div class="font-bold text-black dark:text-white text-lg">
                                     Keluar
                                 </div>
                             </button>

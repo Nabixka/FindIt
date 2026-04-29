@@ -63,7 +63,7 @@
 </script>
 
 <template>
-    <div class="bg-linear-to-r from-white min-h-screen to-gray-200">
+    <div class="dark:bg-linear-to-b dark:from-gray-950/90 dark:to-blue-950 bg-linear-to-r from-white min-h-screen to-gray-200">
         <Nav />
         <Bar />
 
@@ -72,15 +72,15 @@
                 :initial="{ opacity: 0, y: -20 }" 
                 :animate="{ opacity: 1, y: 0 }"
                 class="mb-8 text-center">
-                <h2 class="text-2xl font-black text-blue-950">Lapor Barang Hilang</h2>
-                <p class="text-sm text-gray-500">Isi detail barang agar mudah diidentifikasi</p>
+                <h2 class="text-2xl font-black dark:text-white text-blue-950">Lapor Barang Hilang</h2>
+                <p class="text-sm text-white/70 text-gray-500">Isi detail barang agar mudah diidentifikasi</p>
             </motion.div>
 
             <form @submit.prevent="uploadBarang" class="lg:w-1/3 p-5 lg:shadow-lg lg:bg-white lg:rounded-lg">
                 <motion.label 
                     :initial="{ scale: 0.9, opacity: 0 }" 
                     :animate="{ scale: 1, opacity: 1 }"
-                    class="relative flex flex-col items-center justify-center w-full h-45 border-2 border-dashed border-gray-300 rounded-3xl bg-white hover:bg-gray-50 transition-all cursor-pointer group overflow-hidden">
+                    class="relative flex flex-col items-center justify-center w-full h-45 border-2 border-dashed border-gray-300 rounded-3xl dark:bg-white/10 bg-white hover:bg-gray-50 transition-all cursor-pointer group overflow-hidden">
                     <input type="file" @change="handleFile" accept="image/*" hidden>
                     
                     <template v-if="previewImg">
@@ -95,30 +95,30 @@
                             <Icon icon="solar:camera-add-bold-duotone" width="48" />
                         </div>
                         <div class="text-center">
-                            <span class="text-blue-950 font-bold block">Ambil Foto</span>
-                            <span class="text-xs text-gray-400">JPG, PNG up to 5MB</span>
+                            <span class="text-blue-950 font-bold block dark:text-white">Ambil Foto</span>
+                            <span class="text-xs text-gray-400 dark:text-white/70">JPG, PNG up to 5MB</span>
                         </div>
                     </div>
                 </motion.label>
 
-                <div class="space-y-4">
+                <div class="space-y-4 pt-5">
                     <motion.div :initial="{ x: -20, opacity: 0 }" :animate="{ x: 0, opacity: 1, transition: { delay: 0.1 } }">
-                        <label class="text-xs font-bold text-blue-950 ml-2 mb-1 block uppercase tracking-wider">Nama Barang</label>
-                        <input v-model="form.title" class="w-full shadow-sm bg-white border border-gray-200 rounded-2xl py-4 px-5 focus:ring-4 focus:ring-yellow-500/20 focus:border-yellow-500 outline-none transition-all" type="text" placeholder="Contoh: Dompet Kulit Cokelat">
+                        <label class="dark:text-white text-xs font-bold text-blue-950 ml-2 mb-1 block uppercase tracking-wider">Nama Barang</label>
+                        <input v-model="form.title" class="w-full shadow-sm dark:bg-white/10 dark:text-white/70 bg-white border border-gray-200 rounded-2xl py-4 px-5 focus:ring-4 focus:ring-yellow-500/20 focus:border-yellow-500 outline-none transition-all" type="text" placeholder="Contoh: Dompet Kulit Cokelat">
                     </motion.div>
 
                     <motion.div :initial="{ x: -20, opacity: 0 }" :animate="{ x: 0, opacity: 1, transition: { delay: 0.2 } }">
-                        <label class="text-xs font-bold text-blue-950 ml-2 mb-1 block uppercase tracking-wider">Lokasi</label>
+                        <label class="dark:text-white text-xs font-bold text-blue-950 ml-2 mb-1 block uppercase tracking-wider">Lokasi</label>
                         <div class="relative">
                             <Icon icon="solar:map-point-bold-duotone" class="absolute left-4 top-4 text-gray-400" width="20" />
-                            <input v-model="form.location" class="w-full shadow-sm bg-white border border-gray-200 rounded-2xl py-4 pl-12 pr-5 focus:ring-4 focus:ring-yellow-500/20 focus:border-yellow-500 outline-none transition-all" type="text" placeholder="Lokasi terakhir terlihat">
+                            <input v-model="form.location" class="w-full shadow-sm dark:bg-white/10 dark:text-white/70 bg-white border border-gray-200 rounded-2xl py-4 pl-12 pr-5 focus:ring-4 focus:ring-yellow-500/20 focus:border-yellow-500 outline-none transition-all" type="text" placeholder="Lokasi terakhir terlihat">
                         </div>
                     </motion.div>
 
                     <motion.div :initial="{ x: -20, opacity: 0 }" :animate="{ x: 0, opacity: 1, transition: { delay: 0.3 } }">
-                        <label class="text-xs font-bold text-blue-950 ml-2 mb-1 block uppercase tracking-wider">Kategori</label>
+                        <label class="text-xs dark:text-white font-bold text-blue-950 ml-2 mb-1 block uppercase tracking-wider">Kategori</label>
                         <div class="relative">
-                            <select class="w-full appearance-none shadow-sm bg-white border border-gray-200 rounded-2xl py-4 px-5 focus:ring-4 focus:ring-yellow-500/20 focus:border-yellow-500 outline-none transition-all text-gray-600" v-model="form.category">
+                            <select class="w-full appearance-none shadow-sm dark:bg-white/10 bg-white dark:text-white/70 border border-gray-200 rounded-2xl py-4 px-5 focus:ring-4 focus:ring-yellow-500/20 focus:border-yellow-500 outline-none transition-all text-gray-600" v-model="form.category">
                                 <option value="" disabled selected>Pilih Kategori</option>
                                 <option v-for="c in cat" class="text-black" :value="c">{{ c }}</option>
                             </select>
@@ -127,8 +127,8 @@
                     </motion.div>
 
                     <motion.div :initial="{ x: -20, opacity: 0 }" :animate="{ x: 0, opacity: 1, transition: { delay: 0.4 } }">
-                        <label class="text-xs font-bold text-blue-950 ml-2 mb-1 block uppercase tracking-wider">Deskripsi Tambahan</label>
-                        <textarea v-model="form.description" rows="3" class="w-full shadow-sm bg-white border border-gray-200 rounded-2xl p-5 focus:ring-4 focus:ring-yellow-500/20 focus:border-yellow-500 outline-none transition-all" placeholder="Ciri-ciri khusus barang..."></textarea>
+                        <label class="text-xs font-bold text-blue-950 ml-2 mb-1 block uppercase dark:text-white tracking-wider">Deskripsi Tambahan</label>
+                        <textarea v-model="form.description" rows="3" class="w-full shadow-sm dark:bg-white/10 dark:text-white/70  bg-white border border-gray-200 rounded-2xl p-5 focus:ring-4 focus:ring-yellow-500/20 focus:border-yellow-500 outline-none transition-all" placeholder="Ciri-ciri khusus barang..."></textarea>
                     </motion.div>
                 </div>
 

@@ -81,15 +81,15 @@
         <Bar />
 
         <div v-if="isActive" class="flex justify-center items-center min-h-screen">
-            <motion.div :initial="{ scale: 0}" :animate="{ scale: [0, 1.1, 1], duration: 1}" class="bg-white w-full ml-5 mr-5 pb-5 rounded-lg">
+            <motion.div :initial="{ scale: 0}" :animate="{ scale: [0, 1.1, 1], duration: 1}" class="bg-linear-to-b from-gray-200 to-gray-500/50 dark:bg-linear-to-b dark:from-gray-950/20 dark:to-gray-950/40 w-full ml-5 mr-5 pb-5 rounded-lg">
                 <button @click="isActive = false" class="w-full flex justify-end pr-2 pt-2">
-                    <Icon icon="lets-icons:close-round" class="text-gray-700" width="24" height="24" />
+                    <Icon icon="lets-icons:close-round" class="dark:text-white text-gray-700" width="24" height="24" />
                 </button>
                 <div class="flex-col flex items-center justify-center gap-5">
                     <Icon icon="carbon:close-outline" class="text-red-500" width="75" height="75" />
-                    <h3 class="text-gray-800 text-lg pl-5 pr-5 font-bold text-center">Apakah Anda Yakin Ingin Menghapusnya?</h3>
+                    <h3 class="text-gray-800 text-lg pl-5 pr-5 font-bold text-center dark:text-white">Apakah Anda Yakin Ingin Menghapusnya?</h3>
                     <div class="grid grid-cols-2 gap-2">
-                        <button @click="isActive = false" class="border border-gray-400 font-bold rounded-md">Batal</button>
+                        <button @click="isActive = false" class="bg-white text-black dark:bg-white/0 dark:text-white dark:border dark:border-gray-400 font-bold rounded-md">Batal</button>
                         <button @click="handleDelete()" class="bg-red-500 text-white font-bold rounded-md px-5 border-gray-400 border py-2">Hapus</button>
                     </div>
                 </div>
@@ -116,7 +116,7 @@
 
             <div class="flex flex-col gap-4">
                 <div v-if="items.length" class="grid grid-cols-1 gap-4 lg:grid-cols-2">
-                    <motion.div :initial="{ x: -100}" :animate="{ x: 0}" v-for="item in filter" class="flex justify-between dark:bg-white/10 bg-white py-2 rounded-lg pl-2">
+                    <motion.div :initial="{ x: -100}" :animate="{ x: 0}" v-for="item in filter" class="flex justify-between dark:bg-white/10 bg-gray-200 py-2 rounded-lg pl-2">
                         <button @click="handleNavigate(item.id)" class="flex gap-2 items-center">
                             <img class="shadow rounded-lg p-2 w-23 h-23 bg-white/20" :src="`${API_URL}${item.image}`">
                             <div class="text-start">
