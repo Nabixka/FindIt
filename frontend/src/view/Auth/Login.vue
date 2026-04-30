@@ -33,6 +33,7 @@
             }
             if(res.status == 403){
                 modal.value = true
+                clicked.value = false
             }
 
             const json = await res.json()
