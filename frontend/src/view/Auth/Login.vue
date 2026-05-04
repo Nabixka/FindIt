@@ -3,9 +3,9 @@
     import { useRouter } from 'vue-router'
     import { motion } from 'motion-v'
     import { Icon } from '@iconify/vue'
+    import { api } from '../../components/utils/helper'
 
-    const API_URL = import.meta.env.VITE_API_URL
-
+    const mode = import.meta.env.VITE_ENV_MODE
     const clicked = ref(false)
     const email = ref("")
     const password = ref("")
@@ -16,38 +16,32 @@
     const Login = async () => {
         try {
             clicked.value = true
-            const res = await fetch(`${API_URL}/auth/login`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    email: email.value,
-                    password: password.value
-                })
-            })
-
-            if(res.status == 404 || 401){
-                message.value = "Email Atau Password Salah"
-                clicked.value = false
-            }
-            if(res.status == 403){
-                modal.value = true
-                clicked.value = false
-            }
-
-            const json = await res.json()
-            const data = json.data
-
-            router.push({
-                name: "Otp",
-                state: {
-                    email: data.email
+            const res = await api.post("/auth/login", {email: email.value, password: password.value})
+            const data = res.data.data
+            if(mode === "dev"){
+                router.push({
+                    name: "Otp",
+                    state: {
+                        email: data.email
+                    }
+                })   
+            }else{
+                localStorage.setItem("token", data.token)
+                if (data.role == "member") {
+                    router.push("/member/home")
                 }
-            })
+                if (data.role == "admin") {
+                    router.push("/admin/home")
+                }
+            }
+            clicked.value = false
         }
         catch (err) {
-            console.log(err)
+            if(err.status == 403){
+                modal.value = true
+            }
+
+            clicked.value = false
         }
     }
 
@@ -102,5 +96,3 @@
         </div>
     </div>
 </template>
-
-<style scoped></style>

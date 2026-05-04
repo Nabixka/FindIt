@@ -1,10 +1,8 @@
 <script setup>
     import { ref, computed, onMounted, nextTick } from 'vue';
-    // Import CSS Leaflet adalah kunci agar peta tidak berantakan
     import 'leaflet/dist/leaflet.css';
     import L from 'leaflet';
     
-    // Import komponen (Sesuaikan path ini dengan struktur aslimu)
     import Bar from '../../../Bar/Bar.vue';
     import Nav from '../../../Bar/Nav.vue';
     import { Icon } from '@iconify/vue';
@@ -12,7 +10,6 @@
     import { useRouter, useRoute } from 'vue-router';
     import { motion } from 'motion-v';
 
-    // Fix untuk marker icon yang sering hilang di build tool (Vite/Webpack)
     import markerIcon from 'leaflet/dist/images/marker-icon.png';
     import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 
@@ -41,7 +38,6 @@
     let mapInstance = null
     let currentMarker = null
 
-    // Setup Icon Default agar terbaca oleh Leaflet
     const DefaultIcon = L.icon({
         iconUrl: markerIcon,
         shadowUrl: markerShadow,
@@ -60,7 +56,6 @@
     const initMap = async () => {
         await nextTick()
 
-        // Inisialisasi Map
         mapInstance = L.map('create-map', {
             zoomControl: true,
             attributionControl: false
@@ -70,12 +65,10 @@
             attribution: '&copy; OpenStreetMap contributors'
         }).addTo(mapInstance)
 
-        // Tambahkan marker awal
         currentMarker = L.marker([defaultLat, defaultLng], { icon: DefaultIcon }).addTo(mapInstance)
             .bindPopup('Indonesia - klik map untuk memilih lokasi')
             .openPopup()
 
-        // PENTING: Invalidate size setelah animasi motion-v selesai agar layout peta pas
         setTimeout(() => {
             if (mapInstance) {
                 mapInstance.invalidateSize()
@@ -97,7 +90,7 @@
         }
 
         currentMarker = L.marker([lat, lng], { icon: DefaultIcon }).addTo(mapInstance)
-        mapInstance.setView([lat, lng], 15) // Zoom lebih dekat saat pilih lokasi
+        mapInstance.setView([lat, lng], 15) 
     }
 
     const searchLocation = async () => {
