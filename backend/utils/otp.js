@@ -4,12 +4,14 @@ const nodemailer = require("nodemailer")
 const resend = new Resend(process.env.RESEND_API_KEY)
 const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
-    port: 587,
-    secure: false,
+    port: 465,
+    secure: true,
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS
-    }
+    },
+    pool: 1,
+    maxConnections: 1
 })
 
 if (process.env.MODE === "dev") {
