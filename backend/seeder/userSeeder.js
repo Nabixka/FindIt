@@ -12,13 +12,6 @@ async function userSeeder(){
                 role: "member"
             },
             {
-                username: "User 2",
-                email: "user2@gmail.com",
-                password: "admin123",
-                status: "banned",
-                role: "member"
-            },
-            {
                 username: "Admin 1",
                 email: "admin1@gmail.com",
                 password: "admin123",

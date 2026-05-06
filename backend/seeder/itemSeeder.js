@@ -7,7 +7,7 @@ async function itemSeeder() {
                 title: "Dompet",
                 description: "Berwarna Coklat Merek Atlo",
                 location: "Jalan Sudirman",
-                image: `/uploads/items/dompet.jpg`,
+                image: `https://res.cloudinary.com/dvlb9qvsa/image/upload/v1778034018/items/1778034018407_Blur.jpg.jpg`,
                 category: 'Pribadi',
                 user_id: 1,
                 status: 'lost'
@@ -16,7 +16,7 @@ async function itemSeeder() {
                 title: "Dompet",
                 description: "Berwarna Coklat Merek Atlo",
                 location: "Jalan Sudirman",
-                image: `/uploads/items/dompet.jpg`,
+                image: `https://res.cloudinary.com/dvlb9qvsa/image/upload/v1778034018/items/1778034018407_Blur.jpg.jpg`,
                 category: 'Pribadi',
                 user_id: 2,
                 status: 'found'
@@ -28,7 +28,7 @@ async function itemSeeder() {
                 report_user_id: 1,
                 user_id: 1,
                 item_id: 1,
-                proof: "/uploads/report/dompet.jpg",
+                proof: `https://res.cloudinary.com/dvlb9qvsa/image/upload/v1778034018/reports/1778034018407_Blur.jpg.jpg`,
                 reason: "Baldjadkjakjdakjdjakdjkdl"
             }
         ]
