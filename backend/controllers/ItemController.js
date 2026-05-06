@@ -1,5 +1,6 @@
 const item = require("../models/ItemModel")
 const user = require("../models/UserModel")
+const cloudinary = require("../database/cloudinary")
 
 exports.getItem = async (req, res) => {
     try{
@@ -49,7 +50,29 @@ exports.createItem = async (req, res) => {
     try{
         const user_id = req.user.id
         const {title, location, category, description, status } = req.body
-        const imageUrl = req.file ? `/uploads/items/${req.file.filename}` : null
+        
+        let imageUrl = null
+        if (req.file && req.file.buffer && req.file.buffer.length > 0) {
+            try {
+                const result = await new Promise((resolve, reject) => {
+                    cloudinary.uploader.upload_stream(
+                        { folder: 'items', public_id: `${Date.now()}_${req.file.originalname}` },
+                        (error, result) => {
+                            if (error) reject(error);
+                            else resolve(result);
+                        }
+                    ).end(req.file.buffer);
+                });
+                imageUrl = result.secure_url;
+            } catch (uploadError) {
+                console.error('Cloudinary upload error:', uploadError);
+                return res.status(500).json({
+                    status: 500,
+                    message: "Upload failed",
+                    error: uploadError.message
+                });
+            }
+        }
 
         if(!title || !location || !category || !description){
             return res.status(400).json({

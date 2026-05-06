@@ -32,7 +32,6 @@ const getReport = async () => {
     }
 }
 
-const 
 
 const handleView = async (event, data, user_id) => {
     image.value = ""

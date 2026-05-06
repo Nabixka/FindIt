@@ -1,5 +1,6 @@
 const user = require("../models/UserModel")
 const item = require("../models/ItemModel")
+const cloudinary = require("../database/cloudinary")
 
 // Get User
 exports.getUser = async (req, res) => {
@@ -136,7 +137,29 @@ exports.getReportById = async (req, res) => {
 exports.createReport = async (req, res) => {
     try{
         const { item_id, report_user_id, user_id, reason } = req.body
-        const imageUrl = req.file ? `/uploads/report/${req.file.filename}` : null
+
+        let imageUrl = null
+        if (req.file && req.file.buffer && req.file.buffer.length > 0) {
+            try {
+                const result = await new Promise((resolve, reject) => {
+                    cloudinary.uploader.upload_stream(
+                        { folder: 'reports', public_id: `${Date.now()}_${req.file.originalname}` },
+                        (error, result) => {
+                            if (error) reject(error);
+                            else resolve(result);
+                        }
+                    ).end(req.file.buffer);
+                });
+                imageUrl = result.secure_url;
+            } catch (uploadError) {
+                console.error('Cloudinary upload error:', uploadError);
+                return res.status(500).json({
+                    status: 500,
+                    message: "Upload failed",
+                    error: uploadError.message
+                });
+            }
+        }
 
         if(!item_id || !user_id || !reason || !imageUrl || !report_user_id){
             return res.status(400).json({
