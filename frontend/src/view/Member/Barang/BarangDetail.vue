@@ -22,7 +22,6 @@
 
   const { state } = history
   const router = useRouter()
-  const API_URL = import.meta.env.VITE_API_URL
   const token = getToken()
   const detail = ref({})
   const message = ref("")
@@ -130,7 +129,7 @@
 
           <div class="overflow-hidden rounded-3xl shadow-xl border-4 dark:border-gray-300 border-white bg-white">
             <img v-if="detail.image" class="w-full object-cover aspect-square lg:aspect-auto lg:h-[500px]"
-              :src="`${API_URL}${detail.image}`" alt="Item Image" />
+              :src="`${detail.image}`" alt="Item Image" />
             <div v-else class="w-full aspect-square flex items-center justify-center bg-gray-200 text-gray-400">
               No Image
             </div>

@@ -9,7 +9,6 @@
     const items = ref([])
     const message = ref(null)
     const filter = ref("" || "lost")
-    const API_URL = import.meta.env.VITE_API_URL
     const router = useRouter()
     const category = ref("")
     const search = ref("")
@@ -145,7 +144,7 @@
                                 class="group flex gap-4 bg-white/5 border border-white/5 p-4 rounded-2xl hover:bg-white/10 hover:border-white/20 transition-all duration-300 backdrop-blur-sm">
                                 <div class="relative shrink-0">
                                     <img class="w-24 h-24 object-cover rounded-2xl shadow-lg border border-white/10 group-hover:scale-105 transition-transform duration-500"
-                                        :src="`${API_URL}${item.image}`"
+                                        :src="`${item.image}`"
                                         onerror="this.src='https://placehold.co/200x200?text=No+Image'">
                                 </div>
 

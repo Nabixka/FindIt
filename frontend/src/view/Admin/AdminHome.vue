@@ -9,7 +9,6 @@ const router = useRouter()
 const message = ref("")
 const reports = ref([])
 const view = ref(false)
-const API_URL = import.meta.env.VITE_API_URL
 const image = ref(null)
 const title = ref("")
 const text = ref("")
@@ -87,7 +86,7 @@ const handleNavigate = (id) => {
                 <div class="p-6 space-y-6">
                     <div v-if="image"
                         class="rounded-xl overflow-hidden border border-white/10 shadow-inner bg-black/20">
-                        <img :src="`${API_URL}${image}`" class="w-full h-auto object-cover max-h-72">
+                        <img :src="`${image}`" class="w-full h-auto object-cover max-h-72">
                     </div>
 
                     <div v-if="text" class="space-y-4">
@@ -142,7 +141,7 @@ const handleNavigate = (id) => {
                                 <button @click="handleNavigate(report.item.id)"
                                     class="flex flex-col items-center gap-3 p-2 w-full hover:bg-gray-100 rounded-lg transition-colors">
                                     <img class="w-16 h-16 rounded-lg object-cover"
-                                        :src="`${API_URL}${report.item.image}`" alt="Item">
+                                        :src="`${report.item.image}`" alt="Item">
                                     <h3 class="font-semibold text-blue-600">{{ report.item.title }}</h3>
                                 </button>
                             </td>
@@ -151,7 +150,7 @@ const handleNavigate = (id) => {
                                     <button @click="handleView('image', report.proof)"
                                         class="hover:scale-105 transition-transform">
                                         <img class="w-16 h-16 rounded-lg object-cover shadow-md"
-                                            :src="`${API_URL}${report.proof}`" alt="Proof">
+                                            :src="`${report.proof}`" alt="Proof">
                                     </button>
                                 </div>
                             </td>

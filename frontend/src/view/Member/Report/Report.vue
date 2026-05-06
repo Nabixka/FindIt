@@ -6,7 +6,6 @@
 
     const reports = ref([]);
     const message = ref(null);
-    const API_URL = import.meta.env.VITE_API_URL;
     const router = useRouter();
     const { state } = history;
     const id = state?.id;
@@ -49,7 +48,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 pt-10 pl-10 pr-10 pb-20">
             <div v-if="reports.length" v-for="report in reports" class="dark:bg-white/10 bg-white rounded-lg shadow-lg p-5 flex flex-col gap-4">
                 <div class="flex items-center gap-4">
-                    <img class="w-16 h-16 rounded-full object-cover" :src="`${API_URL}${report.item.image}`" alt="Item Image">
+                    <img class="w-16 h-16 rounded-full object-cover" :src="`${report.item.image}`" alt="Item Image">
                     <div>
                         <h3 class="font-extrabold dark:text-white text-blue-950">{{ report.item.title }}</h3>
                         <h3 class="font-semibold dark:text-red-500 text-red-600 break-words">User yang dilaporkan: <strong>{{ report.user.username }}</strong></h3>
@@ -61,7 +60,7 @@
                 </div>
                 <div v-if="report.proof">
                     <h4 class="font-bold dark:text-white text-gray-700">Bukti:</h4>
-                    <img class="w-full h-32 object-cover rounded-lg" :src="`${API_URL}${report.proof}`" alt="Proof Image">
+                    <img class="w-full h-32 object-cover rounded-lg" :src="`${report.proof}`" alt="Proof Image">
                 </div>
                 <button @click="handleNavigate(report.item.id)" class="bg-blue-500 text-white py-2 px-4 rounded-lg font-semibold hover:bg-blue-600 transition">
                     Lihat Barang

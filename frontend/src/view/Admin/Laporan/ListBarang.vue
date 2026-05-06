@@ -6,7 +6,6 @@
     import { api } from '../../../components/utils/helper';
     import { Icon } from '@iconify/vue';
 
-    const API_URL = import.meta.env.VITE_API_URL
     const listItem = ref([])
     const router = useRouter()
     const selectedFilter = ref("" || "lost")
@@ -62,7 +61,7 @@
                 <button v-for="item in filterItem" :key="item.id" @click="handleNavigate(item.id)"
                     class="group flex gap-4 bg-white p-4 rounded-3xl shadow-sm hover:shadow-md transition-all active:scale-95 border border-transparent hover:border-blue-100">
                     <div class="relative shrink-0">
-                        <img class="w-20 h-20 object-cover rounded-2xl shadow-sm" :src="`${API_URL}${item.image}`"
+                        <img class="w-20 h-20 object-cover rounded-2xl shadow-sm" :src="`${item.image}`"
                             onerror="this.src='https://placehold.co/200x200?text=No+Image'">
                     </div>
 

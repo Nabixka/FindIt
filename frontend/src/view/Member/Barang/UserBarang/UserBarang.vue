@@ -7,7 +7,6 @@
     import { motion } from 'motion-v';
     import { Icon } from '@iconify/vue';
 
-    const API_URL = import.meta.env.VITE_API_URL
     const router = useRouter()
     const isActive = ref(false)
     const selectedItem = ref("" || "lost")
@@ -118,7 +117,7 @@
                 <div v-if="items.length" class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                     <motion.div :initial="{ x: -100}" :animate="{ x: 0}" v-for="item in filter" class="flex justify-between dark:bg-white/10 bg-gray-200 py-2 rounded-lg pl-2">
                         <button @click="handleNavigate(item.id)" class="flex gap-2 items-center">
-                            <img class="shadow rounded-lg p-2 w-23 h-23 bg-white/20" :src="`${API_URL}${item.image}`">
+                            <img class="shadow rounded-lg p-2 w-23 h-23 bg-white/20" :src="`${item.image}`">
                             <div class="text-start">
                                 <h3 class="text-blue-950 dark:text-white font-bold text-lg leading-tight group-hover:text-blue-700 transition-colors">
                                     {{ item.title }}
