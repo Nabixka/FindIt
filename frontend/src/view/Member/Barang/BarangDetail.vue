@@ -27,6 +27,7 @@
   const message = ref("")
   let mapInstance = null;
   const user = computed(() => detail.value?.user)
+  const loading = ref(true)
 
   const showMap = async (locationText) => {
     if (!locationText) return;
@@ -77,6 +78,7 @@
       const id = state?.id
       if (!id) return;
 
+      await new Promise(resolve => setTimeout(resolve, 2000));
       const res = await api.get(`/item/${id}`)
       detail.value = res.data.data
 
@@ -94,6 +96,9 @@
       if(err.status == 404){
         message.value = "Barang Tersebut Tidak Ada"
       }
+    }
+    finally {
+      loading.value = false
     }
   }
 
@@ -116,7 +121,59 @@
 
     <div class="max-w-md lg:max-w-6xl mx-auto px-4">
 
-      <div class="flex flex-col lg:grid lg:grid-cols-2 lg:gap-10">
+      <div v-if="loading" class="flex flex-col lg:grid lg:grid-cols-2 lg:gap-10 animate-pulse">
+
+        <!-- SKELETON IMAGE -->
+        <div class="relative">
+          <div class="absolute top-4 right-4 z-10">
+            <div class="w-16 h-6 bg-gray-300 rounded-full"></div>
+          </div>
+          <div class="overflow-hidden rounded-3xl shadow-xl border-4 border-white bg-white">
+            <div class="w-full aspect-square lg:aspect-auto lg:h-[500px] bg-gray-300"></div>
+          </div>
+        </div>
+
+        <!-- SKELETON RIGHT SIDE -->
+        <div class="flex flex-col gap-5 mt-6 lg:mt-0">
+          <!-- DETAIL -->
+          <div class="bg-white dark:bg-white/10 rounded-3xl p-5 lg:p-8 shadow-sm">
+            <div class="h-8 bg-gray-300 rounded mb-3 w-3/4"></div>
+            <div class="flex items-center gap-2 mt-3">
+              <div class="w-5 h-5 bg-gray-300 rounded"></div>
+              <div class="h-4 bg-gray-300 rounded w-1/2"></div>
+            </div>
+            <div class="mt-5">
+              <div class="h-3 bg-gray-300 rounded mb-2 w-16"></div>
+              <div class="h-4 bg-gray-300 rounded mb-1 w-full"></div>
+              <div class="h-4 bg-gray-300 rounded w-5/6"></div>
+            </div>
+          </div>
+
+          <!-- MAP -->
+          <div class="bg-white rounded-2xl shadow-sm overflow-hidden relative border border-gray-100">
+            <div class="w-full h-56 lg:h-72 bg-gray-300"></div>
+          </div>
+
+          <!-- USER -->
+          <div class="dark:bg-white/10 bg-blue-50 rounded-2xl p-4 flex items-center justify-between dark:border-none border border-blue-100">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 bg-gray-300 rounded-full"></div>
+              <div>
+                <div class="h-3 bg-gray-300 rounded mb-1 w-12"></div>
+                <div class="h-4 bg-gray-300 rounded w-20"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- BUTTON -->
+          <div class="flex flex-col gap-2">
+            <div class="w-full h-12 bg-gray-300 rounded-xl"></div>
+            <div class="w-full h-12 bg-gray-300 rounded-xl"></div>
+          </div>
+        </div>
+      </div>
+
+      <div v-else class="flex flex-col lg:grid lg:grid-cols-2 lg:gap-10">
 
         <!-- IMAGE -->
         <motion.div :initial="{ scale: 0.8 }" :animate="{ scale: 1, transition: { duration: 0.6 } }" class="relative">
@@ -142,7 +199,7 @@
           <!-- DETAIL -->
           <div class="bg-white dark:bg-white/10 rounded-3xl p-5 lg:p-8 shadow-sm">
             <h1 class="text-xl lg:text-3xl font-extrabold dark:text-white text-blue-950 break-words">
-              {{ detail.title || 'Loading...' }}
+              {{ detail.title }}
             </h1>
 
             <div class="flex items-center gap-2 mt-3 text-gray-600">

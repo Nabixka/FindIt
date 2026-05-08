@@ -13,9 +13,11 @@
     const category = ref("")
     const search = ref("")
     const isDark = useDark()
+    const loading = ref(true)
 
     const getItems = async () => {
         try {
+            await new Promise(resolve => setTimeout(resolve, 3000));
             const res = await api.get('/item')
             items.value = res.data.data
         }
@@ -27,6 +29,9 @@
                 message.value = "Anda Tidak Berhak Mengakses Page Ini"
                 router.push("/")
             }
+        }
+        finally {
+            loading.value = false
         }
     }
 
@@ -139,7 +144,25 @@
                     </div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-2">
-                        <template v-if="filterItem.length">
+                        <template v-if="loading">
+                            <div v-for="n in 6" :key="n" class="flex gap-4 bg-white/5 border border-white/5 p-4 rounded-2xl backdrop-blur-sm animate-pulse">
+                                <div class="relative shrink-0">
+                                    <div class="w-24 h-24 bg-gray-300 rounded-2xl"></div>
+                                </div>
+                                <div class="flex flex-col justify-between py-1 text-left w-full">
+                                    <div>
+                                        <div class="h-3 bg-gray-300 rounded mb-2 w-16"></div>
+                                        <div class="h-5 bg-gray-300 rounded mb-2 w-3/4"></div>
+                                        <div class="h-3 bg-gray-300 rounded w-1/2"></div>
+                                    </div>
+                                    <div class="flex items-center gap-2 mt-3 border-t border-white/5 pt-2">
+                                        <div class="w-5 h-5 bg-gray-300 rounded-full"></div>
+                                        <div class="h-3 bg-gray-300 rounded w-24"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                        <template v-else-if="filterItem.length">
                             <button v-for="item in filterItem" :key="item.id" @click="navigate(item.id)"
                                 class="group flex gap-4 bg-white/5 border border-white/5 p-4 rounded-2xl hover:bg-white/10 hover:border-white/20 transition-all duration-300 backdrop-blur-sm">
                                 <div class="relative shrink-0">
