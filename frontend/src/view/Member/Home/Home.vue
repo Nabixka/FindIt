@@ -3,7 +3,6 @@
     import { api } from '../../../components/utils/helper';
     import Bar from '../../Bar/Bar.vue';
     import { useRouter } from 'vue-router';
-    import { motion } from 'motion-v';
     import { useDark } from '@vueuse/core';
 
     const items = ref([])

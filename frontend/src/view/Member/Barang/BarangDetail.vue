@@ -6,7 +6,6 @@
   import { Icon } from '@iconify/vue'
   import { useRouter } from 'vue-router'
   import L from 'leaflet'
-  import { motion } from 'motion-v'
   import 'leaflet/dist/leaflet.css'
 
   import markerIcon from 'leaflet/dist/images/marker-icon.png';

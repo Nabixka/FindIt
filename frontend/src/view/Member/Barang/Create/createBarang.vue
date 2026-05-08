@@ -8,7 +8,6 @@
     import { Icon } from '@iconify/vue';
     import { api, getToken } from '../../../../components/utils/helper';
     import { useRouter, useRoute } from 'vue-router';
-    import { motion } from 'motion-v';
 
     import markerIcon from 'leaflet/dist/images/marker-icon.png';
     import markerShadow from 'leaflet/dist/images/marker-shadow.png';

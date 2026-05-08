@@ -4,7 +4,6 @@
     import { useRouter } from 'vue-router';
     import Bar from '../../../Bar/Bar.vue';
     import Nav from '../../../Bar/Nav.vue';
-    import { motion } from 'motion-v';
     import { Icon } from '@iconify/vue';
 
     const router = useRouter()
@@ -13,9 +12,11 @@
     const itemId = ref(null)
 
     const items = ref([])
+    const isLoading = ref(true)
 
     const getItem = async () => {
         try {
+            await new Promise(resolve => setTimeout(resolve, 2000)) 
             const res = await api.get('/item/user')
             items.value = res.data.data
         }
@@ -27,6 +28,9 @@
                 message.value = "Anda Tidak Berhak Mengakses Page Ini"
                 router.push("/")
             }
+        }
+        finally{
+            isLoading.value = false
         }
     }
 
@@ -80,7 +84,7 @@
         <Bar />
 
         <div v-if="isActive" class="flex justify-center items-center min-h-screen">
-            <motion.div :initial="{ scale: 0}" :animate="{ scale: [0, 1.1, 1], duration: 1}" class="bg-linear-to-b from-gray-200 to-gray-500/50 dark:bg-linear-to-b dark:from-gray-950/20 dark:to-gray-950/40 w-full ml-5 mr-5 pb-5 rounded-lg">
+            <div class="bg-linear-to-b from-gray-200 to-gray-500/50 dark:bg-linear-to-b dark:from-gray-950/20 dark:to-gray-950/40 w-full ml-5 mr-5 pb-5 rounded-lg">
                 <button @click="isActive = false" class="w-full flex justify-end pr-2 pt-2">
                     <Icon icon="lets-icons:close-round" class="dark:text-white text-gray-700" width="24" height="24" />
                 </button>
@@ -92,17 +96,17 @@
                         <button @click="handleDelete()" class="bg-red-500 text-white font-bold rounded-md px-5 border-gray-400 border py-2">Hapus</button>
                     </div>
                 </div>
-            </motion.div>
+            </div>
         </div>
 
         <div v-else class="flex flex-col pt-24 pb-10 px-6 gap-8">
             <div class="space-y-6">
-                <motion.h3 :initial="{ opacity: 0, y: -20 }" :animate="{ opacity: 1, y: 0 }"
+                <h3
                     class="text-center text-blue-950 dark:text-white text-3xl font-black tracking-tight">
                     Barang Saya
-                </motion.h3>
+                </h3>
 
-                <motion.div :initial="{ opacity: 0 }" :animate="{ opacity: 1 }"
+                <div
                     class="bg-gray-200/80 p-1.5 rounded-2xl grid grid-cols-2 gap-2 max-w-md mx-auto shadow-inner">
                     <button @click="selectedItem = 'lost'" :class="buttonColor('lost')">
                         Kehilangan
@@ -110,12 +114,46 @@
                     <button @click="selectedItem = 'found'" :class="buttonColor('found')">
                         Temuan
                     </button>
-                </motion.div>
+                </div>
             </div>
 
             <div class="flex flex-col gap-4">
-                <div v-if="items.length" class="grid grid-cols-1 gap-4 lg:grid-cols-2">
-                    <motion.div :initial="{ x: -100}" :animate="{ x: 0}" v-for="item in filter" class="flex justify-between dark:bg-white/10 bg-gray-200 py-2 rounded-lg pl-2">
+                <div v-if="isLoading" class="flex flex-col gap-5">
+                        <div class="flex rounded justify-between items-center p-2 dark:bg-white/10 w-full gap-2 h-30 bg-gray-200">
+                            <div class="w-35 h-25 rounded bg-gray-400 animate-pulse"></div>
+                            <div class="w-full flex flex-col gap-2">
+                                <div class="w-full h-7 rounded bg-gray-400 animate-pulse"></div>
+                                <div class="w-full h-5 rounded bg-gray-400 animate-pulse"></div>
+                            </div>
+                            <div class="w-10 h-7 bg-gray-400 animate-pulse rounded"></div>
+                        </div>
+                        <div class="flex rounded justify-between items-center p-2 dark:bg-white/10 w-full gap-2 h-30 bg-gray-200">
+                            <div class="w-35 h-25 rounded bg-gray-400 animate-pulse"></div>
+                            <div class="w-full flex flex-col gap-2">
+                                <div class="w-full h-7 rounded bg-gray-400 animate-pulse"></div>
+                                <div class="w-full h-5 rounded bg-gray-400 animate-pulse"></div>
+                            </div>
+                            <div class="w-10 h-7 bg-gray-400 animate-pulse rounded"></div>
+                        </div>
+                        <div class="flex rounded justify-between items-center p-2 dark:bg-white/10 w-full gap-2 h-30 bg-gray-200">
+                            <div class="w-35 h-25 rounded bg-gray-400 animate-pulse"></div>
+                            <div class="w-full flex flex-col gap-2">
+                                <div class="w-full h-7 rounded bg-gray-400 animate-pulse"></div>
+                                <div class="w-full h-5 rounded bg-gray-400 animate-pulse"></div>
+                            </div>
+                            <div class="w-10 h-7 bg-gray-400 animate-pulse rounded"></div>
+                        </div>
+                        <div class="flex rounded justify-between items-center p-2 dark:bg-white/10 w-full gap-2 h-30 bg-gray-200">
+                            <div class="w-35 h-25 rounded bg-gray-400 animate-pulse"></div>
+                            <div class="w-full flex flex-col gap-2">
+                                <div class="w-full h-7 rounded bg-gray-400 animate-pulse"></div>
+                                <div class="w-full h-5 rounded bg-gray-400 animate-pulse"></div>
+                            </div>
+                            <div class="w-10 h-7 bg-gray-400 animate-pulse rounded"></div>
+                        </div>
+                    </div>
+                <div v-else-if="filter.length" class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                    <div v-for="item in filter" class="flex justify-between dark:bg-white/10 bg-gray-200 py-2 rounded-lg pl-2">
                         <button @click="handleNavigate(item.id)" class="flex gap-2 items-center">
                             <img class="shadow rounded-lg p-2 w-23 h-23 bg-white/20" :src="`${item.image}`">
                             <div class="text-start">
@@ -132,15 +170,15 @@
                         <button @click="handleOpenModal(item.id)" class="flex items-center pr-2 text-red-500 group-hover:text-blue-500">
                             <Icon icon="weui:delete-filled" width="24" height="24" />
                         </button>
-                    </motion.div>
+                    </div>
                 </div>
 
-                <motion.div v-else :initial="{ scale: 0.9, opacity: 0 }" :animate="{ scale: 1, opacity: 1 }"
+                <div v-else
                     class="flex flex-col items-center justify-center pt-20 opacity-40">
                     <Icon icon="solar:box-minimalistic-bold-duotone" width="100" class="text-blue-950" />
                     <h3 class="text-blue-950 text-xl font-bold mt-4">Belum ada laporan</h3>
                     <p class="text-gray-500 text-sm">Laporan temuan Anda akan muncul di sini</p>
-                </motion.div>
+                </div>
             </div>
         </div>
 

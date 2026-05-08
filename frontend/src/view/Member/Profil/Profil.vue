@@ -4,7 +4,6 @@ import Bar from '../../Bar/Bar.vue';
 import { api, removeToken } from '../../../components/utils/helper';
 import { useRouter } from 'vue-router';
 import { Icon } from '@iconify/vue';
-import { motion } from 'motion-v';
 import { useDark, useToggle } from '@vueuse/core';
 
 const message = ref("")
@@ -150,23 +149,23 @@ onMounted(() => {
                 <div class="lg:col-span-2 mt-10 pb-10 lg:mt-0">
                     <div class="bg-blue-950/80 dark:bg-white/10 rounded-3xl ml-5 mr-5 p-10 shadow-2xl">
                         <div v-if="isLoading" class="flex flex-col gap-7">
-                            <div class="w-1/3 bg-gray-400 h-8 rounded animate-pule"></div>
+                            <div class="w-1/2 bg-gray-400 h-8 rounded animate-pule"></div>
                             <div class="flex flex-col gap-6">
                                 <div class="rounded-lg w-full bg-white/90 h-20 flex items-center pl-5 gap-6">
-                                    <div class="rounded-full w-10 h-10 bg-gray-400"></div>
-                                    <div class="rounded w-1/2 h-10 bg-gray-400"></div>
+                                    <div class="animate-pule rounded-full w-10 h-10 bg-gray-400"></div>
+                                    <div class="animate-pule rounded w-1/2 h-10 bg-gray-400"></div>
                                 </div>
                                 <div class="rounded-lg w-full bg-white/90 h-20 flex items-center pl-5 gap-6">
-                                    <div class="rounded-full w-10 h-10 bg-gray-400"></div>
-                                    <div class="rounded w-1/4 h-10 bg-gray-400"></div>
+                                    <div class="animate-pule rounded-full w-10 h-10 bg-gray-400"></div>
+                                    <div class="animate-pule rounded w-1/2 lg:w-1/4 h-10 bg-gray-400"></div>
                                 </div>
                                 <div class="rounded-lg w-full bg-white/90 h-20 flex items-center pl-5 gap-6">
-                                    <div class="rounded-full w-10 h-10 bg-gray-400"></div>
-                                    <div class="rounded w-1/3 h-10 bg-gray-400"></div>
+                                    <div class="animate-pule rounded-full w-10 h-10 bg-gray-400"></div>
+                                    <div class="animate-pule rounded w-1/2 lg:w-1/3 h-10 bg-gray-400"></div>
                                 </div>
                                 <div class="rounded-lg w-full bg-white/90 h-20 flex items-center pl-5 gap-6">
-                                    <div class="rounded-full w-10 h-10 bg-gray-400"></div>
-                                    <div class="rounded w-1/9 h-10 bg-gray-400"></div>
+                                    <div class="animate-pule rounded-full w-10 h-10 bg-gray-400"></div>
+                                    <div class="animate-pule rounded w-1/2 lg:w-1/9 h-10 bg-gray-400"></div>
                                 </div>
                             </div>
                         </div>
