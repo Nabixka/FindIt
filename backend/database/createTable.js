@@ -27,6 +27,7 @@ async function createTable(){
             password TEXT,
             role VARCHAR,
             status VARCHAR,
+            nomor VARCHAR,
             otp_code VARCHAR,
             otp_expired BIGINT,
             otp_verified BOOLEAN DEFAULT false

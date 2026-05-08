@@ -103,7 +103,7 @@
                 </motion.div>
             </div>
 
-            <motion.div :initial="{ y: 100, opacity: 0 }" :animate="{ y: 0, opacity: 1 }"
+            <div
                 class="dark:bg-white/10 bg-blue-950 rounded-t-[3.5rem] min-h-screen pb-24 shadow-[0_-10px_40px_rgba(0,0,0,0.2)]">
                 <div class="px-6 pt-12 flex flex-col gap-6">
                     <div class="space-y-4">
@@ -183,7 +183,7 @@
                         </div>
                     </div>
                 </div>
-            </motion.div>
+            </div>
 
         </div>
     </div>

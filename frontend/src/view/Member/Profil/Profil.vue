@@ -74,7 +74,7 @@
             <div class="lg:grid lg:grid-cols-3 pt-10 pb-10 lg:gap-10">
                 <div class="lg:col-span-1 flex flex-col pl-10 pr-10 gap-10">
 
-                    <motion.div :initial="{ scale: 0 }" :animate="{ scale: [0, 1.1, 1], transition: { duration: 0.8 } }" class="bg-blue-950/80 dark:bg-white/10 backdrop-blur-lg rounded-3xl p-8 flex flex-col items-center gap-4 shadow-xl">
+                    <div class="bg-blue-950/80 dark:bg-white/10 backdrop-blur-lg rounded-3xl p-8 flex flex-col items-center gap-4 shadow-xl">
                         <div class="w-32 h-32 bg-white overflow-hidden rounded-full border-4 border-yellow-400">
                             <img src="/F.png" class="w-full h-full object-cover">
                         </div>
@@ -86,28 +86,31 @@
                             <p class="text-gray-300 text-sm">
                                 {{ profil.email }}
                             </p>
+                            <p class="text-gray-300 text-sm">
+                                +{{ profil.nomor }}
+                            </p>
                         </div>
-                    </motion.div>
+                    </div>
 
                     <div class="grid grid-cols-2 gap-6">
-                        <motion.div :initial="{ scale: 0 }" :animate="{ scale: [0, 1.1, 1], transition: { duration: 0.8 } }" class="bg-blue-950/80 dark:bg-white/10 backdrop-blur-lg rounded-2xl p-6 text-center shadow-lg">
+                        <div class="bg-blue-950/80 dark:bg-white/10 backdrop-blur-lg rounded-2xl p-6 text-center shadow-lg">
                             <h3 class="text-yellow-400 text-4xl font-bold">
                                 {{ profil.lost_item }}
                             </h3>
                             <p class="text-white dark:text-white font-semibold mt-2">KEHILANGAN</p>
-                        </motion.div>
+                        </div>
 
-                        <motion.div :initial="{ scale: 0 }" :animate="{ scale: [0, 1.1, 1], transition: { duration: 0.8 } }" class="bg-blue-950/80 dark:bg-white/10 backdrop-blur-lg rounded-2xl p-6 text-center shadow-lg">
+                        <div class="bg-blue-950/80 dark:bg-white/10 backdrop-blur-lg rounded-2xl p-6 text-center shadow-lg">
                             <h3 class="text-yellow-400 text-4xl font-bold">
                                 {{  profil.found_item }}
                             </h3>
                             <p class="text-white dark:text-white font-semibold mt-2">MENEMUKAN</p>
-                        </motion.div>
+                        </div>
                     </div>
 
                 </div>
 
-                <motion.div :initial="{ scale: 0 }" :animate="{ scale: [0, 1.05, 1], transition: { duration: 0.8 } }" class="lg:col-span-2 mt-10 pb-10 lg:mt-0">
+                <div class="lg:col-span-2 mt-10 pb-10 lg:mt-0">
                     <div class="bg-blue-950/80 dark:bg-white/10 rounded-3xl ml-5 mr-5 p-10 shadow-2xl">
 
                         <h3 class="text-2xl font-bold text-white mb-8">
@@ -117,7 +120,7 @@
                         <div class="flex flex-col gap-6">
 
                             <router-link to="/member/item"
-                                class="flex items-center gap-6 bg-white/90 dark:bg-black/20 hover:bg-gray-100 transition p-5 rounded-xl shadow-md">
+                                class="flex items-center gap-6 bg-white/90 dark:bg-black/20 hover:bg-black/50 transition p-5 rounded-xl shadow-md">
                                 <div class="bg-sky-300 p-3 rounded-full">
                                     <Icon icon="solar:box-bold" width="24" height="24" />
                                 </div>
@@ -127,7 +130,7 @@
                             </router-link>
 
                             <button @click="handleNavigate(profil.id)"
-                                class="flex items-center gap-6 bg-white/90 dark:bg-black/20 hover:bg-gray-100 transition p-5 rounded-xl shadow-md">
+                                class="flex items-center gap-6 bg-white/90 dark:bg-black/20 hover:bg-black/50 transition p-5 rounded-xl shadow-md">
                                 <div class="bg-sky-300 p-3 rounded-full">
                                     <Icon icon="boxicons:user-filled" width="24" height="24" />
                                 </div>
@@ -137,7 +140,7 @@
                             </button>
 
                             <button @click="isShow = true"
-                                class="flex items-center gap-6 bg-white/90 dark:bg-black/20 hover:bg-gray-100 transition p-5 rounded-xl shadow-md">
+                                class="flex items-center gap-6 bg-white/90 dark:bg-black/20 hover:bg-black/50 transition p-5 rounded-xl shadow-md">
                                 <div class="bg-sky-300 p-3 rounded-full">
                                     <Icon icon="weui:setting-filled" width="24" height="24" />
                                 </div>
@@ -147,7 +150,7 @@
                             </button>
 
                             <button @click="LogOut"
-                                class="flex items-center gap-6 bg-white/90 dark:bg-black/20 hover:bg-red-100 transition p-5 rounded-xl shadow-md">
+                                class="flex items-center gap-6 bg-white/90 dark:bg-black/20 hover:bg-black/50 transition p-5 rounded-xl shadow-md">
                                 <div class="bg-red-300 p-3 rounded-full">
                                     <Icon icon="material-symbols:logout" width="24" height="24" />
                                 </div>
@@ -159,7 +162,7 @@
                         </div>
 
                     </div>
-                </motion.div>
+                </div>
 
             </div>
         </div>

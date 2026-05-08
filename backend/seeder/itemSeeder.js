@@ -28,7 +28,7 @@ async function itemSeeder() {
                 report_user_id: 1,
                 user_id: 1,
                 item_id: 1,
-                proof: `https://res.cloudinary.com/dvlb9qvsa/image/upload/v1778034018/reports/1778034018407_Blur.jpg.jpg`,
+                proof: `https://res.cloudinary.com/dvlb9qvsa/image/upload/v1778034018//1778034018407_Blur.jpg.jpg`,
                 reason: "Baldjadkjakjdakjdjakdjkdl"
             }
         ]

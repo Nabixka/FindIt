@@ -14,6 +14,7 @@ const auth = async (req, res, next) => {
         u.username, 
         u.email, 
         u.role,
+        u.nomor,
         COUNT(CASE WHEN i.status = 'found' THEN 1 END) AS found_item,
         COUNT(CASE WHEN i.status = 'lost' THEN 1 END) AS lost_item
         FROM users u 

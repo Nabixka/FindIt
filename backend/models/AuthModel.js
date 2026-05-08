@@ -3,12 +3,13 @@ const bcrypt = require("bcrypt")
 
 // Create Account
 const createUser = async (data) => {
-    const { username, email, password, role } = data
+    const { username, email, password, role, nomor } = data
     const hashedPassword = await bcrypt.hash(password, 10)
+    const status = "active"
 
     const create = await pool.query(`
-        INSERT INTO users (username, email, password, role) VALUES ($1, $2, $3, $4) RETURNING id
-    `, [username, email, hashedPassword, role])
+        INSERT INTO users (username, email, password, role, status, nomor) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id
+    `, [username, email, hashedPassword, role, status, nomor])
 
     const newId = create.rows[0].id
     const result = await pool.query(`

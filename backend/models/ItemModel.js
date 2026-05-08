@@ -13,7 +13,9 @@ const getItem = async () => {
         i.status,
         json_build_object(
         'id', u.id,
-        'username', u.username) AS user
+        'username', u.username,
+        'nomor', u.nomor
+        ) AS user
 
         FROM items i
         LEFT JOIN users u ON i.user_id = u.id
@@ -35,7 +37,9 @@ const getItemById = async (id) => {
         i.status,
         json_build_object(
         'id', u.id,
-        'username', u.username) AS user
+        'username', u.username,
+        'nomor', u.nomor
+        ) AS user
 
         FROM items i
         LEFT JOIN users u ON i.user_id = u.id
@@ -65,7 +69,9 @@ const createItem =  async (data) => {
         i.status,
         json_build_object(
         'id', u.id,
-        'username', u.username) AS user
+        'username', u.username,
+        'nomor', u.nomor
+        ) AS user
 
         FROM items i
         LEFT JOIN users u ON i.user_id = u.id
@@ -88,7 +94,9 @@ const getItemUser = async (id) => {
         i.status,
         json_build_object(
         'id', u.id,
-        'username', u.username ) AS User
+        'username', u.username,
+        'nomor', u.nomor
+        ) AS User
 
         FROM items i
         LEFT JOIN users u ON i.user_id = u.id

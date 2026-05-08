@@ -1,7 +1,6 @@
 <script setup>
 import { ref } from "vue"
 import { useRouter } from "vue-router"
-import { motion } from "motion-v"
 
 const { state } = history
 const router = useRouter()
@@ -71,7 +70,7 @@ const verifyOtp = async () => {
 
 <template>
   <div class="bg-linear-to-r from-white min-h-screen to-gray-200 lg:flex lg:justify-center lg:items-center">
-    <motion.div :initial="{ scale: 0 }" :animate="{ scale: [0, 1.1, 1], transition: { duration: 1 } }" class="flex flex-col h-screen lg:h-1/2 lg:bg-white lg:rounded-lg lg:w-1/3 pt-10">
+    <div class="flex flex-col h-screen lg:h-1/2 lg:bg-white lg:rounded-lg lg:w-1/3 pt-10">
 
       <!-- Title -->
       <div class="flex flex-col gap-5 justify-center items-center pt-10">
@@ -100,7 +99,7 @@ const verifyOtp = async () => {
         </button>
         <router-link to="/" class="text-center font-semibold text-blue-400">Kembali Ke Login</router-link>
       </div>
-    </motion.div>
+    </div>
 
   </div>
 </template>

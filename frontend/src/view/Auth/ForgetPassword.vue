@@ -1,7 +1,6 @@
 <script setup>
     import { ref } from 'vue'
     import { useRouter } from 'vue-router'
-    import { motion } from 'motion-v'
 
 
     const API_URL = import.meta.env.VITE_API_URL
@@ -43,7 +42,7 @@
 
 <template>
     <div class="bg-linear-to-r from-white min-h-screen to-gray-200 lg:flex lg:justify-center lg:items-center">
-        <motion.div :initial="{ scale: 0}" :animate="{ scale: [0, 1.1, 1], transition: { duration: 1 } }" class="flex flex-col h-screen lg:mt-5 lg:mb-5 lg:h-1/2 lg:bg-white lg:rounded-lg lg:w-1/3">
+        <div class="flex flex-col h-screen lg:mt-5 lg:mb-5 lg:h-1/2 lg:bg-white lg:rounded-lg lg:w-1/3">
             <div class="flex flex-col gap-20 pt-10">
                 <div>
                     <h3 class="text-yellow-600 text-center text-4xl font-bold z-2">Welcome To</h3>
@@ -77,7 +76,7 @@
                     </div>
                 </div>
             </div>
-        </motion.div>
+        </div>
     </div>
 </template>
 

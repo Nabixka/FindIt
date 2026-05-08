@@ -177,19 +177,15 @@
         <Bar />
 
         <div class="pt-20 pb-20 flex flex-col h-full lg:justify-center lg:items-center px-4">
-            <motion.div 
-                :initial="{ opacity: 0, y: -20 }" 
-                :animate="{ opacity: 1, y: 0 }"
+            <div
                 class="mb-8 text-center">
                 <h2 class="text-2xl font-black dark:text-white text-blue-950">Lapor Barang Hilang</h2>
                 <p class="text-sm text-gray-500 dark:text-gray-400">Isi detail barang agar mudah diidentifikasi</p>
-            </motion.div>
+            </div>
 
             <form @submit.prevent="uploadBarang" class="w-full lg:w-1/3 p-6 bg-white dark:bg-slate-900 shadow-xl rounded-3xl border border-gray-100 dark:border-slate-800">
                 
-                <motion.label 
-                    :initial="{ scale: 0.9, opacity: 0 }" 
-                    :animate="{ scale: 1, opacity: 1 }"
+                <label
                     class="relative flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-gray-300 dark:border-slate-700 rounded-3xl dark:bg-slate-800 bg-gray-50 hover:bg-gray-100 dark:hover:bg-slate-700 transition-all cursor-pointer group overflow-hidden">
                     <input type="file" @change="handleFile" accept="image/*" hidden>
                     
@@ -209,15 +205,15 @@
                             <span class="text-xs text-gray-400">JPG, PNG up to 5MB</span>
                         </div>
                     </div>
-                </motion.label>
+                </label>
 
                 <div class="space-y-5 pt-6">
-                    <motion.div :initial="{ x: -20, opacity: 0 }" :animate="{ x: 0, opacity: 1 }">
+                    <div>
                         <label class="dark:text-slate-300 text-xs font-bold text-blue-950 ml-2 mb-1 block uppercase tracking-wider">Nama Barang</label>
                         <input v-model="form.title" required class="w-full shadow-sm dark:bg-slate-800 dark:text-white bg-white border border-gray-200 dark:border-slate-700 rounded-2xl py-4 px-5 focus:ring-4 focus:ring-yellow-500/20 focus:border-yellow-500 outline-none transition-all" type="text" placeholder="Contoh: Dompet Kulit Cokelat">
-                    </motion.div>
+                    </div>
 
-                    <motion.div :initial="{ x: -20, opacity: 0 }" :animate="{ x: 0, opacity: 1, transition: { delay: 0.1 } }">
+                    <div>
                         <label class="dark:text-slate-300 text-xs font-bold text-blue-950 ml-2 mb-1 block uppercase tracking-wider">Lokasi Kejadian</label>
                         <div class="relative">
                             <Icon icon="solar:map-point-bold-duotone" class="absolute left-4 top-4 text-gray-400" width="20" />
@@ -234,9 +230,9 @@
                             <div id="create-map" class="w-full h-full"></div>
                         </div>
                         <p class="mt-2 text-[10px] text-gray-400 uppercase font-medium">Klik peta jika pencarian tidak akurat</p>
-                    </motion.div>
+                    </div>
 
-                    <motion.div :initial="{ x: -20, opacity: 0 }" :animate="{ x: 0, opacity: 1, transition: { delay: 0.2 } }">
+                    <div>
                         <label class="text-xs dark:text-slate-300 font-bold text-blue-950 ml-2 mb-1 block uppercase tracking-wider">Kategori</label>
                         <div class="relative">
                             <select v-model="form.category" required class="w-full appearance-none shadow-sm dark:bg-slate-800 bg-white dark:text-white border border-gray-200 dark:border-slate-700 rounded-2xl py-4 px-5 focus:ring-4 focus:ring-yellow-500/20 focus:border-yellow-500 outline-none transition-all">
@@ -245,27 +241,25 @@
                             </select>
                             <Icon icon="solar:alt-arrow-down-linear" class="absolute right-5 top-4.5 text-gray-400 pointer-events-none" width="18" />
                         </div>
-                    </motion.div>
+                    </div>
 
-                    <motion.div :initial="{ x: -20, opacity: 0 }" :animate="{ x: 0, opacity: 1, transition: { delay: 0.3 } }">
+                    <div>
                         <label class="text-xs font-bold text-blue-950 dark:text-slate-300 ml-2 mb-1 block uppercase tracking-wider">Deskripsi Tambahan</label>
                         <textarea v-model="form.description" rows="3" class="w-full shadow-sm dark:bg-slate-800 dark:text-white bg-white border border-gray-200 dark:border-slate-700 rounded-2xl p-5 focus:ring-4 focus:ring-yellow-500/20 focus:border-yellow-500 outline-none transition-all" placeholder="Ciri-ciri khusus barang..."></textarea>
-                    </motion.div>
+                    </div>
                 </div>
 
                 <div v-if="message" class="mt-4 p-3 bg-red-100 text-red-600 rounded-xl text-xs text-center font-bold">
                     {{ message }}
                 </div>
 
-                <motion.div 
-                    :initial="{ y: 20, opacity: 0 }" 
-                    :animate="{ y: 0, opacity: 1, transition: { delay: 0.4 } }"
+                <div
                     class="pt-6">
                     <button type="submit" class="w-full bg-yellow-500 hover:bg-yellow-400 active:scale-95 text-blue-950 text-lg font-black py-4 rounded-2xl shadow-lg shadow-yellow-500/30 transition-all flex items-center justify-center gap-2">
                         <Icon icon="solar:cloud-upload-bold" width="24" />
                         Publikasikan Laporan
                     </button>
-                </motion.div>
+                </div>
             </form>
         </div>
     </div>

@@ -239,8 +239,8 @@ exports.verifyLoginOtp = async (req, res) => {
 // Create User
 exports.createUser = async (req, res) => {
     try{
-        const { username, email, password, role } = req.body
-        if(!username || !email || !password || !role){
+        const { username, email, password, role, nomor } = req.body
+        if(!username || !email || !password || !role || !nomor){
             return res.status(400).json({
                 status: 400,
                 message: "Bad Request"
@@ -255,7 +255,7 @@ exports.createUser = async (req, res) => {
             })
         }
 
-        const result = await auth.createUser({username, email, password, role})
+        const result = await auth.createUser({username, email, password, role, nomor})
 
         res.status(201).json({
             status: 201,
