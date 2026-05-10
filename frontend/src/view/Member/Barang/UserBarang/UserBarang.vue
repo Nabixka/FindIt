@@ -118,32 +118,8 @@
             </div>
 
             <div class="flex flex-col gap-4">
-                <div v-if="isLoading" class="flex flex-col gap-5">
-                        <div class="flex rounded justify-between items-center p-2 dark:bg-white/10 w-full gap-2 h-30 bg-gray-200">
-                            <div class="w-35 h-25 rounded bg-gray-400 animate-pulse"></div>
-                            <div class="w-full flex flex-col gap-2">
-                                <div class="w-full h-7 rounded bg-gray-400 animate-pulse"></div>
-                                <div class="w-full h-5 rounded bg-gray-400 animate-pulse"></div>
-                            </div>
-                            <div class="w-10 h-7 bg-gray-400 animate-pulse rounded"></div>
-                        </div>
-                        <div class="flex rounded justify-between items-center p-2 dark:bg-white/10 w-full gap-2 h-30 bg-gray-200">
-                            <div class="w-35 h-25 rounded bg-gray-400 animate-pulse"></div>
-                            <div class="w-full flex flex-col gap-2">
-                                <div class="w-full h-7 rounded bg-gray-400 animate-pulse"></div>
-                                <div class="w-full h-5 rounded bg-gray-400 animate-pulse"></div>
-                            </div>
-                            <div class="w-10 h-7 bg-gray-400 animate-pulse rounded"></div>
-                        </div>
-                        <div class="flex rounded justify-between items-center p-2 dark:bg-white/10 w-full gap-2 h-30 bg-gray-200">
-                            <div class="w-35 h-25 rounded bg-gray-400 animate-pulse"></div>
-                            <div class="w-full flex flex-col gap-2">
-                                <div class="w-full h-7 rounded bg-gray-400 animate-pulse"></div>
-                                <div class="w-full h-5 rounded bg-gray-400 animate-pulse"></div>
-                            </div>
-                            <div class="w-10 h-7 bg-gray-400 animate-pulse rounded"></div>
-                        </div>
-                        <div class="flex rounded justify-between items-center p-2 dark:bg-white/10 w-full gap-2 h-30 bg-gray-200">
+                <div v-if="isLoading" class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <div v-for="n in 4" :key="n" class="flex rounded justify-between items-center p-2 dark:bg-white/10 w-full gap-2 h-30 bg-gray-200">
                             <div class="w-35 h-25 rounded bg-gray-400 animate-pulse"></div>
                             <div class="w-full flex flex-col gap-2">
                                 <div class="w-full h-7 rounded bg-gray-400 animate-pulse"></div>

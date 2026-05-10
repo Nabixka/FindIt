@@ -9,15 +9,20 @@
     const router = useRouter();
     const { state } = history;
     const id = state?.id;
+    const isLoading = ref(true)
 
     const getReports = async () => {
         try {
+            await new Promise(resolve => setTimeout(resolve, 2000))
             const res = await api.get(`/user/report/user/${id}`);
             reports.value = res.data.data;
         } catch (err) {
             if (err.status == 500) {
                 message.value = "Maaf, Terjadi Gangguan Untuk Terhubung Dengan Server";
             }
+        }
+        finally{
+            isLoading.value = false
         }
     };
 
@@ -46,7 +51,25 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 pt-10 pl-10 pr-10 pb-20">
-            <div v-if="reports.length" v-for="report in reports" class="dark:bg-white/10 bg-white rounded-lg shadow-lg p-5 flex flex-col gap-4">
+            <div v-if="isLoading" v-for="n in 4" :key="n" class="dark:bg-white/10 bg-white p-5 rounded-lg shadow-lg flex-col">
+                <div class="flex items-center gap-5">
+                    <div class="rounded-full w-17 h-17 animate-pulse bg-gray-400"></div>
+                    <div class="w-2/3 flex flex-col gap-3">
+                        <div class="w-1/2 bg-gray-400 animate-pulse h-5 rounded"></div>
+                        <div class="w-full bg-gray-400 animate-pulse h-5 rounded"></div>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-2 w-full pt-5">
+                    <div class="w-1/3 rounded animate-pulse h-4 bg-gray-400"></div>
+                    <div class="w-2/3 rounded animate-pulse h-4 bg-gray-400"></div>
+                </div>
+                <div class="flex flex-col gap-2 w-full pt-5">
+                    <div class="w-1/3 rounded h-4 animate-pulse bg-gray-400"></div>
+                    <div class="w-full rounded h-30 animate-pulse bg-gray-400"></div>
+                </div>
+                <div class="w-full h-10 rounded mt-5 animate-pulse bg-gray-400"></div>
+            </div>
+            <div v-else-if="reports.length" v-for="report in reports" class="dark:bg-white/10 bg-white rounded-lg shadow-lg p-5 flex flex-col gap-4">
                 <div class="flex items-center gap-4">
                     <img class="w-16 h-16 rounded-full object-cover" :src="`${report.item.image}`" alt="Item Image">
                     <div>

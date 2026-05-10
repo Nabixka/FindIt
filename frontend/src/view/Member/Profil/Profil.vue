@@ -114,15 +114,10 @@ onMounted(() => {
 
                     <div v-if="isLoading">
                         <div class="grid grid-cols-2 gap-6">
-                            <div
+                            <div v-for="n in 2" :key="n"
                                 class="bg-blue-950/80 dark:bg-white/10 backdrop-blur-lg rounded-2xl p-6 text-center shadow-lg flex flex-col items-center gap-3">
                                 <div class="h-8 w-full bg-gray-400 rounded animate-pulse"></div>
                                 <div class="h-4 w-1/2 bg-gray-400 rounded mt-2 animate-pulse"></div>
-                            </div>
-                            <div
-                                class="bg-blue-950/80 dark:bg-white/10 backdrop-blur-lg rounded-2xl p-6 text-center shadow-lg flex flex-col items-center gap-3">
-                                <div class="h-8 w-full bg-gray-400 rounded animate-pulse"></div>
-                                <div class="h-4 w-1/2 bg-gray-400 rounded justify-center mt-2 animate-pulse"></div>
                             </div>
                         </div>
                     </div>
@@ -151,21 +146,9 @@ onMounted(() => {
                         <div v-if="isLoading" class="flex flex-col gap-7">
                             <div class="w-1/2 bg-gray-400 h-8 rounded animate-pule"></div>
                             <div class="flex flex-col gap-6">
-                                <div class="rounded-lg w-full bg-white/90 h-20 flex items-center pl-5 gap-6">
+                                <div v-for="n in 4" :key="n" class="rounded-lg w-full bg-white/90 h-20 flex items-center pl-5 gap-6">
                                     <div class="animate-pule rounded-full w-10 h-10 bg-gray-400"></div>
                                     <div class="animate-pule rounded w-1/2 h-10 bg-gray-400"></div>
-                                </div>
-                                <div class="rounded-lg w-full bg-white/90 h-20 flex items-center pl-5 gap-6">
-                                    <div class="animate-pule rounded-full w-10 h-10 bg-gray-400"></div>
-                                    <div class="animate-pule rounded w-1/2 lg:w-1/4 h-10 bg-gray-400"></div>
-                                </div>
-                                <div class="rounded-lg w-full bg-white/90 h-20 flex items-center pl-5 gap-6">
-                                    <div class="animate-pule rounded-full w-10 h-10 bg-gray-400"></div>
-                                    <div class="animate-pule rounded w-1/2 lg:w-1/3 h-10 bg-gray-400"></div>
-                                </div>
-                                <div class="rounded-lg w-full bg-white/90 h-20 flex items-center pl-5 gap-6">
-                                    <div class="animate-pule rounded-full w-10 h-10 bg-gray-400"></div>
-                                    <div class="animate-pule rounded w-1/2 lg:w-1/9 h-10 bg-gray-400"></div>
                                 </div>
                             </div>
                         </div>

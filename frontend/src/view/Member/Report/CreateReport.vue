@@ -84,7 +84,7 @@
 <template>
     <div class="dark:bg-linear-to-b dark:from-gray-950/90 dark:to-blue-950 bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
         <Bar />
-        <div class="flex justify-center pt-20 px-4">
+        <div class="flex justify-center pt-20 px-4 lg:pb-30">
             <div class="dark:bg-white/10 bg-white rounded-xl shadow-2xl flex flex-col w-full max-w-lg gap-6 p-8">
                 <h3 class="dark:text-white border-b pb-4 border-gray-300 w-full text-center text-blue-950 text-3xl font-extrabold">
                     Laporkan Pengguna

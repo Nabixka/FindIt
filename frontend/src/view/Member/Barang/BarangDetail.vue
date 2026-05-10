@@ -112,6 +112,12 @@
     })
   }
   
+  const handleHubungi = (e) => {
+    const phoneNumber = e
+    const whatsappUrl = `https://wa.me/${phoneNumber}`
+    window.open(whatsappUrl, '_blank')
+  }
+
 </script>
 
 <template>
@@ -243,7 +249,7 @@
 
           <!-- BUTTON -->
           <div class="flex flex-col gap-2">
-              <button class="w-full flex items-center justify-center gap-2 break-words text-white font-bold bg-blue-700 hover:bg-blue-900 rounded-xl p-3">
+              <button @click="handleHubungi(user.nomor)" class="w-full flex items-center justify-center gap-2 break-words text-white font-bold bg-blue-700 hover:bg-blue-900 rounded-xl p-3">
                 <Icon icon="solar:phone-calling-bold" width="24"  />
                 Hubungi Pelapor
               </button>

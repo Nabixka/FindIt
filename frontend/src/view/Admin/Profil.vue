@@ -14,6 +14,7 @@
     const isDark = useDark()
     const darkToggle = useToggle(isDark)  
     const isShow = ref(false)
+    const isLoading = ref(true)
 
     const getProfil = async () => {
         try{
@@ -45,10 +46,22 @@
         }
     }
 
-    onMounted(() => {
-        getProfil()
-        getItem()
-        getUser()
+    onMounted(async () => {
+        try{    
+            await new Promise(resolve => setTimeout(resolve, 2000))
+
+            await Promise.all([
+                getProfil(),
+                getItem(),
+                getUser()
+            ])
+        }
+        catch(err){
+            console.log(err)
+        }
+        finally{
+            isLoading.value = false
+        }
     })
 
     const LogOut = () => {
@@ -83,7 +96,15 @@
             <div class="lg:grid lg:grid-cols-3 pt-10 pb-10 lg:gap-10">
                 <div class="lg:col-span-1 flex flex-col gap-10">
 
-                    <motion.div :initial="{ scale: 0 }" :animate="{ scale: [0, 1.1, 1], transition: { duration: 0.8 } }" class="bg-blue-950/80 dark:bg-white/10 backdrop-blur-lg rounded-3xl p-8 flex flex-col items-center gap-4 shadow-xl">
+                    <div v-if="isLoading" class="bg-blue-950/80 dark:bg-white/10 backdrop-blur-lg rounded-3xl p-8 flex flex-col items-center gap-4 shadow-xl animate-pulse" > 
+                        <div class="w-32 h-32 rounded-full bg-gray-400"></div> 
+                        <div class="flex flex-col gap-3 items-center w-full"> 
+                            <div class="h-6 w-40 bg-gray-400 rounded"></div> 
+                            <div class="h-4 w-52 bg-gray-500 rounded"></div> 
+                        </div> 
+                    </div>
+
+                    <div v-else class="bg-blue-950/80 dark:bg-white/10 backdrop-blur-lg rounded-3xl p-8 flex flex-col items-center gap-4 shadow-xl">
                         <div class="w-32 h-32 bg-white overflow-hidden rounded-full border-4 border-yellow-400">
                             <img src="/F.png" class="w-full h-full object-cover">
                         </div>
@@ -94,34 +115,52 @@
                             </h3>
                             <p class="text-gray-300 text-sm">{{ profil.email }}</p>
                         </div>
-                    </motion.div>
+                    </div>
 
                     <div class="grid grid-cols-2 gap-6 pb-5">
-                        <motion.div :initial="{ scale: 0 }" :animate="{ scale: [0, 1.1, 1], transition: { duration: 0.8 } }" class="bg-blue-950/80 dark:bg-white/10 backdrop-blur-lg rounded-3xl p-8 flex flex-col items-center gap-4 shadow-xl">
+
+                        <div v-if="isLoading" class="bg-blue-950/80 dark:bg-white/10 rounded-3xl p-8 shadow-xl animate-pulse" > 
+                            <div class="h-10 w-16 bg-gray-400 rounded mx-auto"></div> 
+                            <div class="h-4 w-20 bg-gray-500 rounded mx-auto mt-4"></div> 
+                        </div>
+
+                        <div v-else class="bg-blue-950/80 dark:bg-white/10 backdrop-blur-lg rounded-3xl p-8 flex flex-col items-center gap-4 shadow-xl">
                             <h3 class="text-yellow-400 text-4xl font-bold">
                                 {{ listUser.length }}
                             </h3>
                             <p class="text-white dark:text-white font-semibold mt-2">USER</p>
-                        </motion.div>
+                        </div>
 
-                        <motion.div :initial="{ scale: 0 }" :animate="{ scale: [0, 1.1, 1], transition: { duration: 0.8 } }" class="bg-blue-950/80 dark:bg-white/10 backdrop-blur-lg rounded-3xl p-8 flex flex-col items-center gap-4 shadow-xl">
+                        <div v-if="isLoading" class="bg-blue-950/80 dark:bg-white/10 rounded-3xl p-8 shadow-xl animate-pulse" > 
+                            <div class="h-10 w-16 bg-gray-400 rounded mx-auto"></div> 
+                            <div class="h-4 w-20 bg-gray-500 rounded mx-auto mt-4"></div> 
+                        </div>
+
+                        <div v-else class="bg-blue-950/80 dark:bg-white/10 backdrop-blur-lg rounded-3xl p-8 flex flex-col items-center gap-4 shadow-xl">
                             <h3 class="text-yellow-400 text-4xl font-bold">
                                 {{ listItem.length }}
                             </h3>
                             <p class="text-white dark:text-white font-semibold mt-2">BARANG</p>
-                        </motion.div>
+                        </div>
                     </div>
 
                 </div>
 
-                <motion.div :initial="{ scale: 0 }" :animate="{ scale: [0, 1.05, 1], transition: { duration: 0.8 } }" class="lg:col-span-2 mt-10 pb-10 lg:mt-0">
+                <div class="lg:col-span-2 mt-10 pb-10 lg:mt-0">
                     <div class="bg-blue-950/80 dark:bg-white/10 rounded-3xl p-10 shadow-2xl">
 
-                        <h3 class="text-2xl font-bold text-white mb-8">
-                            Pengaturan
-                        </h3>
+                        <div v-if="isLoading" class="flex flex-col gap-7">
+                            <div class="w-1/2 bg-gray-400 h-8 rounded animate-pulse"></div>
+                            <div class="flex flex-col gap-6">
+                                <div v-for="n in 4" :key="n" class="rounded-lg w-full dark:bg-white/10 bg-white/90 h-20 flex items-center pl-5 gap-6">
+                                    <div class="animate-pulse rounded-full w-10 h-10 bg-gray-400"></div>
+                                    <div class="animate-pulse rounded w-1/2 h-10 bg-gray-400"></div>
+                                </div>
+                            </div>
+                        </div>
 
-                        <div class="flex flex-col gap-6">
+                        <div v-else class="flex flex-col gap-6">
+                            <h3 class="text-2xl font-bold text-white mb-8">Pengaturan</h3>
 
                             <router-link to="/admin/user"
                                 class="flex items-center gap-6 bg-white/90 dark:bg-black/20 hover:bg-gray-100 transition p-5 rounded-xl shadow-md">
@@ -166,7 +205,7 @@
                         </div>
 
                     </div>
-                </motion.div>
+                </div>
 
             </div>
         </div>

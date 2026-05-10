@@ -7,14 +7,19 @@
 
     const listUser = ref([])
     const filterRole = ref("" || "member")
+    const isLoading = ref(true)
 
     const getListUser = async () => {
         try{
+            await new Promise(resolve => setTimeout(resolve, 2000))
             const res = await api.get("/user")
             listUser.value = res.data.data
         }
         catch(err){
             console.log(err)
+        }
+        finally{
+            isLoading.value = false
         }
     }
 
@@ -35,12 +40,12 @@
 </script>
 
 <template>
-    <div class="bg-linear-to-r from-white to-gray-200 min-h-screen h-full">
+    <div class="dark:bg-linear-to-b dark:from-gray-950/90 dark:to-blue-950 bg-linear-to-r from-white to-gray-200 min-h-screen h-full">
         <Bar />
         <Nav />
     
         <div class="pt-25 flex flex-col gap-5 pb-25">
-            <h3 class="font-extrabold text-center text-3xl text-gray-700/90">List User</h3>
+            <h3 class="dark:text-white font-extrabold text-center text-3xl text-gray-700/90">List User</h3>
             <div class="flex justify-center">
                 <div class="lg:grid lg:grid-cols-2 flex w-full shadow-lg justify-around ml-4 mr-4 lg:w-1/3 bg-gray-300 rounded-2xl p-1">
                     <button @click="filterRole = 'member'" :class="buttonColor('member')">Member</button>
@@ -48,8 +53,19 @@
                 </div>
             </div>
 
-            <div v-if="listUser.length" class="grid grid-cols-1 lg:grid-cols-4 gap-10 pl-5 pr-5">
-                <div v-for="user in filter" class="bg-linear-to-b from-blue-950/80 rounded-2xl to-blue-950 flex flex-col gap-2 items-center p-5 shadow-xl">
+            <div v-if="isLoading" class="grid grid-cols-1 lg:grid-cols-4 gap-10 pl-5 pr-5">
+                <div v-for="n in 4" :key="n" class="bg-gray-200 rounded-2xl to-blue-950 flex flex-col gap-2 items-center p-5 shadow-xl">
+                    <div class="w-30 h-30 rounded-full bg-gray-400 animate-pulse"></div>
+                    <div class="flex flex-col w-full gap-2 items-center">
+                        <div class="h-5 w-1/3 rounded bg-gray-400"></div>
+                        <div class="h-5 w-1/2 rounded bg-gray-400"></div>
+                        <div class="h-5 w-1/3 rounded bg-gray-400"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div v-else-if="listUser.length" class="grid grid-cols-1 lg:grid-cols-4 gap-10 pl-5 pr-5">
+                <div v-for="user in filter" class="dark:bg-white/50 bg-linear-to-b from-blue-950/80 rounded-2xl to-blue-950 flex flex-col gap-2 items-center p-5 shadow-xl">
                     <img src="/F.png" class="w-30 h-30 bg-white rounded-full">
                     <div class="flex flex-col items-center">
                         <h3 class="text-yellow-500 font-extrabold">{{ user.username }}</h3>
