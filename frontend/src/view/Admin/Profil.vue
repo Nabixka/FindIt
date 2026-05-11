@@ -167,9 +167,9 @@
                                 <div class="bg-sky-300 p-3 rounded-full">
                                     <Icon icon="boxicons:user-filled" width="24" height="24" />
                                 </div>
-                                <div class="font-bold text-black dark:text-white text-lg">
+                                <h3 class="font-bold text-black dark:text-white text-lg">
                                     User
-                                </div>
+                                </h3>
                             </router-link>
 
                             <router-link to="/admin/barang"
@@ -177,19 +177,18 @@
                                 <div class="bg-sky-300 p-3 rounded-full">
                                     <Icon icon="solar:box-bold" width="24" height="24" />
                                 </div>
-                                <div class="font-bold text-black dark:text-white text-lg">
+                                <h3 class="font-bold text-black dark:text-white text-lg">
                                     Barang
-                                </div>
+                                </h3>
                             </router-link>
 
-                            <button @click="isShow = true"
-                                class="flex items-center gap-6 bg-white/90 dark:bg-black/20 hover:bg-gray-100 transition p-5 rounded-xl shadow-md">
+                            <button @click="isShow = true" class="flex items-center gap-6 bg-white/90 dark:bg-black/20 hover:bg-black/50 transition p-5 rounded-xl shadow-md">
                                 <div class="bg-sky-300 p-3 rounded-full">
                                     <Icon icon="weui:setting-filled" width="24" height="24" />
                                 </div>
-                                <div class="font-bold text-black dark:text-white text-lg">
+                                <h3 class="text-left font-bold text-black dark:text-white text-lg">
                                     Pengaturan Layar
-                                </div>
+                                </h3>
                             </button>
 
                             <button @click="LogOut"
@@ -197,7 +196,7 @@
                                 <div class="bg-red-300 p-3 rounded-full">
                                     <Icon icon="material-symbols:logout" width="24" height="24" />
                                 </div>
-                                <div class="font-bold text-black dark:text-white text-lg">
+                                <div class="break-words font-bold text-black dark:text-white text-lg">
                                     Keluar
                                 </div>
                             </button>

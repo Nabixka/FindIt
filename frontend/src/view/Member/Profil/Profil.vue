@@ -164,9 +164,9 @@ onMounted(() => {
                                     <div class="bg-sky-300 p-3 rounded-full">
                                         <Icon icon="solar:box-bold" width="24" height="24" />
                                     </div>
-                                    <div class="font-bold text-black dark:text-white text-lg">
+                                    <h3 class="font-bold text-black dark:text-white text-lg">
                                         Laporan Pembuatan Barang
-                                    </div>
+                                    </h3>
                                 </router-link>
 
                                 <button @click="handleNavigate(profil.id)"
@@ -174,9 +174,9 @@ onMounted(() => {
                                     <div class="bg-sky-300 p-3 rounded-full">
                                         <Icon icon="boxicons:user-filled" width="24" height="24" />
                                     </div>
-                                    <div class="font-bold text-black dark:text-white text-lg">
+                                    <h3 class="font-bold text-black dark:text-white text-lg">
                                         Laporan Anda
-                                    </div>
+                                    </h3>
                                 </button>
 
                                 <button @click="isShow = true"
@@ -184,9 +184,9 @@ onMounted(() => {
                                     <div class="bg-sky-300 p-3 rounded-full">
                                         <Icon icon="weui:setting-filled" width="24" height="24" />
                                     </div>
-                                    <div class="font-bold text-black dark:text-white text-lg">
+                                    <h3 class="text-left font-bold text-black dark:text-white text-lg">
                                         Pengaturan Layar
-                                    </div>
+                                    </h3>
                                 </button>
 
                                 <button @click="LogOut"

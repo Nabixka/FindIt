@@ -1,24 +1,15 @@
 const pool = require("./database/postgres")
 
-async function deleteDB(){
-    try{
-        await pool.query(`
-            SELECT pg_terminate_backend(pid)
-            FROM pg_stat_activity
-            WHERE datname = 'findit'
-            AND pid <> pg_backend_pid();
-        `)
-        await pool.query(`
-            DROP DATABASE findit
-        `)
+async function deleteDB() {
+    try {
+        await pool.query(`DROP DATABASE IF EXISTS findit WITH (FORCE);`);
 
-        console.log("Berhasil Menghapus Database")
-    }
-    catch(err){
-        console.log(err)
-    }
-    finally{
-        process.exit(0)
+        console.log("Berhasil Menghapus Database 'findit'");
+    } catch (err) {
+        console.error("Gagal menghapus database:", err.message);
+    } finally {
+        await pool.end();
+        process.exit(0);
     }
 }
 
