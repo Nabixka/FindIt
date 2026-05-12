@@ -63,6 +63,23 @@ async function createTable(){
             FOREIGN KEY (item_id) REFERENCES items(id) ON DELETE CASCADE
             )`)
 
+        await pool.query(`
+            CREATE TABLE IF NOT EXISTS item_matches(
+            id SERIAL PRIMARY KEY,
+            item_id_1 INT NOT NULL,
+            item_id_2 INT NOT NULL,
+            similarity_score FLOAT,
+            match_type VARCHAR,
+            is_sent BOOLEAN DEFAULT false,
+            sent_to_user_id INT,
+            sent_at TIMESTAMP,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+            FOREIGN KEY (item_id_1) REFERENCES items(id) ON DELETE CASCADE,
+            FOREIGN KEY (item_id_2) REFERENCES items(id) ON DELETE CASCADE,
+            FOREIGN KEY (sent_to_user_id) REFERENCES users(id) ON DELETE SET NULL
+            )`)
+
         console.log("Berhasil Membuat Table")
     }
     catch(err){

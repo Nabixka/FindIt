@@ -19,6 +19,7 @@ import AdminHome from '../../view/Admin/AdminHome.vue'
 import AdminProfil from '../../view/Admin/Profil.vue'
 import ListBarang from '../../view/Admin/Laporan/ListBarang.vue'
 import ListUser from '../../view/Admin/Laporan/ListUser.vue'
+import ListMatches from '../../view/Admin/Laporan/ListMatches.vue'
 import Home from '../../view/Member/Home/Home.vue'
 
 const routes = [
@@ -93,6 +94,11 @@ const routes = [
         path: "/admin/user",
         name: "ListUser",
         component: ListUser
+    },
+    {
+        path: "/admin/matches",
+        name: "ListMatches",
+        component: ListMatches
     },
     {
         path: "/admin/home",

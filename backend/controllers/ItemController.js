@@ -1,6 +1,7 @@
 const item = require("../models/ItemModel")
 const user = require("../models/UserModel")
 const cloudinary = require("../database/cloudinary")
+const { scanNewItemForMatches } = require("./MatchController")
 
 exports.getItem = async (req, res) => {
     try{
@@ -82,6 +83,12 @@ exports.createItem = async (req, res) => {
         }
 
         const result = await item.createItem({title, description, image: imageUrl, category, location, user_id, status})
+        
+        // Scan untuk match dengan item lain
+        setTimeout(async () => {
+            await scanNewItemForMatches(result.id, 0.7)
+        }, 100)
+
         res.status(201).json({
             status: 201,
             message: "created",

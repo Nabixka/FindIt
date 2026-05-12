@@ -22,7 +22,7 @@ async function userSeeder(){
             },
             {
                 username: "Admin 1",
-                email: "admin@gmail.com",
+                email: "admin1@gmail.com",
                 password: "admin123",
                 status: "active",
                 role: "admin",

@@ -7,6 +7,7 @@ const port = process.env.PORT
 const userRouter = require("./routers/UserRouter")
 const itemRouter = require("./routers/ItemRouter")
 const authRouter = require("./routers/AuthRouter")
+const matchRouter = require("./routers/MatchRouter")
 
 app.use(express.json())
 app.use(bearerToken())
@@ -15,6 +16,7 @@ app.use("/uploads", express.static("uploads"))
 app.use("/user", userRouter)
 app.use("/item", itemRouter)
 app.use("/auth", authRouter)
+app.use("/match", matchRouter)
 
 app.listen(port, () => {
     console.log(`SERVER BERJALAN di http://localhost:${port}`)

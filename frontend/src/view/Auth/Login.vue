@@ -36,6 +36,12 @@
             clicked.value = false
         }
         catch (err) {
+            if(err.status == 400){
+                message.value = "Email atau password salah"
+            }
+            if(err.status == 404){
+                message.value = "User tidak ditemukan"
+            }
             if(err.status == 403){
                 modal.value = true
             }

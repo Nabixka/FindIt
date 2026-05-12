@@ -12,6 +12,7 @@
     const itemId = ref(null)
 
     const items = ref([])
+    const matchedItems = ref([])
     const isLoading = ref(true)
 
     const getItem = async () => {
@@ -34,8 +35,19 @@
         }
     }
 
+    const getMatchedItems = async () => {
+        try {
+            const res = await api.get('/match/user/list')
+            matchedItems.value = res.data.data
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
+
     onMounted(() => {
         getItem()
+        getMatchedItems()
     })
 
     const handleOpenModal = (id) => {
@@ -154,6 +166,87 @@
                     <Icon icon="solar:box-minimalistic-bold-duotone" width="100" class="text-blue-950" />
                     <h3 class="text-blue-950 text-xl font-bold mt-4">Belum ada laporan</h3>
                     <p class="text-gray-500 text-sm">Laporan temuan Anda akan muncul di sini</p>
+                </div>
+            </div>
+
+            <!-- Matched Items Section -->
+            <div v-if="matchedItems.length" class="mt-12 pt-8 border-t-2 border-gray-300 dark:border-gray-700">
+                <h3 class="text-center text-blue-950 dark:text-white text-2xl font-bold mb-6 flex items-center justify-center gap-2">
+                    <Icon icon="solar:check-circle-bold" class="text-green-500" width="28" />
+                    Barang yang Sesuai
+                </h3>
+                
+                <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                    <div v-for="match in matchedItems" :key="match.id" 
+                        class="dark:bg-white/5 bg-green-50 border border-green-200 dark:border-green-900/30 p-4 rounded-lg hover:shadow-md transition-all">
+                        
+                        <div class="flex items-center justify-between mb-3">
+                            <p class="text-xs font-semibold text-green-600 dark:text-green-400">MATCH DITEMUKAN</p>
+                            <span class="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-2 py-1 rounded-full text-xs font-bold">
+                                {{ (match.similarity_score * 100).toFixed(0) }}% Mirip
+                            </span>
+                        </div>
+
+                        <!-- Check which item belongs to current user -->
+                        <div v-if="match.item1.user.id !== $route.params.id" class="space-y-3">
+                            <!-- Matched Item (other user's item) -->
+                            <div class="bg-white dark:bg-gray-800 p-3 rounded-lg">
+                                <p class="text-xs text-gray-500 dark:text-gray-400 mb-2">Cocok dengan:</p>
+                                <div class="flex gap-3">
+                                    <img class="w-16 h-16 object-cover rounded-lg" 
+                                        :src="`${match.item2.image}`"
+                                        onerror="this.src='https://placehold.co/200x200?text=No+Image'">
+                                    <div class="flex-1">
+                                        <h4 class="text-blue-950 dark:text-white font-bold text-sm">{{ match.item2.title }}</h4>
+                                        <div class="flex items-center gap-1 mt-1 text-gray-500 text-xs">
+                                            <Icon icon="solar:map-point-bold-duotone" class="text-yellow-500" width="12" />
+                                            <span>{{ match.item2.location }}</span>
+                                        </div>
+                                        <p class="text-xs text-gray-400 mt-1">Milik: <span class="font-semibold">{{ match.item2.user.username }}</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div v-else class="space-y-3">
+                            <!-- Matched Item (other user's item) -->
+                            <div class="bg-white dark:bg-gray-800 p-3 rounded-lg">
+                                <p class="text-xs text-gray-500 dark:text-gray-400 mb-2">Cocok dengan:</p>
+                                <div class="flex gap-3">
+                                    <img class="w-16 h-16 object-cover rounded-lg" 
+                                        :src="`${match.item1.image}`"
+                                        onerror="this.src='https://placehold.co/200x200?text=No+Image'">
+                                    <div class="flex-1">
+                                        <h4 class="text-blue-950 dark:text-white font-bold text-sm">{{ match.item1.title }}</h4>
+                                        <div class="flex items-center gap-1 mt-1 text-gray-500 text-xs">
+                                            <Icon icon="solar:map-point-bold-duotone" class="text-yellow-500" width="12" />
+                                            <span>{{ match.item1.location }}</span>
+                                        </div>
+                                        <p class="text-xs text-gray-400 mt-1">Milik: <span class="font-semibold">{{ match.item1.user.username }}</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Match Details -->
+                        <div class="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700">
+                            <p class="text-xs text-gray-600 dark:text-gray-400">
+                                <span class="font-semibold">Tipe Kecocokan:</span> 
+                                <span class="capitalize">{{ match.match_type === 'both' ? 'Nama & Lokasi' : match.match_type === 'title' ? 'Nama Barang' : 'Lokasi' }}</span>
+                            </p>
+                            <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">
+                                <span class="font-semibold">Dikirim:</span> 
+                                {{ new Date(match.sent_at).toLocaleDateString('id-ID') }}
+                            </p>
+                        </div>
+
+                        <!-- Contact Button -->
+                        <button @click="$router.push({ name: 'Profil', params: { username: match.item1.user.id === $route.params.id ? match.item2.user.username : match.item1.user.username } })"
+                            class="w-full mt-3 flex items-center justify-center gap-2 px-3 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all text-sm font-semibold">
+                            <Icon icon="solar:chat-round-linear" width="16" />
+                            Hubungi Pemilik
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
