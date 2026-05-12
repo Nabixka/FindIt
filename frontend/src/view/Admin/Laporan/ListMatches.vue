@@ -53,8 +53,8 @@
             if (!confirmed) return
 
             const res = await api.post("/match/send", { 
-                match_id: matchId, 
-                user_id: userId 
+                matchId: matchId, 
+                userId: userId 
             })
             message.value = "Match berhasil dikirim!"
             setTimeout(() => {

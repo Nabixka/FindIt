@@ -55,8 +55,6 @@
       </button>
       <!-- <button v-if="detail.role === 'admin'" @click="showAdminMenu = !showAdminMenu" class="relative">
         <Icon icon="carbon:menu" class="text-white" width="30" height="30" />
-        
-        Admin Menu Dropdown
         <div v-if="showAdminMenu" class="absolute bottom-16 left-1/2 transform -translate-x-1/2 bg-white dark:bg-gray-800 rounded-lg shadow-lg py-2 min-w-max z-50">
           <button @click="navigateToMatches" class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left text-blue-950 dark:text-white">
             <Icon icon="solar:link-circle-2-bold-duotone" width="20" />
