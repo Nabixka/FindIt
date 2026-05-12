@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue"
 import { useRouter } from "vue-router"
+import { api } from "../../components/utils/helper"
 
 const { state } = history
 const router = useRouter()
@@ -22,6 +23,17 @@ const handleInput = (e, index) => {
 const handleBackspace = (e, index) => {
   if (!otp.value[index] && index > 0) {
     inputs.value[index - 1].focus()
+  }
+}
+
+const otpAgain = async () => {
+  try{
+    
+    const res = await api.post("auth/otp/send", {email})
+    console.log("Berhasil")
+  }
+  catch(err){
+    console.log(err)
   }
 }
 
@@ -93,6 +105,8 @@ const verifyOtp = async () => {
             @input="handleInput($event, index)" @keydown.backspace="handleBackspace($event, index)" maxlength="1"
             class="text-center py-5 text-2xl bg-white rounded-md border-2 border-yellow-400" />
         </div>
+
+        <button @click.once="otpAgain" class="text-blue-400 font-semibold">Kirim Ulang Kode OTP</button>
 
         <button @click.once="verifyOtp" class="bg-yellow-400 text-white font-bold py-3 text-2xl rounded-full">
           Verifikasi Akun

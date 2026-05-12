@@ -40,10 +40,10 @@
     showAdminMenu.value = false
   }
 
-  // const navigateToMatches = () => {
-  //   router.push("/admin/matches")
-  //   showAdminMenu.value = false
-  // }
+  const navigateToMatches = () => {
+    router.push("/admin/matches")
+    showAdminMenu.value = false
+  }
 
 </script>
 
@@ -53,7 +53,7 @@
       <button @click="handleNavigate('home')">
         <Icon icon="mdi:home-variant" class="text-white" width="30" height="30" />
       </button>
-      <!-- <button v-if="detail.role === 'admin'" @click="showAdminMenu = !showAdminMenu" class="relative">
+      <button v-if="detail.role === 'admin'" @click="showAdminMenu = !showAdminMenu" class="relative">
         <Icon icon="carbon:menu" class="text-white" width="30" height="30" />
         <div v-if="showAdminMenu" class="absolute bottom-16 left-1/2 transform -translate-x-1/2 bg-white dark:bg-gray-800 rounded-lg shadow-lg py-2 min-w-max z-50">
           <button @click="navigateToMatches" class="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-left text-blue-950 dark:text-white">
@@ -69,7 +69,7 @@
             <span>List User</span>
           </button>
         </div>
-      </button> -->
+      </button>
       <button @click="handleNavigate('profil')">
         <Icon icon="line-md:account" class="text-white" width="30" height="30" />
       </button>

@@ -175,7 +175,7 @@ const buttonColor = (active) => {
                 </div>
             </div>
 
-            <!-- <div v-if="matchedItems.length" class="border-t border-white">
+            <div v-if="matchedItems.length" class="border-t border-white">
                 <div class="grid grid-cols-1 pt-5 gap-5 md:grid-cols-2 lg:grid-cols-4">
                     <div v-for="i in matchedItems" class="rounded-lg p-3 dark:bg-white/10">
                         <div class="grid grid-cols-2 gap-5">
@@ -190,7 +190,7 @@ const buttonColor = (active) => {
                         </div>
                     </div>
                 </div>
-            </div> -->
+            </div>
         </div>
 
     </div>
