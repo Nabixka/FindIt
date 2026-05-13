@@ -16,6 +16,7 @@ const image = ref(null)
 const title = ref("")
 const text = ref("")
 const userId = ref("")
+const token = getToken()
 
 const getReport = async () => {
     try {
@@ -24,11 +25,12 @@ const getReport = async () => {
         reports.value = res.data.data
     }
     catch (err) {
-        if (err.status == 500) {
+        const status = err.response?.status
+        if (status === 500) {
             message.value = "Tidak Dapat Terhubung Ke Server"
         }
 
-        if (err.status == 403 || err.status == 401) {
+        if (status === 403 || status === 401) {
             message.value = "Anda Tidak Berhak Mengakses Page Ini"
             removeToken()
             router.push("/")
@@ -36,6 +38,32 @@ const getReport = async () => {
     }
     finally {
         loading.value = false
+    }
+}
+
+const handleButton = async (event, id) => {
+    try{
+        if(event == "ban"){
+            const res = await api.put(`user/status/${id}`, {status: "banned"})
+        }
+        if(event == "delete"){
+            const res = await api.delete(`user/${id}`)
+        }
+        view.value = false
+        getReport()
+    }
+    catch(err){
+        
+        const status = err.response?.status
+        if (status === 500) {
+            message.value = "Tidak Dapat Terhubung Ke Server"
+        }
+
+        if (status === 403 || status === 401) {
+            message.value = "Anda Tidak Berhak Mengakses Page Ini"
+            removeToken()
+            router.push("/")
+        }
     }
 }
 
@@ -59,10 +87,6 @@ const handleView = async (event, data, user_id) => {
 
 onMounted(() => {
     getReport()
-
-    if (!getToken()) {
-        router.push("/")
-    }
 })
 
 const handleNavigate = (id) => {
@@ -128,13 +152,12 @@ const handleNavigate = (id) => {
 
                         <div class="grid grid-cols-2 gap-4 pt-2">
 
-                            <button
+                            <button @click="handleButton('ban', userId)"
                                 class="flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 text-amber-950 font-bold py-3 rounded-xl transition-all active:scale-95 shadow-lg shadow-amber-500/20">
-
                                 <span>Ban User</span>
                             </button>
 
-                            <button
+                            <button @click="handleButton('delete', userId)"
                                 class="flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 text-white font-bold py-3 rounded-xl transition-all active:scale-95 shadow-lg shadow-red-500/20">
 
                                 <span>Delete Post</span>

@@ -50,7 +50,7 @@ exports.getItemById = async (req, res) => {
 exports.createItem = async (req, res) => {
     try{
         const user_id = req.user.id
-        const {title, location, category, description, status } = req.body
+        const {title, location, category, description, status, event_date } = req.body
         
         let imageUrl = null
         if (req.file && req.file.buffer && req.file.buffer.length > 0) {
@@ -75,19 +75,18 @@ exports.createItem = async (req, res) => {
             }
         }
 
-        if(!title || !location || !category || !description){
+        if(!title || !location || !category || !description || !event_date){
             return res.status(400).json({
                 status: 400,
                 message: "Bad Request"
             })
         }
 
-        const result = await item.createItem({title, description, image: imageUrl, category, location, user_id, status})
+        const result = await item.createItem({title, description, image: imageUrl, category, location, user_id, status, event_date})
         
-        // Scan untuk match dengan item lain
-        setTimeout(async () => {
-            await scanNewItemForMatches(result.id, 0.7)
-        }, 100)
+        // setTimeout(async () => {
+        //     await scanNewItemForMatches(result.id, 0.7)
+        // }, 100)
 
         res.status(201).json({
             status: 201,

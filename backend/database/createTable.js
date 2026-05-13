@@ -44,6 +44,7 @@ async function createTable(){
             category item_category,
             user_id INT,
             status VARCHAR,
+            event_date DATE,
 
             FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
             )  

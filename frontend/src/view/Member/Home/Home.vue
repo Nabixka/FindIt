@@ -1,6 +1,6 @@
 <script setup>
     import { ref, onMounted, computed } from 'vue';
-    import { api } from '../../../components/utils/helper';
+    import { api, formatDate } from '../../../components/utils/helper';
     import Bar from '../../Bar/Bar.vue';
     import { useRouter } from 'vue-router';
     import { useDark } from '@vueuse/core';
@@ -60,10 +60,10 @@
                 item.title?.toLowerCase().includes(search.value.trim().toLowerCase()) ||
                 item.location?.toLowerCase().includes(search.value.trim().toLowerCase())
 
-
             return matchStatus && matchCategory && matchSearch
         })
     })
+
 
     const handleNavigate = (stat) => {
         router.push({
@@ -172,18 +172,19 @@
 
                                 <div class="flex flex-col justify-between py-1 text-left w-full">
                                     <div>
-                                        <span
-                                            class="text-[10px] font-black uppercase tracking-widest text-yellow-500 mb-1 block">
+                                        <span class="text-[10px] font-black uppercase tracking-widest text-yellow-500 mb-1 block">
                                             {{ item.category || 'Lainnya' }}
                                         </span>
-                                        <h3
-                                            class="text-white font-bold text-lg leading-tight group-hover:text-yellow-400 transition-colors">
+                                        <h3 class="text-white font-bold text-lg leading-tight group-hover:text-yellow-400 transition-colors">
                                             {{ item.title }}
                                         </h3>
                                         <div class="flex items-center gap-1 mt-1 text-gray-400">
                                             <Icon icon="mdi:map-marker-outline" class="text-yellow-500/70" width="16" />
                                             <span class="text-xs italic">{{ item.location }}</span>
-                                        </div>
+                                        </div >
+                                        <h3 class="text-white font-bold text-lg leading-tight group-hover:text-yellow-400 transition-colors">
+                                            {{ formatDate(item.event_date) }}
+                                        </h3>
                                     </div>
 
                                     <div class="flex items-center gap-2 mt-3 border-t border-white/5 pt-2">

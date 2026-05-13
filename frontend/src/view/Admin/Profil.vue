@@ -1,6 +1,6 @@
 <script setup>
     import Bar from '../Bar/Bar.vue';
-    import { api, removeToken } from '../../components/utils/helper';
+    import { api, getToken, removeToken } from '../../components/utils/helper';
     import { onMounted, ref } from 'vue';
     import { Icon } from '@iconify/vue';
     import { useRouter } from 'vue-router';
@@ -15,6 +15,8 @@
     const darkToggle = useToggle(isDark)  
     const isShow = ref(false)
     const isLoading = ref(true)
+    const token = getToken()
+    const message = ref()
 
     const getProfil = async () => {
         try{
@@ -22,7 +24,12 @@
             profil.value = res.data.data
         }
         catch(err){
-            console.log(err)
+            if(err.status == 401){
+                LogOut()
+            }
+            if(err.status == 500){
+                message.value = "Gagal Terhubung Ke Server"
+            }
         }
     }
 
@@ -32,7 +39,12 @@
             listUser.value = res.data.data
         }
         catch(err){
-            console.log(err)
+            if(err.status == 403){
+                LogOut()
+            }
+            if(err.status == 500){
+                message.value = "Gagal Terhubung Ke Server"
+            }
         }
     }
 
@@ -42,12 +54,20 @@
             listItem.value = res.data.data
         }
         catch(err){
-            console.log(err)
+            if(err.status == 401){
+                LogOut()
+            }
+            if(err.status == 500){
+                message.value = "Gagal Terhubung Ke Server"
+            }
         }
     }
 
     onMounted(async () => {
         try{    
+            if(!token){
+                LogOut()
+            }
             await new Promise(resolve => setTimeout(resolve, 2000))
 
             await Promise.all([

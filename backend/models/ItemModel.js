@@ -11,6 +11,7 @@ const getItem = async () => {
         i.image,
         i.category,
         i.status,
+        i.event_date,
         json_build_object(
         'id', u.id,
         'username', u.username,
@@ -35,6 +36,7 @@ const getItemById = async (id) => {
         i.image,
         i.category,
         i.status,
+        i.event_date,
         json_build_object(
         'id', u.id,
         'username', u.username,
@@ -51,11 +53,11 @@ const getItemById = async (id) => {
 
 // Create Item
 const createItem =  async (data) => {
-    const { title, description, image, location, category, user_id, status } = data
+    const { title, description, image, location, category, user_id, status, event_date } = data
     
     const create = await pool.query(`
-        INSERT INTO items (title, description, location, category, image, user_id, status) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id
-    `,[title, description, location, category, image, user_id, status])
+        INSERT INTO items (title, description, location, category, image, user_id, status, event_date) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id
+    `,[title, description, location, category, image, user_id, status, event_date])
 
     const newId = create.rows[0].id
     const result = await pool.query(`
@@ -67,6 +69,7 @@ const createItem =  async (data) => {
         i.category,
         i.image,
         i.status,
+        i.event_date,
         json_build_object(
         'id', u.id,
         'username', u.username,
@@ -92,6 +95,7 @@ const getItemUser = async (id) => {
         i.image,
         i.location,
         i.status,
+        i.event_date,
         json_build_object(
         'id', u.id,
         'username', u.username,
