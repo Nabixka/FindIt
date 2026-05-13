@@ -15,6 +15,8 @@
     const isDark = useDark()
     const loading = ref(true)
     const isShow = ref(false)
+    const startDate = ref("")
+    const endDate = ref("")
 
     const getItems = async () => {
         try {
@@ -62,7 +64,17 @@
                 item.title?.toLowerCase().includes(search.value.trim().toLowerCase()) ||
                 item.location?.toLowerCase().includes(search.value.trim().toLowerCase())
 
-            return matchStatus && matchCategory && matchSearch
+            // Filter Waktu 
+            let matchDate = true
+            if(startDate.value && endDate.value){
+                const itemDate = new Date(item.event_date)
+                const start = new Date(startDate.value)
+                const end = new Date(endDate.value)
+
+                matchDate = itemDate >= start && itemDate <= end
+            }
+
+            return matchStatus && matchCategory && matchSearch && matchDate
         })
     })
 
@@ -81,6 +93,11 @@
         })
     }
 
+    const resetDate = () => {
+        startDate.value = ""
+        endDate.value = ""
+    }
+
 </script>
 
 <template>
@@ -90,19 +107,19 @@
         <div v-if="isShow" class="inset-0 fixed z-50 min-h-screen flex items-center justify-center pl-5 pr-5">
             <div @click="isShow = false" class="bg-black/10 inset-0 absolute backdrop-blur-xl min-h-screen"></div>
             <div class="z-50 bg-linear-to-b from-gray-950/90 to-blue-950 p-5 rounded-xl flex flex-col gap-3 w-full text-white semibold">
-                <button @click="isShow = false" class="flex justify-end"><Icon icon="hugeicons:cancel-01" width="24" height="24" /></button>
+                <button @click="isShow = false, resetDate()" class="flex justify-end"><Icon icon="hugeicons:cancel-01" width="24" height="24" /></button>
                 <div class="gap-5 grid lg:grid-cols-2 grid-cols-1">
                     <div class="flex gap-1 flex-col gap-3">
                         <label class="font-bold text-yellow-500">Antara Tanggal</label>
-                        <input class="border border-gray-400 p-2 rounded-lg" type="date">
+                        <input v-model="startDate" class="border border-gray-400 p-2 rounded-lg" type="date">
                     </div>
                     <div class="flex gap-1 flex-col lg:border-none border-t pt-3 lg:pt-0 gap-3">
                         <label class="font-bold text-yellow-500">Sampai Tanggal</label>
-                        <input class="border border-gray-400 p-2 rounded-lg" type="date">
+                        <input v-model="endDate" class="border border-gray-400 p-2 rounded-lg" type="date">
                     </div>
                     <div class="lg:col-span-2 lg:grid lg:grid-cols-2 flex flex-col gap-4">
-                        <button class="w-full border border-blue-500 py-2 rounded-lg font-semibold">Reset</button>
-                        <button class="w-full bg-blue-500 py-2 rounded-lg font-semibold">Atur</button>
+                        <button @click="resetDate" class="w-full border border-blue-500 py-2 rounded-lg font-semibold">Reset</button>
+                        <button @click="isShow = false" class="w-full bg-blue-500 py-2 rounded-lg font-semibold">Atur</button>
                     </div>
                 </div>
             </div>
