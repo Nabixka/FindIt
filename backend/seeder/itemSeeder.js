@@ -4,45 +4,111 @@ async function itemSeeder() {
     try {
         const items = [
             {
-                title: "Dompet",
-                description: "Berwarna Coklat Merek Atlo",
-                location: "Jalan Sudirman",
-                image: `https://res.cloudinary.com/dvlb9qvsa/image/upload/v1778034018/items/1778034018407_Blur.jpg.jpg`,
-                category: 'Pribadi',
-                user_id: 1,
-                status: 'lost'
+                title: "Kunci Motor Honda",
+                description: "Gantungan kunci bentuk astronot warna biru, ditemukan di parkiran.",
+                location: "Mall Grand Indonesia",
+                image: "https://images.unsplash.com/photo-1582139329536-e7284fece509?q=80&w=500",
+                category: "Lainnya",
+                user_id: 2,
+                status: "found",
+                event_date: "2026-05-10"
             },
             {
-                title: "Dompet",
-                description: "Berwarna Coklat Merek Atlo",
-                location: "Jalan Sudirman",
-                image: `https://res.cloudinary.com/dvlb9qvsa/image/upload/v1778034018/items/1778034018407_Blur.jpg.jpg`,
-                category: 'Pribadi',
-                user_id: 2,
-                status: 'found'
-            }
-        ]
-
-        const reports = [
+                title: "iPhone 13 Pro",
+                description: "Warna Sierra Blue, casing bening, hilang di sekitar halte.",
+                location: "Halte TransJakarta Sarinah",
+                image: "https://images.unsplash.com/photo-1632661674596-df8be070a5c5?q=80&w=500",
+                category: "Elektronik",
+                user_id: 3,
+                status: "lost",
+                event_date: "2026-05-12"
+            },
             {
-                report_user_id: 1,
-                user_id: 1,
-                item_id: 1,
-                proof: `https://res.cloudinary.com/dvlb9qvsa/image/upload/v1778034018//1778034018407_Blur.jpg.jpg`,
-                reason: "Baldjadkjakjdakjdjakdjkdl"
+                title: "Kartu Mahasiswa (KTM)",
+                description: "Atas nama Rizky Ramadhan, ditemukan di kantin.",
+                location: "Area Kantin SMKN 10",
+                image: "https://images.unsplash.com/photo-1614036417651-efe5912149d8?q=80&w=500",
+                category: "Lainnya",
+                user_id: 4,
+                status: "found",
+                event_date: "2026-05-11"
+            },
+            {
+                title: "Tas Ransel Hitam",
+                description: "Merek Eiger, berisi buku-buku pelajaran dan botol minum.",
+                location: "Stasiun Manggarai",
+                image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?q=80&w=500",
+                category: "Pribadi",
+                user_id: 6,
+                status: "lost",
+                event_date: "2026-05-09"
+            },
+            {
+                title: "Kacamata Frame Hitam",
+                description: "Ditemukan di bangku taman, lensa terlihat silinder.",
+                location: "Taman Menteng",
+                image: "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?q=80&w=500",
+                category: "Pribadi",
+                user_id: 7,
+                status: "found",
+                event_date: "2026-05-13"
+            },
+            {
+                title: "Earbuds TWS Soundcore",
+                description: "Warna putih, hanya sebelah kanan yang ada di dalam case.",
+                location: "Perpustakaan Daerah",
+                image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?q=80&w=500",
+                category: "Elektronik",
+                user_id: 8,
+                status: "lost",
+                event_date: "2026-05-08"
+            },
+            {
+                title: "Dompet Kulit Pria",
+                description: "Warna hitam, tidak ada uang tunai, hanya kartu identitas.",
+                location: "Pasar Mayestik",
+                image: "https://images.unsplash.com/photo-1627123424574-724758594e93?q=80&w=500",
+                category: "Pribadi",
+                user_id: 9,
+                status: "found",
+                event_date: "2026-05-10"
+            },
+            {
+                title: "Tumblr Corkcicle",
+                description: "Warna Rose Gold, ada stiker kucing di bagian bawah.",
+                location: "Gym Center Kuningan",
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQppaKjAtEcsyHzt-9NNLeFgtabepXtjY96nQ&s",
+                category: "Lainnya",
+                user_id: 10,
+                status: "lost",
+                event_date: "2026-05-12"
+            },
+            {
+                title: "Powerbank Anker",
+                description: "Ditemukan di meja pojok kafe, kapasitas 10000mAh.",
+                location: "Kopi Kenangan Tebet",
+                image: "https://www.ankerindonesia.com/cdn/shop/files/A1259_Anker_Nano_Power_Bank_30W_Built-In_USB-C_Cable_Black_1_3.jpg?v=1724826528",
+                category: "Elektronik",
+                user_id: 11,
+                status: "found",
+                event_date: "2026-05-13"
+            },
+            {
+                title: "Payung Lipat Biru",
+                description: "Ketinggalan di gerbong kereta arah Bekasi.",
+                location: "KRL Commuter Line",
+                image: "https://cdn.ruparupa.io/fit-in/400x400/filters:format(webp)/filters:quality(90)/ruparupa-com/image/upload/Products/10499647_1.jpg",
+                category: "Pribadi",
+                user_id: 12,
+                status: "lost",
+                event_date: "2026-05-11"
             }
-        ]
+        ];
 
         for (let item of items) {
             await pool.query(`
-                INSERT INTO items (title, description, location, image, category, user_id, status) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-                [item.title, item.description, item.location, item.image, item.category, item.user_id, item.status])
-        }
-
-        for (let report of reports) {
-            await pool.query(`
-                        INSERT INTO report (report_user_id, user_id, item_id, proof, reason) VALUES ($1, $2, $3, $4, $5) ON CONFLICT DO NOTHING`,
-                [report.report_user_id, report.user_id, report.item_id, report.proof, report.reason])
+                INSERT INTO items (title, description, location, image, category, user_id, status, event_date) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+                [item.title, item.description, item.location, item.image, item.category, item.user_id, item.status, item.event_date])
         }
 
         console.log("Berhasil Membuat Item")

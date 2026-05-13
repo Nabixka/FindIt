@@ -5,7 +5,7 @@ const auth = require("../middlewares/auth")
 const { uploadItems } = require("../multer")
 
 // GetAll
-router.get("/", auth, ItemController.getItem)
+router.get("/", ItemController.getItem)
 
 // Create Item
 router.post("/", auth, uploadItems.single("image"), ItemController.createItem)

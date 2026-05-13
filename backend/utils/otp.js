@@ -15,7 +15,6 @@ exports.sendOTP = async (to, otp) => {
                 'Content-Type': 'application/json'
             }
         });
-        console.log("OTP terkirim via API");
     } catch (error) {
         console.error("Gagal via API:", error.response.data);
     }
