@@ -4,6 +4,7 @@
     import Bar from '../Bar/Bar.vue'
     import { useRouter } from 'vue-router';
     import { useDark } from '@vueuse/core';
+    import { Icon } from '@iconify/vue';
 
     const items = ref([])
     const message = ref(null)
@@ -13,6 +14,7 @@
     const search = ref("")
     const isDark = useDark()
     const loading = ref(true)
+    const isShow = ref(false)
 
     const getItems = async () => {
         try {
@@ -85,6 +87,27 @@
     <div class="min-h-screen dark:bg-linear-to-b dark:from-gray-950/90 dark:to-blue-950 bg-slate-50">
         <Bar />
 
+        <div v-if="isShow" class="inset-0 fixed z-50 min-h-screen flex items-center justify-center pl-5 pr-5">
+            <div @click="isShow = false" class="bg-black/10 inset-0 absolute backdrop-blur-xl min-h-screen"></div>
+            <div class="z-50 bg-linear-to-b from-gray-950/90 to-blue-950 p-5 rounded-xl flex flex-col gap-3 w-full text-white semibold">
+                <button @click="isShow = false" class="flex justify-end"><Icon icon="hugeicons:cancel-01" width="24" height="24" /></button>
+                <div class="gap-5 grid lg:grid-cols-2 grid-cols-1">
+                    <div class="flex gap-1 flex-col gap-3">
+                        <label class="font-bold text-yellow-500">Antara Tanggal</label>
+                        <input class="border border-gray-400 p-2 rounded-lg" type="date">
+                    </div>
+                    <div class="flex gap-1 flex-col lg:border-none border-t pt-3 lg:pt-0 gap-3">
+                        <label class="font-bold text-yellow-500">Sampai Tanggal</label>
+                        <input class="border border-gray-400 p-2 rounded-lg" type="date">
+                    </div>
+                    <div class="lg:col-span-2 lg:grid lg:grid-cols-2 flex flex-col gap-4">
+                        <button class="w-full border border-blue-500 py-2 rounded-lg font-semibold">Reset</button>
+                        <button class="w-full bg-blue-500 py-2 rounded-lg font-semibold">Atur</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="flex flex-col gap-8 pt-10">
             <div class="px-6 text-center">
                 <motion.h3 :initial="{ opacity: 0, y: -20 }" :animate="{ opacity: 1, y: 0 }"
@@ -119,6 +142,8 @@
                                 class="w-full py-3.5 pl-12 pr-4 bg-white/10 border border-white/10 rounded-2xl text-white placeholder-gray-400 focus:bg-white focus:text-gray-900 focus:outline-none focus:ring-4 focus:ring-yellow-500/30 transition-all shadow-inner"
                                 placeholder="Cari nama barang atau lokasi...">
                         </div>
+
+                       <button @click="isShow = true" class="bg-white/10 w-full py-2 px-4 rounded-xl text-white font-semibold ">Filter Tanggal</button>
 
                         <div class="flex items-center justify-between gap-3">
                             <div class="relative flex-1">
