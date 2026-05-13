@@ -1,7 +1,7 @@
 <script setup>
     import { ref, onMounted } from 'vue';
-    import Bar from '../../Bar/Bar.vue';
-    import { api } from '../../../components/utils/helper';
+    import Bar from '../Bar/Bar.vue';
+    import { api } from '../../components/utils/helper';
     import { useRouter } from 'vue-router';
 
     const reports = ref([]);

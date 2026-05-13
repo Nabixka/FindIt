@@ -2,11 +2,10 @@
     import { ref, computed, onMounted, nextTick } from 'vue';
     import 'leaflet/dist/leaflet.css';
     import L from 'leaflet';
-    
-    import Bar from '../../../Bar/Bar.vue';
-    import Nav from '../../../Bar/Nav.vue';
+    import Bar from '../Bar/Bar.vue'
+    import Nav from '../Bar/Nav.vue'
     import { Icon } from '@iconify/vue';
-    import { api, getToken } from '../../../../components/utils/helper';
+    import { api, getToken } from '../../components/utils/helper';
     import { useRouter, useRoute } from 'vue-router';
 
     import markerIcon from 'leaflet/dist/images/marker-icon.png';

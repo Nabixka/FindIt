@@ -1,7 +1,7 @@
 <script setup>
     import { ref, onMounted, computed } from 'vue';
-    import { api, formatDate } from '../../../components/utils/helper';
-    import Bar from '../../Bar/Bar.vue';
+    import { api, formatDate } from '../../components/utils/helper';
+    import Bar from '../Bar/Bar.vue'
     import { useRouter } from 'vue-router';
     import { useDark } from '@vueuse/core';
 

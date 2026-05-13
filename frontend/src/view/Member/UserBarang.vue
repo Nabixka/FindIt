@@ -1,92 +1,92 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue';
-import { api } from '../../../../components/utils/helper';
-import { useRouter } from 'vue-router';
-import Bar from '../../../Bar/Bar.vue';
-import Nav from '../../../Bar/Nav.vue';
-import { Icon } from '@iconify/vue';
-
-const router = useRouter()
-const isActive = ref(false)
-const selectedItem = ref("" || "lost")
-const itemId = ref(null)
-
-const items = ref([])
-const matchedItems = ref([])
-const isLoading = ref(true)
-
-const getItem = async () => {
-    try {
-        await new Promise(resolve => setTimeout(resolve, 2000))
-        const res = await api.get('/item/user')
-        items.value = res.data.data
-    }
-    catch (err) {
-        if (err.status == 500) {
-            message.value = "Maaf, Terjadi Gangguan Untuk Terhubung Dengan Server"
+    import { ref, onMounted, computed } from 'vue';
+    import { api } from '../../components/utils/helper';
+    import { useRouter } from 'vue-router';
+    import Bar from '../Bar/Bar.vue'
+    import Nav from '../Bar/Nav.vue'
+    import { Icon } from '@iconify/vue';
+    
+    const router = useRouter()
+    const isActive = ref(false)
+    const selectedItem = ref("" || "lost")
+    const itemId = ref(null)
+    
+    const items = ref([])
+    const matchedItems = ref([])
+    const isLoading = ref(true)
+    
+    const getItem = async () => {
+        try {
+            await new Promise(resolve => setTimeout(resolve, 2000))
+            const res = await api.get('/item/user')
+            items.value = res.data.data
         }
-        if (err.status == 403 || 401) {
-            message.value = "Anda Tidak Berhak Mengakses Page Ini"
-            router.push("/")
+        catch (err) {
+            if (err.status == 500) {
+                message.value = "Maaf, Terjadi Gangguan Untuk Terhubung Dengan Server"
+            }
+            if (err.status == 403 || 401) {
+                message.value = "Anda Tidak Berhak Mengakses Page Ini"
+                router.push("/")
+            }
+        }
+        finally {
+            isLoading.value = false
         }
     }
-    finally {
-        isLoading.value = false
+    
+    const getMatchedItems = async () => {
+        try {
+            const res = await api.get('/match/user/list')
+            matchedItems.value = res.data.data
+        }
+        catch (err) {
+            console.log(err)
+        }
     }
-}
-
-const getMatchedItems = async () => {
-    try {
-        const res = await api.get('/match/user/list')
-        matchedItems.value = res.data.data
-    }
-    catch (err) {
-        console.log(err)
-    }
-}
-
-onMounted(() => {
-    getItem()
-    getMatchedItems()
-})
-
-const handleOpenModal = (id) => {
-    isActive.value = true
-    itemId.value = id
-}
-
-const handleDelete = async () => {
-    try {
-        const id = itemId.value
-        const res = await api.delete(`/item/${id}`)
-
-        isActive.value = false
-        itemId.value = null
+    
+    onMounted(() => {
         getItem()
+        getMatchedItems()
+    })
+    
+    const handleOpenModal = (id) => {
+        isActive.value = true
+        itemId.value = id
     }
-    catch (err) {
-        if (err.status == 500) {
-            message.value = "Maaf, Terjadi Gangguan Untuk Terhubung Dengan Server"
+    
+    const handleDelete = async () => {
+        try {
+            const id = itemId.value
+            const res = await api.delete(`/item/${id}`)
+        
+            isActive.value = false
+            itemId.value = null
+            getItem()
+        }
+        catch (err) {
+            if (err.status == 500) {
+                message.value = "Maaf, Terjadi Gangguan Untuk Terhubung Dengan Server"
+            }
         }
     }
-}
-
-const handleNavigate = (id) => {
-    router.push({
-        name: "Barang",
-        state: { id }
+    
+    const handleNavigate = (id) => {
+        router.push({
+            name: "Barang",
+            state: { id }
+        })
+    }
+    
+    const filter = computed(() => {
+        return items.value.filter(item => item.status == selectedItem.value)
     })
-}
-
-const filter = computed(() => {
-    return items.value.filter(item => item.status == selectedItem.value)
-})
-
-const buttonColor = (active) => {
-    return [
-        "text-center py-2.5 rounded-xl font-bold transition-all", selectedItem.value == active ? "text-blue-950 bg-white" : "text-yellow-500"
-    ]
-}
+    
+    const buttonColor = (active) => {
+        return [
+            "text-center py-2.5 rounded-xl font-bold transition-all", selectedItem.value == active ? "text-blue-950 bg-white" : "text-yellow-500"
+        ]
+    }
 
 </script>
 

@@ -7,20 +7,20 @@ import ForgetPassword from '../../view/Auth/ForgetPassword.vue'
 import Otp from '../../view/Auth/Otp.vue'
 
 // Member
-import Profil from '../../view/Member/Profil/Profil.vue'
-import BarangDetail from '../../view/Member/Barang/BarangDetail.vue'
-import MemberCreate from '../../view/Member/Barang/Create/createBarang.vue'
-import MemberReport from '../../view/Member/Report/Report.vue'
-import MemberItem from '../../view/Member/Barang/UserBarang/UserBarang.vue'
-import CreateReport from '../../view/Member/Report/CreateReport.vue'
+import Profil from '../../view/Member/Profil.vue'
+import BarangDetail from '../../view/Member/BarangDetail.vue'
+import MemberCreate from '../../view/Member/createBarang.vue'
+import MemberReport from '../../view/Member/Report.vue'
+import MemberItem from '../../view/Member/UserBarang.vue'
+import CreateReport from '../../view/Member/CreateReport.vue'
+import Home from '../../view/Member/Home.vue'
 
 // Admin
 import AdminHome from '../../view/Admin/AdminHome.vue'
 import AdminProfil from '../../view/Admin/Profil.vue'
-import ListBarang from '../../view/Admin/Laporan/ListBarang.vue'
-import ListUser from '../../view/Admin/Laporan/ListUser.vue'
-import ListMatches from '../../view/Admin/Laporan/ListMatches.vue'
-import Home from '../../view/Member/Home/Home.vue'
+import ListBarang from '../../view/Admin/ListBarang.vue'
+import ListUser from '../../view/Admin/ListUser.vue'
+import ListMatches from '../../view/Admin/ListMatches.vue'
 
 const routes = [
 

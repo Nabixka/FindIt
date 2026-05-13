@@ -1,8 +1,8 @@
 <script setup>
 
     import { Icon } from '@iconify/vue';
-    import Bar from '../../Bar/Bar.vue';
-    import { api } from '../../../components/utils/helper';
+    import Bar from '../Bar/Bar.vue';
+    import { api } from '../../components/utils/helper';
     import { ref, onMounted} from 'vue';
     import { useRouter } from 'vue-router';
 

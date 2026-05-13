@@ -1,55 +1,55 @@
 <script setup>
-import { ref, onMounted } from 'vue';
-import Bar from '../../Bar/Bar.vue';
-import { api, removeToken } from '../../../components/utils/helper';
-import { useRouter } from 'vue-router';
-import { Icon } from '@iconify/vue';
-import { useDark, useToggle } from '@vueuse/core';
-
-const message = ref("")
-const profil = ref({})
-const router = useRouter()
-const isDark = useDark()
-const darkToggle = useToggle(isDark)
-const isShow = ref(false)
-const isLoading = ref(true)
-
-
-const getProfil = async () => {
-    try {
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        const res = await api.get('/user/profil')
-        profil.value = res.data.data
-    }
-    catch (err) {
-        if (err.status == 500) {
-            message.value = "Maaf, Terjadi Gangguan Untuk Terhubung Dengan Server"
+    import { ref, onMounted } from 'vue';
+    import Bar from '../Bar/Bar.vue';
+    import { api, removeToken } from '../../components/utils/helper';
+    import { useRouter } from 'vue-router';
+    import { Icon } from '@iconify/vue';
+    import { useDark, useToggle } from '@vueuse/core';
+    
+    const message = ref("")
+    const profil = ref({})
+    const router = useRouter()
+    const isDark = useDark()
+    const darkToggle = useToggle(isDark)
+    const isShow = ref(false)
+    const isLoading = ref(true)
+    
+    
+    const getProfil = async () => {
+        try {
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            const res = await api.get('/user/profil')
+            profil.value = res.data.data
         }
-        if (err.status == 403 || 401) {
-            message.value = "Anda Tidak Berhak Mengakses Page Ini"
-            LogOut()
+        catch (err) {
+            if (err.status == 500) {
+                message.value = "Maaf, Terjadi Gangguan Untuk Terhubung Dengan Server"
+            }
+            if (err.status == 403 || 401) {
+                message.value = "Anda Tidak Berhak Mengakses Page Ini"
+                LogOut()
+            }
+        }
+        finally {
+            isLoading.value = false
         }
     }
-    finally {
-        isLoading.value = false
+    
+    const handleNavigate = (id) => {
+        router.push({
+            name: 'MemberReport',
+            state: { id }
+        })
     }
-}
-
-const handleNavigate = (id) => {
-    router.push({
-        name: 'MemberReport',
-        state: { id }
+    
+    const LogOut = async () => {
+        removeToken()
+        router.push("/")
+    }
+    
+    onMounted(() => {
+        getProfil()
     })
-}
-
-const LogOut = async () => {
-    removeToken()
-    router.push("/")
-}
-
-onMounted(() => {
-    getProfil()
-})
 
 </script>
 
