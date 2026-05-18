@@ -29,10 +29,16 @@ const getAllMatches = async () => {
 
 const getUserMatches = async (user_id) => {
     const result = await pool.query(`
-        SELECT m.*, i1.title as item1_title, i2.title as item2_title
+        SELECT 
+            m.*, 
+            i1.title as item1_title, i1.location as item1_location, i1.image as item1_image,
+            i2.title as item2_title, i2.location as item2_location, i2.image as item2_image,
+            u1.username as user1_name, u2.username as user2_name
         FROM item_matches m
         JOIN items i1 ON m.item_id_1 = i1.id
         JOIN items i2 ON m.item_id_2 = i2.id
+        JOIN users u1 ON i1.user_id = u1.id
+        JOIN users u2 ON i2.user_id = u2.id
         WHERE (i1.user_id = $1 OR i2.user_id = $1) AND m.is_sent = true
         ORDER BY m.sent_at DESC
     `, [user_id]);
