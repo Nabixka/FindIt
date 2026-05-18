@@ -1,6 +1,7 @@
 <script setup>
     import { ref, onMounted } from 'vue';
     import Bar from '../Bar/Bar.vue';
+    import Nav from '../Bar/Nav.vue';
     import { api } from '../../components/utils/helper';
     import { useRouter } from 'vue-router';
 
@@ -41,6 +42,7 @@
 <template>
     <div class="dark:bg-linear-to-b dark:from-gray-950/90 dark:to-blue-950 bg-gray-100 min-h-screen">
         <Bar />
+        <Nav />
         
         <div class="flex justify-center pt-5">
             <h3 class="dark:text-white text-4xl font-extrabold text-blue-950">Laporan Anda</h3>

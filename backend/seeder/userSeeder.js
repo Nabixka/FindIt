@@ -10,7 +10,7 @@ async function userSeeder() {
                 status: "active",
                 password: "password123",
                 role: "admin",
-                nomor: "081234567890"
+                nomor: "6281234567890"
             },
             {
                 username: "Budi Santoso",
@@ -18,7 +18,7 @@ async function userSeeder() {
                 status: "active",
                 password: "password123",
                 role: "member",
-                nomor: "081298765432"
+                nomor: "6281298765432"
             },
             {
                 username: "Siti Aminah",
@@ -26,7 +26,7 @@ async function userSeeder() {
                 status: "active",
                 password: "password123",
                 role: "member",
-                nomor: "081311223344"
+                nomor: "6281311223344"
             },
             {
                 username: "Andi Wijaya",
@@ -34,7 +34,7 @@ async function userSeeder() {
                 status: "banned",
                 password: "password123",
                 role: "member",
-                nomor: "085644556677"
+                nomor: "6285644556677"
             },
             {
                 username: "Rina Permata",
@@ -42,7 +42,7 @@ async function userSeeder() {
                 status: "active",
                 password: "password123",
                 role: "admin",
-                nomor: "081900998877"
+                nomor: "6281900998877"
             },
             {
                 username: "Dewi Lestari",
@@ -50,7 +50,7 @@ async function userSeeder() {
                 status: "active",
                 password: "password123",
                 role: "member",
-                nomor: "082122334455"
+                nomor: "6282122334455"
             },
             {
                 username: "Eko Prasetyo",
@@ -58,7 +58,7 @@ async function userSeeder() {
                 status: "active",
                 password: "password123",
                 role: "member",
-                nomor: "081122336677"
+                nomor: "6281122336677"
             },
             {
                 username: "Rizky Ramadhan",
@@ -66,7 +66,7 @@ async function userSeeder() {
                 status: "active",
                 password: "password123",
                 role: "member",
-                nomor: "081288776655"
+                nomor: "6281288776655"
             },
             {
                 username: "Maya Indah",
@@ -74,7 +74,7 @@ async function userSeeder() {
                 status: "banned",
                 password: "password123",
                 role: "member",
-                nomor: "081399887766"
+                nomor: "6281399887766"
             },
             {
                 username: "Agus Setiawan",
@@ -82,7 +82,7 @@ async function userSeeder() {
                 status: "active",
                 password: "password123",
                 role: "member",
-                nomor: "085711224455"
+                nomor: "6285711224455"
             },
             {
                 username: "Lutfi Hakim",
@@ -90,7 +90,7 @@ async function userSeeder() {
                 status: "active",
                 password: "password123",
                 role: "member",
-                nomor: "081255667788"
+                nomor: "6281255667788"
             },
             {
                 username: "Putri Rahayu",
@@ -98,7 +98,7 @@ async function userSeeder() {
                 status: "active",
                 password: "password123",
                 role: "member",
-                nomor: "081899001122"
+                nomor: "6281899001122"
             },
             {
                 username: "Denny Hidayat",
@@ -106,7 +106,7 @@ async function userSeeder() {
                 status: "active",
                 password: "password123",
                 role: "admin",
-                nomor: "081233445566"
+                nomor: "6281233445566"
             },
             {
                 username: "Taufik Hidayat",
@@ -114,7 +114,7 @@ async function userSeeder() {
                 status: "active",
                 password: "password123",
                 role: "member",
-                nomor: "081377889900"
+                nomor: "6281377889900"
             },
             {
                 username: "Anisa Fitri",
@@ -122,7 +122,7 @@ async function userSeeder() {
                 status: "active",
                 password: "password123",
                 role: "member",
-                nomor: "085211335577"
+                nomor: "6285211335577"
             }
         ];
 

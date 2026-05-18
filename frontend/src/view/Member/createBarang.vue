@@ -15,6 +15,7 @@
     const route = useRoute()
     const token = getToken()
     const status = computed(() => route.query.status)
+    const statusLabel = computed(() => status.value === 'found' ? 'Lapor Barang Temuan' : 'Lapor Barang Hilang')
     const previewImg = ref(null)
     const message = ref('')
     const cat = ref(['Elektronik', 'Aksesoris', 'Pribadi', 'Berharga', 'Lainnya'])
@@ -175,10 +176,9 @@
         <Bar />
 
         <div class="pt-20 pb-20 flex flex-col h-full lg:justify-center lg:items-center px-4">
-            <div
-                class="mb-8 text-center">
-                <h2 class="text-2xl font-black dark:text-white text-blue-950">Lapor Barang Hilang</h2>
-                <p class="text-sm text-gray-500 dark:text-gray-400">Isi detail barang agar mudah diidentifikasi</p>
+            <div class="mb-8 text-center">
+                <h2 class="text-2xl font-black dark:text-white text-blue-950">{{ statusLabel }}</h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400">Isi detail barang agar mudah diidentifikasi dengan data lengkap dan bukti foto.</p>
             </div>
 
             <form @submit.prevent="uploadBarang" class="w-full lg:w-1/3 p-6 bg-white dark:bg-slate-900 shadow-xl rounded-3xl border border-gray-100 dark:border-slate-800">

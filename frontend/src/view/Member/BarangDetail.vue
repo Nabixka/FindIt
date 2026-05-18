@@ -23,9 +23,11 @@
   const router = useRouter()
   const token = getToken()
   const detail = ref({})
+  const profil = ref({})
   const message = ref("")
   let mapInstance = null;
   const user = computed(() => detail.value?.user)
+  const isReporter = computed(() => detail.value?.user?.id && profil.value?.id && detail.value.user.id === profil.value.id)
   const loading = ref(true)
 
   const showMap = async (locationText) => {
@@ -67,41 +69,52 @@
     }
   }
 
-  const getDetail = async () => {
-    try {
-      if (!token) {
-        router.push('/')
-        return
-      }
-
-      const id = state?.id
-      if (!id) return;
-
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      const res = await api.get(`/item/${id}`)
-      detail.value = res.data.data
-
-      if (detail.value.location) {
-        showMap(detail.value.location)
-      }
-    } catch (err) {
-      if(err.status == 500){
-        message.value = "Maaf, Terjadi Gangguan Untuk Terhubung Dengan Server"
-      }
-      if(err.status == 403 || 401) {
-        message.value = "Anda Tidak Berhak Mengakses Page Ini"
-        router.push("/")
-      }
-      if(err.status == 404){
-        message.value = "Barang Tersebut Tidak Ada"
-      }
+const getProfil = async () => {
+        try {
+            const res = await api.get('/user/profil')
+            profil.value = res.data.data
+        }
+        catch (err) {
+            console.log(err)
+        }
     }
-    finally {
-      loading.value = false
-    }
-  }
 
-  onMounted(() => {
+    const getDetail = async () => {
+        try {
+            if (!token) {
+                router.push('/')
+                return
+            }
+
+            const id = state?.id
+            if (!id) return;
+
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            const res = await api.get(`/item/${id}`)
+            detail.value = res.data.data
+
+            if (detail.value.location) {
+                showMap(detail.value.location)
+            }
+        } catch (err) {
+            if(err.status == 500){
+                message.value = "Maaf, Terjadi Gangguan Untuk Terhubung Dengan Server"
+            }
+            if(err.status == 403 || 401) {
+                message.value = "Anda Tidak Berhak Mengakses Page Ini"
+                router.push("/")
+            }
+            if(err.status == 404){
+                message.value = "Barang Tersebut Tidak Ada"
+            }
+        }
+        finally {
+            loading.value = false
+        }
+    }
+
+    onMounted(() => {
+        getProfil()
     getDetail()
   })
 
@@ -249,15 +262,21 @@
 
           <!-- BUTTON -->
           <div class="flex flex-col gap-2">
-              <button @click="handleHubungi(user.nomor)" class="w-full flex items-center justify-center gap-2 break-words text-white font-bold bg-blue-700 hover:bg-blue-900 rounded-xl p-3">
-                <Icon icon="solar:phone-calling-bold" width="24"  />
-                Hubungi Pelapor
-              </button>
+                  <div v-if="!isReporter" class="grid gap-3">
+                  <button @click="handleHubungi(user.nomor)" :disabled="!user?.nomor" class="w-full flex items-center justify-center gap-2 break-words text-white font-bold bg-blue-700 hover:bg-blue-900 rounded-xl p-3 disabled:opacity-50 disabled:cursor-not-allowed transition">
+                      <Icon icon="solar:phone-calling-bold" width="24" />
+                      <span>Hubungi Pelapor</span>
+                  </button>
 
-              <button @click="handleLapor(detail.id, detail.user.id)" class="flex items-center justify-center gap-2 text-white font-bold bg-red-600 hover:bg-red-800 rounded-xl p-3">
-                <Icon icon="solar:danger-bold" width="24" height="24" />
-                Laporkan
-              </button>
+                  <button @click="handleLapor(detail.id, detail.user.id)" class="w-full flex items-center justify-center gap-2 text-white font-bold bg-red-600 hover:bg-red-800 rounded-xl p-3 transition">
+                      <Icon icon="solar:danger-bold" width="24" height="24" />
+                      <span>Laporkan</span>
+                  </button>
+              </div>
+
+              <div v-else class="rounded-3xl bg-amber-50 border border-amber-200 p-4 text-center text-amber-800">
+                  Anda adalah pelapor barang ini, fitur kontak dan laporan tidak tersedia.
+              </div>
           </div>
 
         </div>

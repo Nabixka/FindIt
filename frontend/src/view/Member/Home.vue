@@ -78,6 +78,18 @@
         })
     })
 
+    const totalLost = computed(() => items.value.filter(item => item.status === 'lost').length)
+    const totalFound = computed(() => items.value.filter(item => item.status === 'found').length)
+    const totalActive = computed(() => filterItem.value.length)
+    const hasFilters = computed(() => filter.value || category.value || search.value.trim() || startDate.value || endDate.value)
+
+    const clearFilters = () => {
+        filter.value = ''
+        category.value = ''
+        search.value = ''
+        startDate.value = ''
+        endDate.value = ''
+    }
 
     const handleNavigate = (stat) => {
         router.push({
@@ -144,6 +156,21 @@
                             Found Item
                         </button>
                     </div>
+
+                    <div class="mt-8 grid grid-cols-2 sm:grid-cols-3 gap-4 w-full max-w-4xl">
+                        <div class="rounded-3xl bg-gray-300 dark:bg-white/10 border border-white/10 p-5 text-center">
+                            <p class="text-xs text-gray-900 uppercase tracking-[0.2em] dark:text-slate-200">Total Item</p>
+                            <p class="text-3xl font-bold text-gray-700 dark:text-white">{{ items.length }}</p>
+                        </div>
+                        <div class="rounded-3xl bg-gray-300 dark:bg-white/10 border border-white/10 p-5 text-center">
+                            <p class="text-xs text-gray-900 uppercase tracking-[0.2em] dark:text-slate-200">Kehilangan</p>
+                            <p class="text-3xl font-bold text-yellow-700 dark:text-yellow-300">{{ totalLost }}</p>
+                        </div>
+                        <div class="rounded-3xl bg-gray-300 col-span-2 sm:col-span-1 dark:bg-white/10 border border-white/10 p-5 text-center">
+                            <p class="text-xs text-gray-900 uppercase tracking-[0.2em] dark:text-slate-200">Temuan</p>
+                            <p class="text-3xl font-bold text-sky-700 dark:text-sky-300">{{ totalFound }}</p>
+                        </div>
+                    </div>
                 </motion.div>
             </div>
 
@@ -160,7 +187,12 @@
                                 placeholder="Cari nama barang atau lokasi...">
                         </div>
 
-                       <button @click="isShow = true" class="bg-white/10 w-full py-2 px-4 rounded-xl text-white font-semibold ">Filter Tanggal</button>
+                       <div class="flex flex-col gap-3">
+                            <button @click="isShow = true" class="bg-white/10 w-full py-2 px-4 rounded-xl text-white font-semibold ">Filter Tanggal</button>
+                            <button v-if="hasFilters" @click="clearFilters" class="bg-white/20 w-full py-2 px-4 rounded-xl text-white font-semibold border border-white/20 hover:bg-white/30 transition">
+                                Reset Filter
+                            </button>
+                        </div>
 
                         <div class="flex items-center justify-between gap-3">
                             <div class="relative flex-1">

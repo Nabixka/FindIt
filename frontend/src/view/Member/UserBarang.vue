@@ -45,6 +45,9 @@
         }
     }
     
+    const totalLost = computed(() => items.value.filter(item => item.status == 'lost').length)
+    const totalFound = computed(() => items.value.filter(item => item.status == 'found').length)
+
     onMounted(() => {
         getItem()
         getMatchedItems()
@@ -75,6 +78,13 @@
         router.push({
             name: "Barang",
             state: { id }
+        })
+    }
+
+    const handleCreateBarang = () => {
+        router.push({
+            name: "MemberCreate",
+            query: { status: selectedItem.value }
         })
     }
     
@@ -115,7 +125,7 @@
             </div>
         </div>
 
-        <div v-else class="flex flex-col pt-24 pb-10 px-6 gap-8">
+        <div v-else class="flex flex-col pt-24 pb-20 px-6 gap-8">
             <div class="space-y-6">
                 <h3 class="text-center text-blue-950 dark:text-white text-3xl font-black tracking-tight">
                     Barang Saya
@@ -129,13 +139,34 @@
                         Temuan
                     </button>
                 </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+                    <div class="rounded-3xl bg-gray-100 dark:bg-white/10 p-2 text-center border border-gray-200 dark:border-white/10">
+                        <p class="text-xs uppercase tracking-[0.2em] text-slate-500">Total Item</p>
+                        <p class="text-3xl font-bold text-blue-950 dark:text-white">{{ items.length }}</p>
+                    </div>
+                    <div class="rounded-3xl bg-gray-100 dark:bg-white/10 p-2 text-center border border-gray-200 dark:border-white/10">
+                        <p class="text-xs uppercase tracking-[0.2em] text-slate-500">Kehilangan</p>
+                        <p class="text-3xl font-bold text-red-500">{{ totalLost }}</p>
+                    </div>
+                    <div class="col-span-2 sm:col-span-1 rounded-3xl bg-gray-100 dark:bg-white/10 p-2 text-center border border-gray-200 dark:border-white/10">
+                        <p class="text-xs uppercase tracking-[0.2em] text-slate-500">Temuan</p>
+                        <p class="text-3xl font-bold text-emerald-500">{{ totalFound }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-center lg:justify-end px-4">
+                <button @click="handleCreateBarang" class="bg-yellow-500 hover:bg-yellow-400 text-blue-950 font-bold py-3 px-6 rounded-2xl shadow-lg shadow-yellow-500/20 transition-all active:scale-95">
+                    + Tambah Laporan Baru
+                </button>
             </div>
 
             <div class="flex flex-col gap-4">
                 <div v-if="isLoading" class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <div v-for="n in 4" :key="n"
-                        class="flex rounded justify-between items-center p-2 dark:bg-white/10 w-full gap-2 h-30 bg-gray-200">
-                        <div class="w-35 h-25 rounded bg-gray-400 animate-pulse"></div>
+                        class="flex rounded justify-between items-center p-2 dark:bg-white/10 w-full gap-2 bg-gray-200 min-h-[130px]">
+                        <div class="w-24 h-24 rounded bg-gray-400 animate-pulse"></div>
                         <div class="w-full flex flex-col gap-2">
                             <div class="w-full h-7 rounded bg-gray-400 animate-pulse"></div>
                             <div class="w-full h-5 rounded bg-gray-400 animate-pulse"></div>
@@ -144,10 +175,9 @@
                     </div>
                 </div>
                 <div v-else-if="filter.length" class="grid grid-cols-1 gap-4 lg:grid-cols-2">
-                    <div v-for="item in filter"
-                        class="flex justify-between dark:bg-white/10 bg-gray-200 py-2 rounded-lg pl-2">
-                        <button @click="handleNavigate(item.id)" class="flex gap-2 items-center">
-                            <img class="shadow rounded-lg p-2 w-23 h-23 bg-white/20" :src="`${item.image}`">
+                    <div v-for="item in filter" class="flex dark:bg-white/10 bg-gray-200 py-2 rounded-lg pl-2 sm:flex-row gap-4  sm:items-center">
+                        <button @click="handleNavigate(item.id)" class="flex gap-2 items-center flex-1 min-w-0">
+                            <img class="shadow rounded-lg p-2 w-24 h-24 bg-white/20 object-cover" :src="`${item.image}`">
                             <div class="text-start">
                                 <h3
                                     class="text-blue-950 dark:text-white font-bold text-lg leading-tight group-hover:text-blue-700 transition-colors">
@@ -175,18 +205,27 @@
                 </div>
             </div>
 
-            <div v-if="matchedItems.length" class="border-t border-white">
-                <div class="grid grid-cols-1 pt-5 gap-5 md:grid-cols-2 lg:grid-cols-4">
-                    <div v-for="i in matchedItems" class="rounded-lg p-3 dark:bg-white/10">
-                        <div class="grid grid-cols-2 gap-5">
-                            <div class="flex flex-col gap-2">
-                                <h3 class="text-white">Barang 1: <strong>{{ i.item1_title }}</strong></h3>
-                                <button @click="handleNavigate(i.item_id_1)" class="bg-linear-to-b text-white font-bold from-blue-900 to-blue-800 py-1 rounded px-3">Cek Detail</button>
+            <div v-if="matchedItems.length" class="mt-6 border-t border-white/10 pt-6">
+                <h3 class="text-lg font-bold text-blue-950 dark:text-white text-center mb-4">Potensi Match</h3>
+                <div class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                    <div v-for="match in matchedItems" :key="match.id || match.item_id_1 + '-' + match.item_id_2" class="bg-gray-200 dark:bg-white/5 rounded-2xl p-4">
+                        <div class="flex gap-4 items-center">
+                            <img :src="match.item1_image || ''" alt="item1" class="w-20 h-20 object-cover rounded-lg border border-white/10" />
+                            <div class="flex-1 min-w-0">
+                                <p class="text-xs text-slate-400">Item 1</p>
+                                <h4 class="font-bold text-blue-950 dark:text-white truncate">{{ match.item1_title }}</h4>
+                                <p class="text-xs text-gray-400 truncate">{{ match.item1_location || '' }}</p>
                             </div>
-                            <div class="flex flex-col gap-2">
-                                <h3 class="text-white">Barang 2: <strong>{{ i.item2_title }}</strong></h3>
-                                <button @click="handleNavigate(i.item_id_2)" class="bg-linear-to-b text-white font-bold from-blue-900 to-blue-800 py-1 rounded px-3">Cek Detail</button>
+                            <div class="text-right">
+                                <div class="text-xs text-gray-400">Kemiripan</div>
+                                <div class="text-lg font-bold text-amber-500">{{ Math.round((match.score || match.similarity || 0) * 100) }}%</div>
                             </div>
+                        </div>
+
+                        <div class="flex gap-3 items-center mt-3">
+                            <button @click="handleNavigate(match.item_id_1 || match.item_id1)" class="flex-1 bg-blue-600 text-white py-2 rounded-lg">Detail 1</button>
+                            <button @click="handleNavigate(match.item_id_2 || match.item_id2)" class="flex-1 bg-sky-500 text-white py-2 rounded-lg">Detail 2</button>
+                            <button @click.prevent class="px-3 py-2 rounded-lg border text-sm text-gray-700 hidden sm:inline-block">Tandai</button>
                         </div>
                     </div>
                 </div>
