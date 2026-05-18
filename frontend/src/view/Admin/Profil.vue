@@ -112,7 +112,7 @@
             </div>
         </div>
 
-        <div class="pl-8 pr-8 lg:flex lg:justify-center lg:items-center lg:h-screen h-full pb-10">
+        <div class="pl-8 pr-8 lg:flex lg:justify-center lg:items-center h-full pb-10">
             <div class="lg:grid lg:grid-cols-3 pt-10 pb-10 lg:gap-10">
                 <div class="lg:col-span-1 flex flex-col gap-10">
 
@@ -183,7 +183,7 @@
                             <h3 class="text-2xl font-bold text-white mb-8">Pengaturan</h3>
 
                             <router-link to="/admin/user"
-                                class="flex items-center gap-6 bg-white/90 dark:bg-black/20 hover:bg-gray-100 transition p-5 rounded-xl shadow-md">
+                                class="flex items-center gap-6 bg-white/90 dark:bg-black/20 hover:bg-black/30 transition p-5 rounded-xl shadow-md">
                                 <div class="bg-sky-300 p-3 rounded-full">
                                     <Icon icon="boxicons:user-filled" width="24" height="24" />
                                 </div>
@@ -193,7 +193,7 @@
                             </router-link>
 
                             <router-link to="/admin/barang"
-                                class="flex items-center gap-6 bg-white/90 dark:bg-black/20 hover:bg-gray-100 transition p-5 rounded-xl shadow-md">
+                                class="flex items-center gap-6 bg-white/90 dark:bg-black/20 hover:bg-black/30 transition p-5 rounded-xl shadow-md">
                                 <div class="bg-sky-300 p-3 rounded-full">
                                     <Icon icon="solar:box-bold" width="24" height="24" />
                                 </div>
@@ -202,7 +202,16 @@
                                 </h3>
                             </router-link>
 
-                            <button @click="isShow = true" class="flex items-center gap-6 bg-white/90 dark:bg-black/20 hover:bg-black/50 transition p-5 rounded-xl shadow-md">
+                            <router-link to="/admin/matches" class="flex items-center gap-6 bg-white/90 dark:bg-black/20 hover:bg-black/30 transition p-5 rounded-xl shadow-md">
+                                <div class="bg-sky-300 p-3 rounded-full">
+                                    <Icon icon="material-symbols:all-match" width="24" height="24" />
+                                </div>
+                                <h3 class="text-left font-bold text-black dark:text-white text-lg">
+                                    Match Barang    
+                                </h3>
+                            </router-link>
+
+                            <button @click="isShow = true" class="flex items-center gap-6 bg-white/90 dark:bg-black/20 hover:bg-black/30 transition p-5 rounded-xl shadow-md">
                                 <div class="bg-sky-300 p-3 rounded-full">
                                     <Icon icon="weui:setting-filled" width="24" height="24" />
                                 </div>

@@ -141,11 +141,10 @@
                         </div>
 
                         <!-- Match Type & Score (Tengah) -->
-                        <div class="flex flex-row md:flex-col items-center justify-center bg-gray-50 dark:bg-white/5 rounded-xl px-4 py-2 min-w-[100px]">
+                        <div class="flex flex-row md:flex-col w-full md:w-50 items-center justify-center bg-gray-50 dark:bg-white/5 rounded-xl px-4 py-2 min-w-[100px]">
                             <div :class="`px-2 py-1 rounded-full text-xs font-bold ${getSimilarityBadgeColor(match.similarity_score)}`">
                                 {{ (match.similarity_score * 100).toFixed(0) }}%
                             </div>
-                            <p class="text-[10px] text-gray-500 mt-1 capitalize font-medium">{{ match.match_type }}</p>
                         </div>
 
                         <!-- Item 2 (Kanan) -->
