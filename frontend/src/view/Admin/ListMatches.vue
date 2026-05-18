@@ -2,15 +2,25 @@
     import { useRouter } from 'vue-router';
     import Bar from '../Bar/Bar.vue';
     import Nav from '../Bar/Nav.vue';
-    import { ref, onMounted } from 'vue'
-    import { api } from '../../components/utils/helper';
-    import { Icon } from '@iconify/vue';
+import { ref, onMounted, computed } from 'vue';
+import { api } from '../../components/utils/helper';
+import { Icon } from '@iconify/vue';
 
     const matches = ref([])
     const router = useRouter()
     const isLoading = ref(true)
     const isScanning = ref(false)
+    const filterStatus = ref('all')
     const message = ref("")
+
+    const filteredMatches = computed(() => {
+        const list = [...matches.value]
+        return list.filter(match => {
+            if (filterStatus.value === 'sent') return match.is_sent
+            if (filterStatus.value === 'unsent') return !match.is_sent
+            return true
+        }).sort((a, b) => b.similarity_score - a.similarity_score)
+    })
 
     const getMatches = async () => {
         try {
@@ -85,21 +95,30 @@
         <Nav />
         <Bar />
 
-        <div class="pt-25">
-            <h3 class="font-extrabold dark:text-white text-center pb-3 text-3xl text-gray-700/90">Matching Items</h3>
-            
-            <div v-if="message" class="m-4 p-3 rounded-lg" :class="message.includes('Gagal') ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'">
-                {{ message }}
-            </div>
+        <div class="pt-24">
+            <div class="max-w-6xl mx-auto px-4">
+                <div class="flex flex-col gap-4 items-center text-center">
+                    <h3 class="font-extrabold dark:text-white text-3xl text-gray-700/90">Matching Items</h3>
+                    <p class="text-sm text-gray-500 dark:text-slate-300 max-w-2xl">
+                        Lihat hasil pencocokan item, filter sesuai status kirim, dan jalankan pemindaian match kapan saja.
+                    </p>
+                </div>
 
-            <div class="flex justify-center gap-2 pb-5 px-4">
-                <button 
-                    @click="scanMatches"
-                    :disabled="isScanning"
-                    class="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:bg-gray-400 font-semibold transition-all">
-                    <Icon icon="solar:reload-linear" width="20" />
-                    {{ isScanning ? 'Scanning...' : 'Scan Matches' }}
-                </button>
+                <div class="mt-6 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                    <div class="flex flex-wrap gap-2 justify-center">
+                        <button @click="filterStatus='all'" :class="filterStatus === 'all' ? 'bg-sky-500 text-white' : 'bg-white/90 text-slate-700'" class="px-4 py-2 rounded-full shadow-sm border border-slate-200 transition">Semua</button>
+                        <button @click="filterStatus='unsent'" :class="filterStatus === 'unsent' ? 'bg-amber-500 text-white' : 'bg-white/90 text-slate-700'" class="px-4 py-2 rounded-full shadow-sm border border-slate-200 transition">Belum Terkirim</button>
+                        <button @click="filterStatus='sent'" :class="filterStatus === 'sent' ? 'bg-emerald-500 text-white' : 'bg-white/90 text-slate-700'" class="px-4 py-2 rounded-full shadow-sm border border-slate-200 transition">Sudah Terkirim</button>
+                    </div>
+
+                    <button 
+                        @click="scanMatches"
+                        :disabled="isScanning"
+                        class="inline-flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 disabled:bg-gray-400 font-semibold transition-all">
+                        <Icon icon="solar:reload-linear" width="20" />
+                        {{ isScanning ? 'Scanning...' : 'Scan Matches' }}
+                    </button>
+                </div>
             </div>
 
             <!-- Loading State -->
@@ -116,8 +135,8 @@
             </div>
 
             <!-- Data List -->
-            <div v-else-if="matches.length" class="space-y-4 p-5">
-                <div v-for="match in matches" :key="match.id" 
+            <div v-else-if="filteredMatches.length" class="space-y-4 p-5">
+                <div v-for="match in filteredMatches" :key="match.id" 
                     class="dark:bg-white/10 bg-white p-4 rounded-2xl shadow-sm hover:shadow-md transition-all border border-transparent hover:border-blue-100">
                     
                     <div class="flex flex-col md:flex-row items-start md:items-center gap-4">

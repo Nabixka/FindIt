@@ -2,13 +2,12 @@
   import { Icon } from "@iconify/vue"
   import { useRouter } from "vue-router";
   import { getToken } from "../../components/utils/helper";
-  import { ref, onMounted, computed } from "vue"
+  import { ref, onMounted } from "vue"
   
   const router = useRouter()
   const token = getToken()
   const detail = ref({})
   const API_URL = import.meta.env.VITE_API_URL
-  const showAdminMenu = ref(false)
 
   const getRole = async () => {
     try{
@@ -31,30 +30,26 @@
   })
 
   const handleNavigate = (e) => {
-    if(detail.value.role == "member"){
+    if(detail.value.role === "member"){
       router.push(`/member/${e}`)
     }
-    if(detail.value.role == "admin"){
+    if(detail.value.role === "admin"){
       router.push(`/admin/${e}`)
     }
-    showAdminMenu.value = false
-  }
-
-  const navigateToMatches = () => {
-    router.push("/admin/matches")
-    showAdminMenu.value = false
   }
 
 </script>
 
 <template>
   <div class="fixed bottom-0 left-0 right-0 z-50">
-    <div class="flex justify-around bg-blue-900 p-3">
-      <button @click="handleNavigate('home')">
-        <Icon icon="mdi:home-variant" class="text-white" width="30" height="30" />
+    <div class="bg-slate-950/95 backdrop-blur-xl border-t border-white/10 px-4 py-3 flex justify-around gap-4">
+      <button @click="handleNavigate('home')" class="flex flex-col items-center gap-1 text-slate-100 hover:text-white transition">
+        <Icon icon="mdi:home-variant" width="26" height="26" />
+        <span class="text-[11px]">Home</span>
       </button>
-      <button @click="handleNavigate('profil')">
-        <Icon icon="line-md:account" class="text-white" width="30" height="30" />
+      <button @click="handleNavigate('profil')" class="flex flex-col items-center gap-1 text-slate-100 hover:text-white transition">
+        <Icon icon="line-md:account" width="26" height="26" />
+        <span class="text-[11px]">Profil</span>
       </button>
     </div>
   </div>

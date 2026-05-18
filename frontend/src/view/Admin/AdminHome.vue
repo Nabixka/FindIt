@@ -1,104 +1,121 @@
 <script setup>
-import { ref, onMounted } from 'vue';
-import Bar from '../Bar/Bar.vue';
-import { api, getToken, removeToken } from '../../components/utils/helper';
-import { useRouter } from 'vue-router';
-import { Icon } from '@iconify/vue';
+    import { ref, onMounted, computed } from 'vue';
+    import Nav from '../Bar/Nav.vue';
+    import Bar from '../Bar/Bar.vue';
+    import { api, getToken, removeToken } from '../../components/utils/helper';
+    import { useRouter } from 'vue-router';
+    import { Icon } from '@iconify/vue';
 
-const router = useRouter()
+    const router = useRouter()
 
-const message = ref("")
-const reports = ref([])
-const loading = ref(true)
+    const message = ref("")
+    const reports = ref([])
+    const loading = ref(true)
+    const search = ref("")
 
-const view = ref(false)
-const image = ref(null)
-const title = ref("")
-const text = ref("")
-const userId = ref("")
-const token = getToken()
+    const view = ref(false)
+    const image = ref(null)
+    const title = ref("")
+    const text = ref("")
+    const userId = ref("")
+    const token = getToken()
 
-const getReport = async () => {
-    try {
-        await new Promise(resolve => setTimeout(resolve, 2000))
-        const res = await api.get('/user/report')
-        reports.value = res.data.data
-    }
-    catch (err) {
-        const status = err.response?.status
-        if (status === 500) {
-            message.value = "Tidak Dapat Terhubung Ke Server"
-        }
-
-        if (status === 403 || status === 401) {
-            message.value = "Anda Tidak Berhak Mengakses Page Ini"
-            removeToken()
-            router.push("/")
-        }
-    }
-    finally {
-        loading.value = false
-    }
-}
-
-const handleButton = async (event, id) => {
-    try{
-        if(event == "ban"){
-            const res = await api.put(`user/status/${id}`, {status: "banned"})
-        }
-        if(event == "delete"){
-            const res = await api.delete(`user/${id}`)
-        }
-        view.value = false
-        getReport()
-    }
-    catch(err){
-        
-        const status = err.response?.status
-        if (status === 500) {
-            message.value = "Tidak Dapat Terhubung Ke Server"
-        }
-
-        if (status === 403 || status === 401) {
-            message.value = "Anda Tidak Berhak Mengakses Page Ini"
-            removeToken()
-            router.push("/")
-        }
-    }
-}
-
-const handleView = async (event, data, user_id) => {
-    image.value = ""
-    text.value = ""
-
-    if (event === "image") {
-        title.value = "Detail Gambar"
-        image.value = data
-    }
-
-    if (event === "text") {
-        title.value = "Detail Alasan"
-        text.value = data
-        userId.value = user_id
-    }
-
-    view.value = true
-}
-
-onMounted(() => {
-    getReport()
-})
-
-const handleNavigate = (id) => {
-    router.push({
-        name: 'Barang',
-        state: { id }
+    const filteredReports = computed(() => {
+        const term = search.value.toLowerCase().trim()
+        return reports.value.filter(report => {
+            if (!term) return true
+            return report.user_report.username.toLowerCase().includes(term)
+                || report.user.username.toLowerCase().includes(term)
+                || report.item.title.toLowerCase().includes(term)
+        })
     })
-}
+
+    const totalReports = computed(() => reports.value.length)
+
+    const reportImageCount = computed(() => reports.value.filter(report => report.proof).length)
+
+    const getReport = async () => {
+        try {
+            await new Promise(resolve => setTimeout(resolve, 2000))
+            const res = await api.get('/user/report')
+            reports.value = res.data.data
+        }
+        catch (err) {
+            const status = err.response?.status
+            if (status === 500) {
+                message.value = "Tidak Dapat Terhubung Ke Server"
+            }
+
+            if (status === 403 || status === 401) {
+                message.value = "Anda Tidak Berhak Mengakses Page Ini"
+                removeToken()
+                router.push("/")
+            }
+        }
+        finally {
+            loading.value = false
+        }
+    }
+
+    const handleButton = async (event, id) => {
+        try{
+            if(event == "ban"){
+                const res = await api.put(`user/status/${id}`, {status: "banned"})
+            }
+            if(event == "delete"){
+                const res = await api.delete(`user/${id}`)
+            }
+            view.value = false
+            getReport()
+        }
+        catch(err){
+
+            const status = err.response?.status
+            if (status === 500) {
+                message.value = "Tidak Dapat Terhubung Ke Server"
+            }
+
+            if (status === 403 || status === 401) {
+                message.value = "Anda Tidak Berhak Mengakses Page Ini"
+                removeToken()
+                router.push("/")
+            }
+        }
+    }
+
+    const handleView = async (event, data, user_id) => {
+        image.value = ""
+        text.value = ""
+
+        if (event === "image") {
+            title.value = "Detail Gambar"
+            image.value = data
+        }
+
+        if (event === "text") {
+            title.value = "Detail Alasan"
+            text.value = data
+            userId.value = user_id
+        }
+
+        view.value = true
+    }
+
+    onMounted(() => {
+        getReport()
+    })
+
+    const handleNavigate = (id) => {
+        router.push({
+            name: 'Barang',
+            state: { id }
+        })
+    }
 </script>
 
 <template>
     <div>
+        <Nav />
         <Bar />
 
         <div v-if="view" class="flex fixed inset-0 z-50 items-center justify-center p-4 sm:p-6">
@@ -168,16 +185,44 @@ const handleNavigate = (id) => {
             </div>
         </div>
 
-        <div
-            class="flex flex-col gap-10 pt-5 pb-20 bg-linear-to-b from-white to-gray-200 dark:bg-linear-to-b dark:from-gray-950/90 dark:to-blue-950 min-h-screen">
+        <div class="flex flex-col gap-10 pt-24 pb-20 bg-linear-to-b from-white to-gray-200 dark:bg-linear-to-b dark:from-gray-950/90 dark:to-blue-950 min-h-screen">
 
-            <div class="flex justify-center">
-                <h3 class="text-blue-950 dark:text-white text-4xl font-bold">
-                    Laporan Pengguna
-                </h3>
+            <div class="flex flex-col gap-4 items-center">
+                <div class="text-center">
+                    <h3 class="text-blue-950 dark:text-white text-4xl font-bold">
+                        Laporan Pengguna
+                    </h3>
+                    <p class="text-gray-600 dark:text-slate-300 mt-2 max-w-2xl pl-5 pr-5">
+                        Pantau semua laporan pengguna dan kelola bukti dengan cepat dari dashboard admin.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-6xl px-4">
+                    <div class="rounded-3xl bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700 p-4 shadow-sm">
+                        <p class="text-sm uppercase tracking-[0.2em] text-slate-400">Total Laporan</p>
+                        <p class="text-xl font-bold text-slate-900 dark:text-white">{{ totalReports }}</p>
+                    </div>
+                    <div class="rounded-3xl bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700 p-4 shadow-sm">
+                        <p class="text-sm uppercase tracking-[0.2em] text-slate-400">Laporan Tampil</p>
+                        <p class="text-xl font-bold text-blue-600 dark:text-sky-300">{{ filteredReports.length }}</p>
+                    </div>
+                    <div class="rounded-3xl bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700 p-4 shadow-sm">
+                        <p class="text-sm uppercase tracking-[0.2em] text-slate-400">Bukti Gambar</p>
+                        <p class="text-xl font-bold text-emerald-600 dark:text-emerald-300">{{ reportImageCount }}</p>
+                    </div>
+                </div>
+
+                <div class="w-full max-w-6xl px-4">
+                    <input
+                        v-model="search"
+                        type="text"
+                        placeholder="Cari reporter, target, atau judul item..."
+                        class="w-full rounded-3xl dark:text-white/80 border border-slate-300 dark:border-slate-700 bg-white/95 dark:bg-slate-950/90 px-4 py-3 shadow-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition"
+                    />
+                </div>
             </div>
 
-            <div class="overflow-x-auto lg:flex lg:justify-center px-4">
+            <div class="overflow-x-auto lg:flex lg:justify-center px-4 pb-10">
 
                 <table class="min-w-full bg-white rounded-lg shadow-lg overflow-hidden">
 
@@ -246,10 +291,10 @@ const handleNavigate = (id) => {
                         </template>
 
                         <!-- DATA -->
-                        <template v-else-if="reports.length">
+                        <template v-else-if="filteredReports.length">
 
                             <tr
-                                v-for="report in reports"
+                                v-for="report in filteredReports"
                                 :key="report.id"
                                 class="hover:bg-gray-50 transition-colors">
 
@@ -313,7 +358,6 @@ const handleNavigate = (id) => {
                             <td
                                 class="px-6 py-4 text-center font-bold text-gray-500 text-lg"
                                 colspan="5">
-
                                 Tidak ada laporan
                             </td>
                         </tr>

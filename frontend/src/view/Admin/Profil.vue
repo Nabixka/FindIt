@@ -1,5 +1,6 @@
 <script setup>
     import Bar from '../Bar/Bar.vue';
+    import Nav from '../Bar/Nav.vue';
     import { api, getToken, removeToken } from '../../components/utils/helper';
     import { onMounted, ref } from 'vue';
     import { Icon } from '@iconify/vue';
@@ -93,6 +94,7 @@
 
 <template>
     <div class="min-h-screen bg-linear-to-b from-white to-gray-200 dark:bg-linear-to-b dark:from-gray-950/90 dark:to-blue-950">
+        <Nav />
         <Bar />
 
         <div v-if="isShow" class="fixed inset-0 z-50 flex h-screen items-center justify-center pl-5 pr-5">
@@ -112,7 +114,7 @@
             </div>
         </div>
 
-        <div class="pl-8 pr-8 lg:flex lg:justify-center lg:items-center h-full pb-10">
+        <div class="pt-24 pl-8 pr-8 lg:flex lg:justify-center lg:items-center h-full pb-10">
             <div class="lg:grid lg:grid-cols-3 pt-10 pb-10 lg:gap-10">
                 <div class="lg:col-span-1 flex flex-col gap-10">
 
