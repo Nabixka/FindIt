@@ -2,9 +2,9 @@
     import { useRouter } from 'vue-router';
     import Bar from '../Bar/Bar.vue';
     import Nav from '../Bar/Nav.vue';
-import { ref, onMounted, computed } from 'vue';
-import { api } from '../../components/utils/helper';
-import { Icon } from '@iconify/vue';
+    import { ref, onMounted, computed } from 'vue';
+    import { api } from '../../components/utils/helper';
+    import { Icon } from '@iconify/vue';
 
     const matches = ref([])
     const router = useRouter()

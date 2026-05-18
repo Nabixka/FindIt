@@ -74,7 +74,7 @@
                 </div>
             </div>
 
-            <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="max-w-6xl mx-auto px-4 grid grid-cols-2 sm:grid-cols-3 gap-4">
                 <div
                     class="rounded-3xl bg-white/95 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-700 p-4 shadow-sm text-center">
                     <p class="text-xs uppercase tracking-[0.2em] text-slate-400">Total Users</p>
@@ -86,7 +86,7 @@
                     <p class="text-3xl font-bold text-sky-600 dark:text-sky-300">{{ filteredUsers.length }}</p>
                 </div>
                 <div
-                    class="rounded-3xl bg-white/95 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-700 p-4 shadow-sm text-center">
+                    class="rounded-3xl col-span-2 sm:col-span-1 bg-white/95 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-700 p-4 shadow-sm text-center">
                     <p class="text-xs uppercase tracking-[0.2em] text-slate-400">Filter</p>
                     <p class="text-3xl font-bold text-amber-500">{{ filterRole }}</p>
                 </div>
