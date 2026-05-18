@@ -222,7 +222,7 @@
                 </div>
             </div>
 
-            <div class="overflow-x-auto lg:flex lg:justify-center px-4 pb-10">
+            <div class="overflow-x-auto lg:flex lg:justify-center px-4 mb-10">
 
                 <table class="min-w-full bg-white rounded-lg shadow-lg overflow-hidden">
 
@@ -292,13 +292,12 @@
 
                         <!-- DATA -->
                         <template v-else-if="filteredReports.length">
-
                             <tr
                                 v-for="report in filteredReports"
                                 :key="report.id"
-                                class="hover:bg-gray-50 transition-colors">
+                                class="hover:bg-gray-50 dark:hover:bg-slate-600 bg-white dark:bg-slate-800 transition-colors">
 
-                                <td class="px-6 py-4 text-center font-bold text-gray-900 border-r border-gray-200">
+                                <td class="px-6 py-4 text-center font-bold dark:text-white text-gray-900 border-r border-gray-200">
                                     {{ report.user_report.username }}
                                 </td>
 

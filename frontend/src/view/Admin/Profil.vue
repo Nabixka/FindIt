@@ -223,7 +223,7 @@
                             </button>
 
                             <button @click="LogOut"
-                                class="flex items-center gap-6 bg-white/90 dark:bg-black/20 hover:bg-red-100 transition p-5 rounded-xl shadow-md">
+                                class="flex items-center gap-6 bg-white/90 dark:bg-black/20 dark:hover:bg-black/30 hover:bg-red-100 transition p-5 rounded-xl shadow-md">
                                 <div class="bg-red-300 p-3 rounded-full">
                                     <Icon icon="material-symbols:logout" width="24" height="24" />
                                 </div>
