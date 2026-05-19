@@ -7,12 +7,9 @@
         <div class="flex items-center gap-4">
           <img class="h-10 w-auto" src="/Putih.png" alt="FindIt Logo" />
           <div>
-            <p class="text-xs uppercase tracking-[0.25em] font-semibold text-sky-100/90">FindIt Admin</p>
+            <p class="text-xs uppercase tracking-[0.25em] font-semibold text-sky-100/90">FindIt</p>
             <p class="text-sm text-sky-100/80">Dashboard Pengelolaan</p>
           </div>
-        </div>
-        <div class="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold tracking-wide">
-          Admin Panel
         </div>
       </div>
     </div>
