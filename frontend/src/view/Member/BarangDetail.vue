@@ -7,6 +7,8 @@
   import { useRouter } from 'vue-router'
   import L from 'leaflet'
   import 'leaflet/dist/leaflet.css'
+  import 'leaflet-routing-machine'
+  import 'leaflet-routing-machine/dist/leaflet-routing-machine.css'
 
   import markerIcon from 'leaflet/dist/images/marker-icon.png';
   import markerShadow from 'leaflet/dist/images/marker-shadow.png';
@@ -26,9 +28,73 @@
   const profil = ref({})
   const message = ref("")
   let mapInstance = null;
+  let routeControl = null;
+  let userLocation = null;
   const user = computed(() => detail.value?.user)
   const isReporter = computed(() => detail.value?.user?.id && profil.value?.id && detail.value.user.id === profil.value.id)
   const loading = ref(true)
+  const isLoadingRoute = ref(false)
+
+  const getUserLocation = () => {
+    return new Promise((resolve, reject) => {
+      if (!navigator.geolocation) {
+        reject(new Error("Geolocation tidak didukung di browser ini"));
+        return;
+      }
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          userLocation = [position.coords.latitude, position.coords.longitude];
+          resolve(userLocation);
+        },
+        (error) => {
+          reject(error);
+        },
+        { enableHighAccuracy: true, timeout: 5000 }
+      );
+    });
+  };
+
+  const showRoute = async () => {
+    if (!mapInstance || !detail.value.location) return;
+
+    isLoadingRoute.value = true;
+    try {
+      await getUserLocation();
+
+      if (!userLocation) {
+        message.value = "Tidak dapat mendapatkan lokasi Anda";
+        return;
+      }
+
+      if (routeControl) {
+        mapInstance.removeControl(routeControl);
+      }
+
+      routeControl = L.Routing.control({
+        waypoints: [
+          L.latLng(userLocation[0], userLocation[1]),
+          L.latLng(detail.value.lat, detail.value.lng)
+        ],
+        routeWhileDragging: true,
+        lineOptions: {
+          styles: [{ color: 'rgb(59, 130, 246)', opacity: 0.8, weight: 5 }]
+        },
+        createMarker: (i, wp) => {
+          const icon = i === 0
+            ? L.divIcon({ html: '<div style="background: #22c55e; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">📍</div>' })
+            : L.divIcon({ html: '<div style="background: #ef4444; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">📍</div>' });
+          return L.marker(wp.latLng, { icon, draggable: false });
+        }
+      }).addTo(mapInstance);
+
+      mapInstance.fitBounds(routeControl.getWaypoints().map(wp => wp.latLng));
+    } catch (err) {
+      console.error("Gagal memuat rute:", err);
+      message.value = err.message || "Gagal memuat rute";
+    } finally {
+      isLoadingRoute.value = false;
+    }
+  };
 
   const showMap = async (locationText) => {
     if (!locationText) return;
@@ -42,6 +108,9 @@
 
       const lat = data[0].lat;
       const lng = data[0].lon;
+
+      detail.value.lat = parseFloat(lat);
+      detail.value.lng = parseFloat(lng);
 
       await nextTick();
 
@@ -240,6 +309,10 @@ const getProfil = async () => {
           <!-- MAP -->
           <div class="bg-white rounded-2xl shadow-sm overflow-hidden relative border border-gray-100">
             <div id="map" class="w-full h-56 lg:h-72 z-0"></div>
+            <button @click="showRoute" :disabled="isLoadingRoute" class="absolute bottom-4 right-4 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-bold py-2 px-4 rounded-lg flex items-center gap-2 shadow-lg transition">
+              <Icon icon="mdi:directions" width="20" />
+              {{ isLoadingRoute ? 'Memuat Rute...' : 'Arahkan' }}
+            </button>
           </div>
 
           <!-- USER -->
