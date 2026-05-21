@@ -1,6 +1,6 @@
 <script setup>
   import { ref, onMounted, nextTick, computed } from 'vue'
-  import { api, getToken } from '../../components/utils/helper'
+  import { api, getToken, formatDate } from '../../components/utils/helper'
   import Bar from '../Bar/Bar.vue'
   import Nav from '../Bar/Nav.vue'
   import { Icon } from '@iconify/vue'
@@ -303,6 +303,11 @@ const getProfil = async () => {
               <p class="text-sm lg:text-lg dark:text-white/70 text-blue-900/80 leading-relaxed break-words">
                 {{ detail.description }}
               </p>
+            </div>
+            
+            <div class="mt-5">
+              <h4 class="text-xs font-bold dark:text-white text-gray-400 uppercase mb-2">Waktu Hilang</h4>
+              <p class="text-sm lg:text-lg dark:text-white/70 text-blue-900/80 leading-relaxed break-words">{{ formatDate(detail.event_date)}}</p>
             </div>
           </div>
 

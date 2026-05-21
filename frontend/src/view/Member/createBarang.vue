@@ -25,7 +25,8 @@
         location: '',
         description: '',
         image: null,
-        category: ''
+        category: '',
+        event_date: new Date().toISOString().slice(0, 10)
     })
 
     const queryLocation = ref('')
@@ -155,6 +156,7 @@
             formData.append('image', form.value.image)
             formData.append('status', status.value || 'lost')
             formData.append('category', form.value.category)
+            formData.append('event_date', form.value.event_date)
 
             await api.post('/item', formData)
             router.push("/member/home")
@@ -239,6 +241,11 @@
                             </select>
                             <Icon icon="solar:alt-arrow-down-linear" class="absolute right-5 top-4.5 text-gray-400 pointer-events-none" width="18" />
                         </div>
+                    </div>
+
+                    <div>
+                        <label class="text-xs font-bold text-blue-950 dark:text-slate-300 ml-2 mb-1 block uppercase tracking-wider">Tanggal Kejadian</label>
+                        <input v-model="form.event_date" required class="w-full shadow-sm dark:bg-slate-800 dark:text-white bg-white border border-gray-200 dark:border-slate-700 rounded-2xl py-4 px-5 focus:ring-4 focus:ring-yellow-500/20 focus:border-yellow-500 outline-none transition-all" type="date">
                     </div>
 
                     <div>
