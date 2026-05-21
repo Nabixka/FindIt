@@ -222,146 +222,98 @@
                 </div>
             </div>
 
-            <div class="overflow-x-auto lg:flex lg:justify-center px-4 mb-10">
-
-                <table class="min-w-full bg-white rounded-lg shadow-lg overflow-hidden">
-
-                    <thead class="bg-blue-900 text-white">
-                        <tr>
-                            <th class="px-6 py-4 text-left text-sm font-semibold border-r border-blue-500/30">
-                                Reporter
-                            </th>
-
-                            <th class="px-6 py-4 text-left text-sm font-semibold border-r border-blue-500/30">
-                                Reported User
-                            </th>
-
-                            <th class="px-6 py-4 text-left text-sm font-semibold border-r border-blue-500/30">
-                                Item
-                            </th>
-
-                            <th class="px-6 py-4 text-left text-sm font-semibold border-r border-blue-500/30">
-                                Bukti
-                            </th>
-
-                            <th class="px-6 py-4 text-left text-sm font-semibold">
-                                Alasan
-                            </th>
-                        </tr>
-                    </thead>
-
-                    <tbody class="divide-y divide-gray-200">
-
-                        <template v-if="loading">
-
-                            <tr
-                                v-for="n in 5"
+            <div class="flex lg:justify-center px-4 mb-10">
+                <div class="w-full max-w-6xl">
+                    <!-- Loading State -->
+                    <template v-if="loading">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <div
+                                v-for="n in 6"
                                 :key="n"
-                                class="animate-pulse">
+                                class="animate-pulse bg-white dark:bg-slate-800 rounded-xl shadow-md p-4">
+                                <div class="h-40 bg-gray-300 rounded-lg mb-4"></div>
+                                <div class="h-4 bg-gray-300 rounded w-3/4 mb-3"></div>
+                                <div class="h-4 bg-gray-300 rounded w-1/2 mb-4"></div>
+                                <div class="space-y-2">
+                                    <div class="h-8 bg-gray-300 rounded"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
 
-                                <td class="px-6 py-4 border-r border-gray-200">
-                                    <div class="h-5 w-24 bg-gray-300 rounded mx-auto"></div>
-                                </td>
-
-                                <td class="px-6 py-4 border-r border-gray-200">
-                                    <div class="h-5 w-24 bg-gray-300 rounded mx-auto"></div>
-                                </td>
-
-                                <td class="px-6 py-4 border-r border-gray-200">
-                                    <div class="flex flex-col items-center gap-3">
-
-                                        <div class="w-16 h-16 bg-gray-300 rounded-lg"></div>
-
-                                        <div class="h-4 w-20 bg-gray-300 rounded"></div>
-                                    </div>
-                                </td>
-
-                                <td class="px-6 py-4 border-r border-gray-200">
-                                    <div class="flex justify-center">
-                                        <div class="w-16 h-16 bg-gray-300 rounded-lg"></div>
-                                    </div>
-                                </td>
-
-                                <td class="px-6 py-4">
-                                    <div class="flex justify-center">
-                                        <div class="h-10 w-32 bg-gray-300 rounded-lg"></div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </template>
-
-                        <!-- DATA -->
-                        <template v-else-if="filteredReports.length">
-                            <tr
+                    <!-- Data Cards -->
+                    <template v-else-if="filteredReports.length">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <div
                                 v-for="report in filteredReports"
                                 :key="report.id"
-                                class="hover:bg-gray-50 dark:hover:bg-slate-600 bg-white dark:bg-slate-800 transition-colors">
+                                class="bg-white dark:bg-slate-800 rounded-xl shadow-md hover:shadow-lg transition-shadow overflow-hidden border border-slate-200 dark:border-slate-700">
 
-                                <td class="px-6 py-4 text-center font-bold dark:text-white text-gray-900 border-r border-gray-200">
-                                    {{ report.user_report.username }}
-                                </td>
+                                <!-- Item Image -->
+                                <button
+                                    @click="handleNavigate(report.item.id)"
+                                    class="w-full h-40 overflow-hidden hover:opacity-90 transition-opacity">
+                                    <img
+                                        class="w-full h-full object-cover"
+                                        :src="`${report.item.image}`"
+                                        alt="Item">
+                                </button>
 
-                                <td class="px-6 py-4 text-center font-bold text-red-600 border-r border-gray-200">
-                                    {{ report.user.username }}
-                                </td>
-
-                                <td class="px-6 py-4 border-r border-gray-200">
-
+                                <!-- Card Content -->
+                                <div class="p-4 space-y-3">
+                                    <!-- Item Title -->
                                     <button
                                         @click="handleNavigate(report.item.id)"
-                                        class="flex flex-col items-center gap-3 p-2 w-full hover:bg-gray-100 rounded-lg transition-colors">
-
-                                        <img
-                                            class="w-16 h-16 rounded-lg object-cover"
-                                            :src="`${report.item.image}`"
-                                            alt="Item">
-
-                                        <h3 class="font-semibold text-blue-600">
+                                        class="text-left">
+                                        <h3 class="font-semibold text-blue-600 dark:text-sky-300 text-sm hover:underline line-clamp-2">
                                             {{ report.item.title }}
                                         </h3>
                                     </button>
-                                </td>
 
-                                <td class="px-6 py-4 border-r border-gray-200">
-
-                                    <div class="flex justify-center">
-
-                                        <button
-                                            @click="handleView('image', report.proof)"
-                                            class="hover:scale-105 transition-transform">
-
-                                            <img
-                                                class="w-16 h-16 rounded-lg object-cover shadow-md"
-                                                :src="`${report.proof}`"
-                                                alt="Proof">
-                                        </button>
+                                    <!-- Reporter Info -->
+                                    <div class="bg-slate-50 dark:bg-slate-900/50 rounded-lg p-3 space-y-1">
+                                        <div class="flex justify-between items-start gap-2">
+                                            <p class="text-xs text-slate-500 dark:text-slate-400 uppercase font-semibold">Reporter</p>
+                                            <p class="text-sm font-bold text-slate-900 dark:text-white text-right">
+                                                {{ report.user_report.username }}
+                                            </p>
+                                        </div>
+                                        <div class="flex justify-between items-start gap-2">
+                                            <p class="text-xs text-slate-500 dark:text-slate-400 uppercase font-semibold">Reported</p>
+                                            <p class="text-sm font-bold text-red-600 dark:text-red-400 text-right">
+                                                {{ report.user.username }}
+                                            </p>
+                                        </div>
                                     </div>
-                                </td>
 
-                                <td class="px-6 py-4">
+                                    <!-- Proof Image -->
+                                    <button
+                                        @click="handleView('image', report.proof)"
+                                        class="w-full h-24 rounded-lg overflow-hidden hover:scale-105 transition-transform bg-slate-100 dark:bg-slate-900">
+                                        <img
+                                            class="w-full h-full object-cover"
+                                            :src="`${report.proof}`"
+                                            alt="Proof">
+                                    </button>
 
-                                    <div class="flex justify-center">
+                                    <!-- Reason Button -->
+                                    <button
+                                        @click="handleView('text', report.reason, report.user.id)"
+                                        class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg font-semibold transition-colors text-sm">
+                                        Lihat Alasan
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
 
-                                        <button
-                                            @click="handleView('text', report.reason, report.user.id)"
-                                            class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg font-semibold transition-colors">
-
-                                            Lihat Alasan
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </template>
-
-                        <tr v-else>
-                            <td
-                                class="px-6 py-4 text-center font-bold text-gray-500 text-lg"
-                                colspan="5">
-                                Tidak ada laporan
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                    <!-- Empty State -->
+                    <div v-else class="flex items-center justify-center py-12">
+                        <p class="text-center font-bold text-gray-500 dark:text-gray-400 text-lg">
+                            Tidak ada laporan
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
