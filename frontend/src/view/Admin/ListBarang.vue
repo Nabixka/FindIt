@@ -10,6 +10,8 @@
     const router = useRouter()
     const search = ref("")
     const selectedFilter = ref("lost")
+    const startDate = ref("")
+    const endDate = ref("")
     const isLoading = ref(true)
 
     const getListItem = async () => {
@@ -28,11 +30,34 @@
     
     const filteredList = computed(() => {
         const term = search.value.toLowerCase().trim()
-        return listItem.value.filter(item => item.status === selectedFilter.value)
+
+        return listItem.value
+            .filter(item => item.status === selectedFilter.value)
             .filter(item => {
                 if (!term) return true
                 return item.title.toLowerCase().includes(term)
                     || item.location.toLowerCase().includes(term)
+            })
+            .filter(item => {
+                if (!startDate.value && !endDate.value) return true
+
+                const itemDate = new Date(item.event_date)
+                const start = startDate.value ? new Date(startDate.value) : null
+                const end = endDate.value ? new Date(endDate.value) : null
+
+                if (start && end) {
+                    return itemDate >= start && itemDate <= end
+                }
+
+                if (start) {
+                    return itemDate >= start
+                }
+
+                if (end) {
+                    return itemDate <= end
+                }
+
+                return true
             })
     })
     
@@ -84,6 +109,22 @@
                                 <div class="grid grid-cols-2 gap-2 bg-slate-50 dark:bg-slate-950/70 rounded-3xl p-3 border border-slate-200 dark:border-slate-700">
                                     <button @click="selectedFilter = 'lost'" :class="buttonColor('lost')" class="py-3">Kehilangan</button>
                                     <button @click="selectedFilter = 'found'" :class="buttonColor('found')" class="py-3">Penemuan</button>
+                                </div>
+                                <div class="grid gap-3 bg-slate-50 dark:bg-slate-950/70 rounded-3xl p-4 border border-slate-200 dark:border-slate-700">
+                                    <div class="space-y-2">
+                                        <label class="text-xs uppercase tracking-[0.18em] text-slate-500">Tanggal Mulai</label>
+                                        <input v-model="startDate" type="date"
+                                            class="w-full rounded-3xl border border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/80 text-slate-900 dark:text-white py-3 px-4 outline-none" />
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label class="text-xs uppercase tracking-[0.18em] text-slate-500">Tanggal Akhir</label>
+                                        <input v-model="endDate" type="date"
+                                            class="w-full rounded-3xl border border-slate-200 dark:border-slate-700 bg-white/95 dark:bg-slate-900/80 text-slate-900 dark:text-white py-3 px-4 outline-none" />
+                                    </div>
+                                    <button @click="startDate = ''; endDate = ''"
+                                        class="w-full text-sm font-semibold text-blue-950 bg-white rounded-3xl py-3 transition hover:bg-blue-50">
+                                        Reset Tanggal
+                                    </button>
                                 </div>
                             </div>
                         </div>

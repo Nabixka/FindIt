@@ -10,6 +10,15 @@
     const search = ref("")
     const isLoading = ref(true)
 
+    const handleDelete = async (userId) => {
+        try {
+            await api.delete(`user/${userId}`)
+            listUser.value = listUser.value.filter(user => user.id !== userId)
+        } catch (err) {
+            console.error("Error deleting user:", err)
+        }
+    }
+
     const getListUser = async () => {
         try{
             await new Promise(resolve => setTimeout(resolve, 2000))
@@ -58,6 +67,7 @@
         <Nav />
 
         <div class="pt-24 pb-24 bg-linear-to-b from-white to-gray-200 dark:bg-linear-to-b dark:from-gray-950/90 dark:to-blue-950 min-h-screen">
+            
             <div class="max-w-7xl mx-auto px-4">
                 <div class="grid gap-6 lg:grid-cols-[320px_minmax(0,1fr)]">
                     <aside class="space-y-6">
@@ -113,6 +123,10 @@
                                     <p class="mt-1 text-sm text-slate-500 dark:text-slate-300 truncate">{{ user.email }}</p>
                                 </div>
                                 <span class="text-xs uppercase tracking-[0.2em] bg-slate-100 dark:bg-slate-950/70 text-slate-800 dark:text-white px-3 py-1 rounded-full">{{ user.role }}</span>
+                                <button @click="handleDelete(user.id)"
+                                    class="flex items-center pr-2 text-red-500 group-hover:text-blue-500">
+                                    <Icon icon="weui:delete-filled" width="24" height="24" />
+                                </button>
                             </div>
                         </div>
 
